@@ -8,23 +8,26 @@
     ".NETCoreApp,Version=v3.1": []
   },
   "packageFolders": {
-    "C:\\Users\\auzzy\\.nuget\\packages\\": {},
-    "C:\\Microsoft\\Xamarin\\NuGet\\": {}
+    "C:\\Users\\Venom\\.nuget\\packages\\": {},
+    "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\NUS ISS\\Modules\\ESNET\\CA\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj",
+      "projectUniqueName": "E:\\Code\\ESNET\\CA_Project\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj",
       "projectName": "ESSD-CA",
-      "projectPath": "C:\\NUS ISS\\Modules\\ESNET\\CA\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj",
-      "packagesPath": "C:\\Users\\auzzy\\.nuget\\packages\\",
-      "outputPath": "C:\\NUS ISS\\Modules\\ESNET\\CA\\ESSD-CA\\ESSD-CA\\obj\\",
+      "projectPath": "E:\\Code\\ESNET\\CA_Project\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj",
+      "packagesPath": "C:\\Users\\Venom\\.nuget\\packages\\",
+      "outputPath": "E:\\Code\\ESNET\\CA_Project\\ESSD-CA\\ESSD-CA\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Microsoft\\Xamarin\\NuGet\\"
+        "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+        "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\auzzy\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\Venom\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
