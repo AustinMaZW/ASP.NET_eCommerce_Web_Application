@@ -37,6 +37,14 @@ namespace ESSD_CA.Controllers
 
         public IActionResult Privacy()
         {
+            string sessionId = Request.Cookies["sessionId"];
+            if (sessionId != null)
+            {
+                if (sessionId == null)
+                    return RedirectToAction("Index", "Logout");
+
+                ViewData["sessionId"] = sessionId;
+            }
             return View();
         }
 
