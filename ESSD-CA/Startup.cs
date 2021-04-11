@@ -60,6 +60,7 @@ namespace ESSD_CA
             {
                 db.Database.EnsureCreated();    // Create and Empty database
                 new DbSeedData(db).Init();      // seed our database with data
+
             }
         }
     }
