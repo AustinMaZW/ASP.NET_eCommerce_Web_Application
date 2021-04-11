@@ -1,5 +1,7 @@
+using ESSD_CA.Db;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -23,10 +25,15 @@ namespace ESSD_CA
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
+
+            // add database DbESSDCA into DI Container
+            services.AddDbContext<DbESSDCA>(opt =>
+                opt.UseLazyLoadingProxies().UseSqlServer(
+                    Configuration.GetConnectionString("DbConn")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, DbESSDCA db)
         {
             if (env.IsDevelopment())
             {
@@ -48,6 +55,12 @@ namespace ESSD_CA
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
+
+            if(!db.Database.CanConnect())
+            {
+                db.Database.EnsureCreated();    // Create and Empty database
+                new DbSeedData(db).Init();      // seed our database with data
+            }
         }
     }
 }

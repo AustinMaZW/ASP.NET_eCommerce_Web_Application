@@ -1,25 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Code\\ESNET\\CA_Project\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj": {}
+    "C:\\NUS ISS\\Modules\\ESNET\\CA\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj": {}
   },
   "projects": {
-    "E:\\Code\\ESNET\\CA_Project\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj": {
+    "C:\\NUS ISS\\Modules\\ESNET\\CA\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Code\\ESNET\\CA_Project\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj",
+        "projectUniqueName": "C:\\NUS ISS\\Modules\\ESNET\\CA\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj",
         "projectName": "ESSD-CA",
-        "projectPath": "E:\\Code\\ESNET\\CA_Project\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj",
-        "packagesPath": "C:\\Users\\Venom\\.nuget\\packages\\",
-        "outputPath": "E:\\Code\\ESNET\\CA_Project\\ESSD-CA\\ESSD-CA\\obj\\",
+        "projectPath": "C:\\NUS ISS\\Modules\\ESNET\\CA\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj",
+        "packagesPath": "C:\\Users\\auzzy\\.nuget\\packages\\",
+        "outputPath": "C:\\NUS ISS\\Modules\\ESNET\\CA\\ESSD-CA\\ESSD-CA\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\Venom\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\auzzy\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -45,6 +43,20 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.Proxies": {
+              "target": "Package",
+              "version": "[5.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.5, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
