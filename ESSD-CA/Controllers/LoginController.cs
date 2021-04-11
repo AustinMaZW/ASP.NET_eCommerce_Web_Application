@@ -17,7 +17,7 @@ namespace ESSD_CA.Controllers
         {
             
             
-            if (username == null)
+            if (username == null || password == null)
             {
                 ViewData["username"] = username;
                 ViewData["errLogin"] = "Please enter valid username and password.";

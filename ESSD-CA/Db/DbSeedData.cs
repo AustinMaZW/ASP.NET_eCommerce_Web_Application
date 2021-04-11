@@ -18,6 +18,8 @@ namespace ESSD_CA.Db
         {
             //add code for generating data
             AddProduct();
+            AddUser();
+            
         }
 
         private void AddProduct()
@@ -51,6 +53,20 @@ namespace ESSD_CA.Db
 
                 db.SaveChanges();
             }
+        }
+
+        private void AddUser()
+        {
+            db.Users.Add(new User("peter"));
+
+            db.Users.AddRange(new User[] 
+            { 
+                new User("john"), 
+                new User("mary"),
+                new User("jane")
+            });
+            db.SaveChanges();
+
         }
     }
 }
