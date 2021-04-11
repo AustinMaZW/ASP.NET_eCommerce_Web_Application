@@ -12,6 +12,7 @@ namespace ESSD_CA.Models
         [Required]
         [MaxLength(36)]
         public string UserId { get; set; }
+        
         [Required]
         [MaxLength(36)]
         public string Username { get; set; }

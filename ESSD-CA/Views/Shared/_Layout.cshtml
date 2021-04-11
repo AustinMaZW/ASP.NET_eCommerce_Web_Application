@@ -28,7 +28,7 @@
                     </ul>
                 </div>
                 <div style="float:right">
-                    @if (ViewData["sessionId"]== null)
+                    @if (@ViewData["sessionId"]== null)
                         {
                             <a class="nav-link text-dark"asp-controller="Login" asp-action="Index">Login</a>
                         }
