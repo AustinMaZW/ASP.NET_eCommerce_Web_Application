@@ -38,10 +38,10 @@ namespace ESSD_CA.Controllers
                 }
                 else
                 {
+                    ViewData["username"] = username;
                     ViewData["errLogin"] = "Please enter valid username or password.";
                     return View("Index");
                 }
-
             }
             else
             {
