@@ -46,7 +46,7 @@ namespace ESSD_CA
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Purchase}/{action=History}/{id?}");
             });
         }
     }

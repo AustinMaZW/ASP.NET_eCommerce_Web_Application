@@ -1,0 +1,72 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+<style>
+    @*.text-dark {
+        color: #272b30 !important;
+    }*@
+    .menu {
+        margin-left: 20px;
+    }
+    .menu-list {
+        padding: 10px;
+        text-decoration: underline;
+    }
+    .vl {
+        border-left: 3px solid green;
+        margin: 10px 0;
+    }
+    .product-info {
+        display: inline-block;
+    }
+    .purchase-info {
+        display: inline-block;
+    }
+</style>
+<div>
+    <a class="text-white" asp-area="" asp-controller="" asp-action="">My Purchases</a>
+
+    <div class="d-sm-inline-flex menu">
+        <span class="menu-list">
+            <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+        </span>
+        <span class="vl"></span>
+        <span class="menu-list">
+            <a asp-area="" asp-controller="Home" asp-action="Privacy">Logout</a>
+        </span>
+    </div>
+</div>
+<div class="product-info">
+    <table>
+        <tr>
+            <td>photo</td>
+        </tr>
+        <tr>
+            <td>Product Name</td>
+        </tr>
+        <tr>
+            <td>Product Description</td>
+        </tr>
+        <tr>
+            <td><button><a href="#">Download</a></button></td>
+        </tr>
+    </table>
+</div>
+<div class="purchase-info">
+    <table>
+        <tr>
+            <td>photo</td>
+        </tr>
+        <tr>
+            <td>Product Name</td>
+        </tr>
+        <tr>
+            <td>Product Description</td>
+        </tr>
+        <tr>
+            <td><button><a href="#">Download</a></button></td>
+        </tr>
+    </table>
+</div>
