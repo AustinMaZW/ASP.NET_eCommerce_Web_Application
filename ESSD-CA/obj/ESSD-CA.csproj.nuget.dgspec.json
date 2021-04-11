@@ -1,24 +1,24 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Code\\ESNET\\CA_Project\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj": {}
+    "C:\\GitHub\\AustinMaZW\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj": {}
   },
   "projects": {
-    "E:\\Code\\ESNET\\CA_Project\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj": {
+    "C:\\GitHub\\AustinMaZW\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Code\\ESNET\\CA_Project\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj",
+        "projectUniqueName": "C:\\GitHub\\AustinMaZW\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj",
         "projectName": "ESSD-CA",
-        "projectPath": "E:\\Code\\ESNET\\CA_Project\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj",
-        "packagesPath": "C:\\Users\\Venom\\.nuget\\packages\\",
-        "outputPath": "E:\\Code\\ESNET\\CA_Project\\ESSD-CA\\ESSD-CA\\obj\\",
+        "projectPath": "C:\\GitHub\\AustinMaZW\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj",
+        "packagesPath": "C:\\Users\\Kenneth\\.nuget\\packages\\",
+        "outputPath": "C:\\GitHub\\AustinMaZW\\ESSD-CA\\ESSD-CA\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
+          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\Venom\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\Kenneth\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
@@ -45,6 +45,12 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
