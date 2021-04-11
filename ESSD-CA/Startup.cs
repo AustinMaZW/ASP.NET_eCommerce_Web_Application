@@ -56,11 +56,10 @@ namespace ESSD_CA
                     pattern: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            if (!db.Database.CanConnect())
+            if (db.Database.CanConnect())
             {
-                db.Database.EnsureCreated();    // Create and Empty database
-                new DbSeedData(db).Init();      // seed our database with data
-
+                if(db.Database.EnsureCreated())    // Create and Empty database
+                        new DbSeedData(db).Init();      // seed our database with data
             }
         }
     }
