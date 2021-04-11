@@ -24,8 +24,15 @@ namespace ESSD_CA.Controllers
 
                 return View("Index");
             }
+            else
+            {
 
-            return RedirectToAction("Index", "Home");
+                //user???.SessionId = Guid.NewGuid().ToString();
+                //Response.Cookies.Append("sessionId", user???.SessionId);
+
+                return RedirectToAction("Index", "Home");
+            }
+
         }
     }
 }
