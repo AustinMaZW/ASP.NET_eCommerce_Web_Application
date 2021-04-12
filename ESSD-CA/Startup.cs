@@ -26,6 +26,9 @@ namespace ESSD_CA
         {
             services.AddControllersWithViews();
 
+            // add session state
+            services.AddSession();
+
             // add database DbESSDCA into DI Container
             services.AddDbContext<DbESSDCA>(opt =>
                 opt.UseLazyLoadingProxies().UseSqlServer(
@@ -49,11 +52,13 @@ namespace ESSD_CA
 
             app.UseAuthorization();
 
+            app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Purchase}/{action=History}/{id?}");
             });
 
             db.Database.EnsureDeleted();    // Delete all existing Tables
