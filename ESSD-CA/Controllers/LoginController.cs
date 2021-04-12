@@ -21,14 +21,23 @@ namespace ESSD_CA.Controllers
 
         public IActionResult Index()
         {
+            string sessionId = Request.Cookies["sessionId"];
+            
+            if(sessionId != null)
+            {
+                return RedirectToAction("Index", "Home");
+            }
             return View();
         }
 
         public IActionResult Authenticate (string username, string password)
         {
             User user = db.Users.FirstOrDefault(x => x.Username == username);
-                
-            if (user.Username != null)
+            string sessionId = Request.Cookies["sessionId"];
+            if (sessionId != null)
+                return RedirectToAction("Index", "Home");
+                            
+            if (user != null)
             {
                 if (user.Password == password)
                 {
@@ -43,6 +52,7 @@ namespace ESSD_CA.Controllers
                     return View("Index");
                 }
             }
+
             else
             {
                 ViewData["username"] = username;
