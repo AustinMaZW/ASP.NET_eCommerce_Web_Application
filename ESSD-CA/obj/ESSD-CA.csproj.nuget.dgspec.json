@@ -1,25 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "E:\\Code\\ESNET\\CA_Project\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj": {}
+    "C:\\Users\\Jean\\source\\repos\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj": {}
   },
   "projects": {
-    "E:\\Code\\ESNET\\CA_Project\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj": {
+    "C:\\Users\\Jean\\source\\repos\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "E:\\Code\\ESNET\\CA_Project\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj",
+        "projectUniqueName": "C:\\Users\\Jean\\source\\repos\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj",
         "projectName": "ESSD-CA",
-        "projectPath": "E:\\Code\\ESNET\\CA_Project\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj",
-        "packagesPath": "C:\\Users\\Venom\\.nuget\\packages\\",
-        "outputPath": "E:\\Code\\ESNET\\CA_Project\\ESSD-CA\\ESSD-CA\\obj\\",
+        "projectPath": "C:\\Users\\Jean\\source\\repos\\ESSD-CA\\ESSD-CA\\ESSD-CA.csproj",
+        "packagesPath": "C:\\Users\\Jean\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Jean\\source\\repos\\ESSD-CA\\ESSD-CA\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "E:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
-          "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
+          "C:\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\Venom\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\Jean\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -45,6 +43,24 @@
       "frameworks": {
         "netcoreapp3.1": {
           "targetAlias": "netcoreapp3.1",
+          "dependencies": {
+            "Microsoft.EntityFrameworkCore": {
+              "target": "Package",
+              "version": "[5.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.Proxies": {
+              "target": "Package",
+              "version": "[5.0.5, )"
+            },
+            "Microsoft.EntityFrameworkCore.SqlServer": {
+              "target": "Package",
+              "version": "[5.0.5, )"
+            },
+            "Microsoft.VisualStudio.Web.CodeGeneration.Design": {
+              "target": "Package",
+              "version": "[3.1.5, )"
+            }
+          },
           "imports": [
             "net461",
             "net462",
@@ -63,7 +79,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.201\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.104\\RuntimeIdentifierGraph.json"
         }
       }
     }
