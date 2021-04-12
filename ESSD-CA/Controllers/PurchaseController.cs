@@ -14,5 +14,10 @@ namespace ESSD_CA.Controllers
             // 
             return View();
         }
+
+        public void GenerateActivationCode()
+        {
+
+        }
     }
 }
