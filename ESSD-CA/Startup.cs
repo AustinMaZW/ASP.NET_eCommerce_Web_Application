@@ -26,6 +26,9 @@ namespace ESSD_CA
         {
             services.AddControllersWithViews();
 
+            // add session state
+            services.AddSession();
+
             // add database DbESSDCA into DI Container
             services.AddDbContext<DbESSDCA>(opt =>
                 opt.UseLazyLoadingProxies().UseSqlServer(
@@ -48,6 +51,8 @@ namespace ESSD_CA
             app.UseRouting();
 
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {
