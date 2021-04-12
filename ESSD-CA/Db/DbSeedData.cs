@@ -58,7 +58,8 @@ namespace ESSD_CA.Db
         private void AddUser()
         {
             db.Users.AddRange(new User[] 
-            { 
+            {
+                new User("admin"),
                 new User("john"), 
                 new User("mary"),
                 new User("jane"),
