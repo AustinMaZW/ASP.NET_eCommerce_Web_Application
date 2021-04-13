@@ -22,7 +22,6 @@ namespace ESSD_CA.Controllers
         public IActionResult Index()
         {
             string sessionId = Request.Cookies["sessionId"];
-            
             if(sessionId != null)
             {
                 return RedirectToAction("Index", "Home");
@@ -42,6 +41,8 @@ namespace ESSD_CA.Controllers
                 if (user.Password == password)
                 {
                     user.SessionId = Guid.NewGuid().ToString();
+                    db.Users.Update(user);
+                    db.SaveChanges();
                     Response.Cookies.Append("sessionId", user.SessionId);
                     return RedirectToAction("Index", "Home");
                 }
@@ -57,7 +58,6 @@ namespace ESSD_CA.Controllers
             {
                 ViewData["username"] = username;
                 ViewData["errLogin"] = "Please enter valid username and password.";
-
                 return View("Index");
             }
         }
