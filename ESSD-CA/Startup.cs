@@ -26,6 +26,9 @@ namespace ESSD_CA
         {
             services.AddControllersWithViews();
 
+            // add session state
+            services.AddSession();
+
             // add database DbESSDCA into DI Container
             services.AddDbContext<DbESSDCA>(opt =>
                 opt.UseLazyLoadingProxies().UseSqlServer(
@@ -49,6 +52,8 @@ namespace ESSD_CA
 
             app.UseAuthorization();
 
+            app.UseSession();
+
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllerRoute(
@@ -56,12 +61,10 @@ namespace ESSD_CA
                     pattern: "{controller=Purchase}/{action=History}/{id?}");
             });
 
-            if (!db.Database.CanConnect())
-            {
-                db.Database.EnsureCreated();    // Create and Empty database
-                new DbSeedData(db).Init();      // seed our database with data
+            db.Database.EnsureDeleted();    // Delete all existing Tables
+            db.Database.EnsureCreated();    // Recreate Tables
+            new DbSeedData(db).Init();      // seed our database with data
 
-            }
         }
     }
 }

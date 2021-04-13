@@ -6,12 +6,15 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using ESSD_CA.Db;
+
 
 namespace ESSD_CA.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly DbESSDCA db;
 
         public HomeController(ILogger<HomeController> logger)
         {
@@ -20,11 +23,28 @@ namespace ESSD_CA.Controllers
 
         public IActionResult Index()
         {
+            string sessionId = Request.Cookies["sessionId"];
+            if (sessionId != null)
+            {
+                if (sessionId == null)
+                    return RedirectToAction("Index", "Logout");
+
+                ViewData["sessionId"] = sessionId;
+            }
+
             return View();
         }
 
         public IActionResult Privacy()
         {
+            string sessionId = Request.Cookies["sessionId"];
+            if (sessionId != null)
+            {
+                if (sessionId == null)
+                    return RedirectToAction("Index", "Logout");
+
+                ViewData["sessionId"] = sessionId;
+            }
             return View();
         }
 

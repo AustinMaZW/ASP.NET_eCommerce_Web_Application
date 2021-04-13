@@ -22,9 +22,16 @@ namespace ESSD_CA.Db
             // fluent API, add code as per necessary
             // e.g. unique columns in a table
             // composite keys
+
+            model.Entity<User>().HasIndex(x => x.Username).IsUnique();
         }
 
         // create tables
+        public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<ShoppingCart> ShoppingCarts { get; set; }
+        public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
+        public DbSet<PurchaseOrderDetails> PODetails { get; set; }
     }
 }
