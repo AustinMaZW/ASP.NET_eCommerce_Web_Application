@@ -24,9 +24,12 @@
     .purchase-info {
         display: inline-block;
     }
+    .page-title {
+        font-size: 24px;
+    }
 </style>
 <div>
-    <a class="text-white" asp-area="" asp-controller="" asp-action="">My Purchases</a>
+    <a class="page-title" asp-area="" asp-controller="" asp-action="">My Purchases</a>
 
     <div class="d-sm-inline-flex menu">
         <span class="menu-list">
@@ -50,23 +53,25 @@
             <td>Product Description</td>
         </tr>
         <tr>
-            <td><button><a href="#">Download</a></button></td>
+            <td><a href="#"><button>Download</button></a></td>
         </tr>
     </table>
 </div>
 <div class="purchase-info">
     <table>
         <tr>
-            <td>photo</td>
+            <td>Purchased On:</td>
+            <td>8 Apr 2019</td>
         </tr>
         <tr>
-            <td>Product Name</td>
+            <td>Quantity:</td>
+            <td>2</td>
         </tr>
         <tr>
-            <td>Product Description</td>
-        </tr>
-        <tr>
-            <td><button><a href="#">Download</a></button></td>
+            <td>Activation Code:</td>
+            <td><select>
+                <option>e2290-124-ggat-002</option>
+                </select></td>
         </tr>
     </table>
 </div>
