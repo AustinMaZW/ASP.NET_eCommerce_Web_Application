@@ -22,7 +22,11 @@ namespace ESSD_CA.Controllers
             User user = db.Users.FirstOrDefault(x => x.SessionId == sessionId);
 
             if (user != null)
+            {
                 user.SessionId = null;
+                db.Users.Update(user);
+                db.SaveChanges();
+            }
 
             Response.Cookies.Delete("sessionId");
 
