@@ -58,7 +58,7 @@ namespace ESSD_CA
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Purchase}/{action=History}/{id?}");
+                    pattern: "{controller=ShopGallery}/{action=Index}/{id?}");
             });
 
             db.Database.EnsureDeleted();    // Delete all existing Tables
