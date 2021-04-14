@@ -48,8 +48,7 @@
             @*Login and cart - to flush right*@
             <div class="navbar-collapse collapse w-100 order-2 dual-collapse2">
                 <ul class="navbar-nav ml-auto">
-                    @*using IHttpContextAccessor Injection to retrieve session values*@
-                    @if (HttpContextAccessor.HttpContext.Request.Cookies["sessionId"] == null)
+                    @if (ViewData["sessionId"] == null)
                     {
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Login" asp-action="Index">Login</a>
@@ -61,6 +60,7 @@
                             <a class="nav-link" asp-area="" asp-controller="Logout" asp-action="Index">Logout</a>
                         </li>
                     }
+
                     @if (HttpContextAccessor.HttpContext.Session.GetInt32("ShoppingCartIcon") != null)
                     {
                         <li class="nav-item">
