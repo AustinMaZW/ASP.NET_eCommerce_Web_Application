@@ -5,6 +5,7 @@ using System.Linq;
 using ESSD_CA.Db;
 using ESSD_CA.Models;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace ESSD_CA.Controllers
 {
@@ -29,8 +30,18 @@ namespace ESSD_CA.Controllers
             }
 
             Response.Cookies.Delete("sessionId");
+            
+            //generate new guest id when log out from db
+            GenerateNewGuestId();
 
             return RedirectToAction("Index", "Home");
+        }
+
+        private void GenerateNewGuestId()
+        {
+            
+            string guestId = Guid.NewGuid().ToString();
+            HttpContext.Session.SetString("guestId", guestId);
         }
     }
 }

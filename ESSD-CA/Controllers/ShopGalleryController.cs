@@ -23,7 +23,9 @@ namespace ESSD_CA.Controllers
             List<Product> products = db.Products.ToList();  //retrieving products from database and putting into a list
 
             ViewData["products"] = products;    //sending data view ViewData
-            
+
+            ViewData["sessionId"] = HttpContext.Request.Cookies["sessionId"];
+
             if (HttpContext.Session.GetString("guestId") == null)
             {
                 string guestId = Guid.NewGuid().ToString();
@@ -35,50 +37,82 @@ namespace ESSD_CA.Controllers
 
         public IActionResult AddToCart(Product product, int count)
         {
-            // add code to check if user is currently logged in through session ID
+            if (product == null) { return RedirectToAction("Index"); }
 
-            if (product != null) // need to check if sessionid is null too
+            string sessionId = Request.Cookies["sessionId"];
+            User user = db.Users.FirstOrDefault(x => x.SessionId == sessionId && x.SessionId != null);
+
+            string guestId = HttpContext.Session.GetString("guestId");
+
+            Debug.WriteLine("Product Id: " + product.Id);               //just for debug purposes, can delete
+            Debug.WriteLine("count: " + count);                         //just for debug purposes, can delete
+
+            if (user != null)
             {
-                // debug script to check that correct items were selected
-                Debug.WriteLine("Product Id: " + product.Id);
-                Debug.WriteLine("count: " + count);
-
-                string guestId = HttpContext.Session.GetString("guestId");
-                // search database if existing cart with same id exists
-                ShoppingCart cartFromDb = db.ShoppingCarts.FirstOrDefault(
-                    x => x.Id == guestId && x.ProductId == product.Id);
-
-                //calculate price
-                double price = product.UnitPrice * count;
-                bool guestUser = false;
-
-                // add info to database
-                ShoppingCart cartObj = new ShoppingCart
-                {
-                    // might need to change this to guest sessionId to reconcile all the items from same user
-                    Id = HttpContext.Session.GetString("guestId"),
-                    ProductId = product.Id,
-                    GuestUser = guestUser,
-                    Count = count
-                };
-
-                if (cartFromDb == null)
-                {
-                    db.ShoppingCarts.Add(cartObj);
-                }
-                else
-                {
-                    cartFromDb.Count += count;
-                    db.ShoppingCarts.Update(cartFromDb);
-                }
-
-                // current issue is how to update a cart with same id 
-                db.SaveChanges();
-                
-
+                UserAddToCart(product, count, guestId, user);
+            }
+            else
+            {
+                GuestAddToCart(product, count, guestId);
             }
 
             return RedirectToAction("Index");
+        }
+
+        private void GuestAddToCart(Product product, int count, string guestId)
+        {
+            if (product == null) { return; }
+
+            // search database if existing cart with same id exists
+            ShoppingCart cartFromDb = db.ShoppingCarts.FirstOrDefault(
+                x => x.GuestId == guestId && x.ProductId == product.Id);
+
+            ShoppingCart cartObj = new ShoppingCart
+            {
+                Id = Guid.NewGuid().ToString(),
+                GuestId = guestId,
+                ProductId = product.Id,
+                Count = count
+            };
+
+            if (cartFromDb == null)             // if guest never had a cart before
+            {
+                db.ShoppingCarts.Add(cartObj);
+            }
+            else                                // if guest had a cart before, then merge
+            {
+                cartFromDb.Count += count;
+                db.ShoppingCarts.Update(cartFromDb);
+            }
+            db.SaveChanges();
+        }
+
+        private void UserAddToCart(Product product, int count, string guestId, User user)
+        {
+            if (product == null || user == null) { return; }
+
+            ShoppingCart userCartFromDb = db.ShoppingCarts.FirstOrDefault(
+            x => x.UserId == user.UserId && x.ProductId == product.Id);
+
+            ShoppingCart cartObj = new ShoppingCart
+            {
+                Id = Guid.NewGuid().ToString(),
+                GuestId = null,
+                ProductId = product.Id,
+                UserId = user.UserId,
+                Count = count
+            };
+            if (userCartFromDb != null)             // merge if user had previous logged in and add to cart with same product
+            {
+                userCartFromDb.Count += count;
+                db.ShoppingCarts.Update(userCartFromDb);
+            }
+                                     
+            else                                    // add new row 
+            {
+                db.ShoppingCarts.Add(cartObj);
+            }
+            db.SaveChanges();
         }
     }
 }
