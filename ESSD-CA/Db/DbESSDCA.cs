@@ -30,7 +30,6 @@ namespace ESSD_CA.Db
         }
 
         // create tables
-        public DbSet<Customer> Customers { get; set; }
         public DbSet<Product> Products { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }

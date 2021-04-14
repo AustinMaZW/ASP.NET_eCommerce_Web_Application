@@ -11,10 +11,14 @@ namespace ESSD_CA.Models
         [Key]
         [MaxLength(36)]
         public string OrderId { get; set; }
-        public DateTime ProductDate { get; set; }
+        public DateTime PurchaseDate { get; set; }
         public double GrandTotal { get; set; }
-        public int Quantity { get; set; }
-        public virtual Customer Customer { get; set; }
+        /*public int Quantity { get; set; }*/
+
+        public string UserId { get; set; }
+        public virtual User User { get; set; }
+
+        public virtual ICollection<PurchaseOrderDetails> PODetails { get; set; }
 
     }
 }
