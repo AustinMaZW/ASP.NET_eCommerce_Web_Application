@@ -25,7 +25,7 @@ namespace ESSD_CA.Controllers
             string sessionId = Request.Cookies["sessionId"];
             if(sessionId != null)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "ShopGallery");
             }
             return View();
         }
@@ -41,26 +41,28 @@ namespace ESSD_CA.Controllers
         //    return View("Index", "Login");
         //}
 
-        public IActionResult Authenticate (string username, string password)
+
+        [HttpPost]
+        public IActionResult Index (string username, string password)
         {
             User user = db.Users.FirstOrDefault(x => x.Username == username);
             string sessionId = Request.Cookies["sessionId"];
             if (sessionId != null)
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "ShopGallery");
                             
             if (user != null)
             {
                 if (user.Password == password)
                 {
                     CheckForGuestCart(user);
+                    UpdateCartIcon(user);
 
                     user.SessionId = Guid.NewGuid().ToString();
                     db.Users.Update(user);
                     db.SaveChanges();
                     Response.Cookies.Append("sessionId", user.SessionId);
                     Response.Cookies.Append("userId", user.UserId);
-                    return RedirectToAction("Index", "Home");
-
+                    return RedirectToAction("Index", "ShopGallery");
                 }
                 else
                 {
@@ -110,6 +112,13 @@ namespace ESSD_CA.Controllers
                     db.SaveChanges();
                 }
             }
+        }
+
+        private void UpdateCartIcon(User user)
+        {
+            //below code to show user shopping cart icon count
+            int count = db.ShoppingCarts.Where(x => x.UserId == user.UserId).ToList().Count();
+            HttpContext.Session.SetInt32("ShoppingCartIcon", count);
         }
     }
 }

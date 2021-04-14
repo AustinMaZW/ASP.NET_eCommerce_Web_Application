@@ -24,26 +24,39 @@ namespace ESSD_CA.Controllers
 
             ViewData["products"] = products;    //sending data view ViewData
             
-            if (HttpContext.Session.GetString("guestId") == null)
+            if (HttpContext.Session.GetString("guestId") == null)       // generate guestId when visit shop gallery
             {
                 string guestId = Guid.NewGuid().ToString();
                 HttpContext.Session.SetString("guestId", guestId);
             }
 
-            ViewData["sessionId"] = HttpContext.Request.Cookies["sessionId"];
-
-            if (HttpContext.Session.GetString("guestId") == null)
-            {
-                string guestId = Guid.NewGuid().ToString();
-                HttpContext.Session.SetString("guestId", guestId);
-            }
+            string sessionId = Request.Cookies["sessionId"];
+            
+            SetShopIconCount(sessionId);
 
             return View();
         }
 
+        private void SetShopIconCount(string sessionId)
+        {
+            //below for setting up shop cart icon count
+            User user = db.Users.FirstOrDefault(x => x.SessionId == sessionId && x.SessionId != null);
+            if (user != null)
+            {
+                int count = db.ShoppingCarts.Where(x => x.UserId == user.UserId).ToList().Count();
+                HttpContext.Session.SetInt32("ShoppingCartIcon", count);
+            }
+            else
+            {
+                int count = db.ShoppingCarts.Where(x => x.GuestId ==
+                    HttpContext.Session.GetString("guestId")).ToList().Count();
+                HttpContext.Session.SetInt32("ShoppingCartIcon", count);
+            }
+        }
+
         public IActionResult AddToCart(Product product, int count)
         {
-            if (product == null) { return RedirectToAction("Index"); }
+            if (product == null || count <= 0) { return RedirectToAction("Index"); }
 
             string sessionId = Request.Cookies["sessionId"];
             User user = db.Users.FirstOrDefault(x => x.SessionId == sessionId && x.SessionId != null);
