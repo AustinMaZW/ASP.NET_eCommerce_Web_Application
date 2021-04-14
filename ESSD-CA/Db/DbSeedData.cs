@@ -82,67 +82,63 @@ namespace ESSD_CA.Db
                 new PurchaseOrder(){
                     OrderId = "001",
                     PurchaseDate=DateTime.Now.ToUniversalTime(),
-                    UserId = john.UserId,
+                    UserId = "11111",
                     GrandTotal = 2230.65
                 },
                 new PurchaseOrder()
                 {
                     OrderId = "002",
                     PurchaseDate = DateTime.Now.ToUniversalTime(),
-                    UserId = jane.UserId,
+                    UserId = "22222",
                     GrandTotal = 3000.50
                 }
             });
+            db.SaveChanges();
         }
 
          // To be deleted, for populating PODetail only
         private void AddPOD()
         {
-            User john = db.Users.FirstOrDefault(x => x.Username == "john");
-            User jane = db.Users.FirstOrDefault(x => x.Username == "jane");
-            Product product1 = db.Products.FirstOrDefault(x => x.ProductName == "Churn Analysis");
-            Product product2 = db.Products.FirstOrDefault(x => x.ProductName == "Retention Graph");
-            PurchaseOrder order1 = db.PurchaseOrders.FirstOrDefault(x => x.OrderId == "001");
-            PurchaseOrder order2 = db.PurchaseOrders.FirstOrDefault(x => x.OrderId == "002");
             db.PODetails.AddRange(new PurchaseOrderDetails[]
             {
                 new PurchaseOrderDetails()
                 {
                     ActivationCode = Guid.NewGuid().ToString(),
-                    ProductId = product1.Id,
-                    OrderId = order1.OrderId
+                    ProductId = "Product001",
+                    OrderId = "001"
                 },
                 new PurchaseOrderDetails()
                 {
                     ActivationCode = Guid.NewGuid().ToString(),
-                    ProductId = product1.Id,
-                    OrderId = order1.OrderId
+                    ProductId = "Product001",
+                    OrderId = "001"
                 },
                 new PurchaseOrderDetails()
                 {
                     ActivationCode = Guid.NewGuid().ToString(),
-                    ProductId = product1.Id,
-                    OrderId = order1.OrderId
+                    ProductId = "Product001",
+                    OrderId = "001"
                 },
                 new PurchaseOrderDetails()
                 {
                     ActivationCode = Guid.NewGuid().ToString(),
-                    ProductId = product2.Id,
-                    OrderId = order1.OrderId
+                    ProductId = "Product002",
+                    OrderId = "001"
                 },
                 new PurchaseOrderDetails()
                 {
                     ActivationCode = Guid.NewGuid().ToString(),
-                    ProductId = product1.Id,
-                    OrderId = order2.OrderId
+                    ProductId = "Product001",
+                    OrderId = "002"
                 },
                 new PurchaseOrderDetails()
                 {
                     ActivationCode = Guid.NewGuid().ToString(),
-                    ProductId = product2.Id,
-                    OrderId = order2.OrderId
+                    ProductId = "Product002",
+                    OrderId = "002"
                 }
             });
+            db.SaveChanges();
 
         }
 
