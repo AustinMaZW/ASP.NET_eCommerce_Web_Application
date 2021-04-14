@@ -24,18 +24,6 @@ namespace ESSD_CA.Controllers
 
             ViewData["products"] = products;    //sending data view ViewData
             
-            if (HttpContext.Session.GetString("guestId") == null)
-            {
-                string guestId = Guid.NewGuid().ToString();
-                HttpContext.Session.SetString("guestId", guestId);
-            }
-
-            if (HttpContext.Session.GetString("guestId") == null)
-            {
-                string guestId = Guid.NewGuid().ToString();
-                HttpContext.Session.SetString("guestId", guestId);
-            }
-
             if (HttpContext.Session.GetString("guestId") == null)       // generate guestId when visit shop gallery
             {
                 string guestId = Guid.NewGuid().ToString();
@@ -43,7 +31,7 @@ namespace ESSD_CA.Controllers
             }
 
             string sessionId = Request.Cookies["sessionId"];
-            ViewData["sessionId"] = sessionId;
+            
             SetShopIconCount(sessionId);
 
             return View();
@@ -68,7 +56,7 @@ namespace ESSD_CA.Controllers
 
         public IActionResult AddToCart(Product product, int count)
         {
-            if (product == null) { return RedirectToAction("Index"); }
+            if (product == null || count <= 0) { return RedirectToAction("Index"); }
 
             string sessionId = Request.Cookies["sessionId"];
             User user = db.Users.FirstOrDefault(x => x.SessionId == sessionId && x.SessionId != null);
