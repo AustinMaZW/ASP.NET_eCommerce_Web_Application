@@ -25,7 +25,7 @@
             <div class="navbar-collapse collapse w-100 order-1 dual-collapse2">
                 <ul class="navbar-nav mr-auto">
                     <li class="nav-item">
-                        <a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                        <a class="nav-link ml-4" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="ShopGallery" asp-action="Index">Products</a>
@@ -39,7 +39,7 @@
                 </ul>
 
                 @*Search form*@
-                <form class="form-inline container-fluid" asp-controller="ShopGallery" asp-action="Index">
+                <form class="form-inline container-fluid ml-2" asp-controller="ShopGallery" asp-action="Index">
                     <input class="form-control mr-sm-2" type="search" placeholder="Search..." name="searchString">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit" hidden> </button>
                 </form>
@@ -94,7 +94,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - GDipSA52 Team 10 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - GDipSA52 Team 10 
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
