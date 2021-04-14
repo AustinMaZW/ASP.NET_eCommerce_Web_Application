@@ -49,7 +49,7 @@ namespace ESSD_CA.Controllers
             }
             else if (guestId != null)
             {
-                List<ShoppingCart> _guestCart = db.ShoppingCarts.Where(a => a.Id == guestId).ToList();      //GusetId & Id(in the table of ShoppingCarts)
+                List<ShoppingCart> _guestCart = db.ShoppingCarts.Where(a => a.GuestId == guestId).ToList();      //GusetId & Id(in the table of ShoppingCarts)
                 ViewData["userItems"] = _guestCart;
                 List<Product> prods = db.Products.ToList();     //Retrieve all product details
                 List<Product> _prods = new List<Product>();
@@ -69,7 +69,7 @@ namespace ESSD_CA.Controllers
 
         public IActionResult AdditemCart([FromBody] ShoppingCart addItem)
         {
-            string sessionId = Request.Cookies["sessionId"];
+            string sessionId = HttpContext.Request.Cookies["sessionId"];
             string guestId = HttpContext.Session.GetString("guestId");
             if (!string.IsNullOrEmpty(sessionId))
             {
@@ -99,13 +99,13 @@ namespace ESSD_CA.Controllers
                                     select i;
                 if (addItem.Count == 0)
                 {
-                    ShoppingCart item = db.ShoppingCarts.First(a => a.Id == guestId && a.ProductId == addItem.ProductId);
+                    ShoppingCart item = db.ShoppingCarts.FirstOrDefault(a => a.GuestId == guestId && a.ProductId == addItem.ProductId);
                     db.ShoppingCarts.Remove(item);
                     db.SaveChanges();
                 }
                 else
                 {
-                    ShoppingCart item = db.ShoppingCarts.First(a => a.Id == guestId && a.ProductId == addItem.ProductId);
+                    ShoppingCart item = db.ShoppingCarts.FirstOrDefault(a => a.GuestId == guestId && a.ProductId == addItem.ProductId);
                     item.Count = addItem.Count;
                     db.SaveChanges();
                 }

@@ -52,7 +52,7 @@ function changeIn(event) {
         var totalPrice = 0;
         for (var i = 0; i < totals.length; i++)
         {
-            tata += Number(totals[i].innerHTML);
+            totalPrice += Number(totals[i].innerHTML);
         }
         divtotal.innerHTML = totalPrice;
     }
