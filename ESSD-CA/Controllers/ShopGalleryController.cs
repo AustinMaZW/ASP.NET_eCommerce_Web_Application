@@ -39,7 +39,9 @@ namespace ESSD_CA.Controllers
             }
 
             string sessionId = Request.Cookies["sessionId"];
-            
+
+            ViewData["sessionId"] = sessionId;
+
             SetShopIconCount(sessionId);
 
             return View();
