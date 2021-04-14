@@ -6,7 +6,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - ESSD_CA</title>
+    <title>@ViewData["Title"] - .NET Core CA Project</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
 </head>
@@ -39,8 +39,8 @@
                 </ul>
 
                 @*Search form*@
-                <form class="form-inline container-fluid">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search..." id="SearchString">
+                <form class="form-inline container-fluid" asp-controller="ShopGallery" asp-action="Index">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search..." name="searchString">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit" hidden> </button>
                 </form>
             </div>
@@ -94,7 +94,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2021 - ESSD_CA - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2021 - GDipSA52 Team 10 - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
