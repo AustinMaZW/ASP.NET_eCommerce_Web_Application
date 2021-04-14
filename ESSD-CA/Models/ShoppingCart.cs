@@ -17,15 +17,15 @@ namespace ESSD_CA.Models
         [MaxLength(36)]
         public string UserId { get; set; }
         public virtual User User { get; set; }
-        
+
         [MaxLength(50)]
         public string ProductId { get; set; }
         [ForeignKey("ProductId")]
         public virtual Product Product { get; set; }
-        
+   
         [Range(1,1000)]
         public int Count { get; set; }
-        
+
         [NotMapped]
         public double price { get; set; }
 

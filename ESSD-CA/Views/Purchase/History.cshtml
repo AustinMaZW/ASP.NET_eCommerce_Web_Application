@@ -1,8 +1,9 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model IEnumerable<HistoryViewModel>;
+
 @{
-    List<PurchaseOrderDetails> purchaseOrderDetails = (List<PurchaseOrderDetails>)ViewData["PODetails"];
+    ViewData["Title"] = "Purchase History";
+    bool hasData = (bool)ViewData["hasHistory"];
+
 }
 <style>
     @*.text-dark {
@@ -19,22 +20,18 @@
         border-left: 3px solid green;
         margin: 10px 0;
     }
-    .purchased-item{
-
-        width:100%;
-
-        height: fit-content();
-    }
     .product-info {
-        width:30%;
         display: inline-block;
     }
     .purchase-info {
         display: inline-block;
     }
+    .page-title {
+        font-size: 24px;
+    }
 </style>
-@*<div>
-    <a class="text-white" asp-area="" asp-controller="" asp-action="">My Purchases</a>
+<div>
+    <a class="page-title" asp-area="" asp-controller="" asp-action="">My Purchases</a>
 
     <div class="d-sm-inline-flex menu">
         <span class="menu-list">
@@ -42,58 +39,65 @@
         </span>
         <span class="vl"></span>
         <span class="menu-list">
-            <a asp-area="" asp-controller="Home" asp-action="Privacy">Logout</a>
+            <a asp-area="" asp-controller="Logout" asp-action="Index">Logout</a>
         </span>
     </div>
+</div>
+@if (!hasData)
+{
+    <h2>no purchase history</h2>
+}
+else
+            {
 
-</div>*@
-
-
-<div class="purchased-item">
+            
+@foreach (HistoryViewModel history in Model)
+{
     <div class="product-info">
         <table>
             <tr>
-
-                <td><img src="https://cna-sg-res.cloudinary.com/image/upload/q_auto,f_auto/image/13750910/16x9/670/377/fa3e200ec242270cc14d0367d27179c5/OX/state-courts-file-photo-13.jpg" width="350"/></td>
-
+                <td><img src=@history.Product.ImagePath class="card-img-top rounded" /></td>
             </tr>
             <tr>
-                <td>Product Name</td>
+                <td>@history.Product.ProductName</td>
             </tr>
             <tr>
-                <td>Product Description</td>
+                <td>@history.Product.ProductDescription</td>
             </tr>
             <tr>
-
-                <td><button href="#">Download</button></td>
-
+                <td><a href=@history.Product.DownloadLink><button>Download</button></a></td>
             </tr>
         </table>
     </div>
-
     <div class="purchase-info">
-
-        <table class="purchase-details">
+        <table>
             <tr>
                 <td>Purchased On:</td>
-                <td>Purcahsed date Logic here</td>
+                <td>@history.Order.PurchaseDate.ToString("dd MMM yyyy")</td>
             </tr>
-
             <tr>
                 <td>Quantity:</td>
-                <td>Quantity logic here</td>
+                <td>@history.ActivationCdList.Count</td>
             </tr>
-
             <tr>
                 <td>Activation Code:</td>
-              
                 <td>
-                    <select name="Acivation-Code">
-                        <option value="activationCode">Activation code logic</option>
-                    </select>
+                    @if (@history.ActivationCdList.Count > 1)
+                    {
+                        <select>
+                            @foreach (string activationCd in history.ActivationCdList)
+                            {
+                                <option>@activationCd</option>
+                            }
+                        </select>
+                    }
+                    else
+                    {
+                    @history.ActivationCdList[0]
+                    }
                 </td>
-               
             </tr>
         </table>
     </div>
-</div>
+}
+}
