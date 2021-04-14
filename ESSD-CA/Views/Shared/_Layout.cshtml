@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,7 +15,7 @@
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
                 <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">ESSD_CA</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" 
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse"
                         aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -36,7 +39,27 @@
                     {
                         <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                             <a class="nav-link text-dark" asp-controller="Logout" asp-action="Index">Logout</a>
-                            <a asp-controller="ShoppingCart" asp-action="Index"><img src="/img/shopping-cart.png" width="25" /></a>
+                        </div>
+                    }
+                </div>
+                <div style="float:right">
+                    @if (HttpContextAccessor.HttpContext.Session.GetInt32("ShoppingCartIcon") != null)
+                    {
+                        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                            <a asp-controller="ShoppingCart" asp-action="Index">
+                                @{
+                                    var count = HttpContextAccessor.HttpContext.Session.GetInt32("ShoppingCartIcon");
+                                }
+                                <img src="/img/shopping-cart.png" width="25" /> &nbsp; (@count)
+                            </a>
+                        </div>
+                    }
+                    else
+                    {
+                        <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                            <a href="#">
+                                <img src="/img/shopping-cart.png" width="25" /> &nbsp; (0)
+                            </a>
                         </div>
                     }
                 </div>
