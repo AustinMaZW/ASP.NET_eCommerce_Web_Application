@@ -53,6 +53,7 @@ namespace ESSD_CA.Controllers
                 if (user.Password == password)
                 {
                     CheckForGuestCart(user);
+                    UpdateCartIcon(user);
 
                     user.SessionId = Guid.NewGuid().ToString();
                     db.Users.Update(user);
@@ -110,6 +111,13 @@ namespace ESSD_CA.Controllers
                     db.SaveChanges();
                 }
             }
+        }
+
+        private void UpdateCartIcon(User user)
+        {
+            //below code to show user shopping cart icon count
+            int count = db.ShoppingCarts.Where(x => x.UserId == user.UserId).ToList().Count();
+            HttpContext.Session.SetInt32("ShoppingCartIcon", count);
         }
     }
 }

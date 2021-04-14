@@ -23,22 +23,41 @@ namespace ESSD_CA.Controllers
             List<Product> products = db.Products.ToList();  //retrieving products from database and putting into a list
 
             ViewData["products"] = products;    //sending data view ViewData
-            
-            if (HttpContext.Session.GetString("guestId") == null)
-            {
-                string guestId = Guid.NewGuid().ToString();
-                HttpContext.Session.SetString("guestId", guestId);
-            }
-
-            ViewData["sessionId"] = HttpContext.Request.Cookies["sessionId"];
 
             if (HttpContext.Session.GetString("guestId") == null)
             {
                 string guestId = Guid.NewGuid().ToString();
                 HttpContext.Session.SetString("guestId", guestId);
             }
+
+            if (HttpContext.Session.GetString("guestId") == null)       // generate guestId when visit shop gallery
+            {
+                string guestId = Guid.NewGuid().ToString();
+                HttpContext.Session.SetString("guestId", guestId);
+            }
+
+            string sessionId = Request.Cookies["sessionId"];
+            ViewData["sessionId"] = sessionId;
+            SetShopIconCount(sessionId);
 
             return View();
+        }
+
+        private void SetShopIconCount(string sessionId)
+        {
+            //below for setting up shop cart icon count
+            User user = db.Users.FirstOrDefault(x => x.SessionId == sessionId && x.SessionId != null);
+            if (user != null)
+            {
+                int count = db.ShoppingCarts.Where(x => x.UserId == user.UserId).ToList().Count();
+                HttpContext.Session.SetInt32("ShoppingCartIcon", count);
+            }
+            else
+            {
+                int count = db.ShoppingCarts.Where(x => x.GuestId ==
+                    HttpContext.Session.GetString("guestId")).ToList().Count();
+                HttpContext.Session.SetInt32("ShoppingCartIcon", count);
+            }
         }
 
         public IActionResult AddToCart(Product product, int count)
