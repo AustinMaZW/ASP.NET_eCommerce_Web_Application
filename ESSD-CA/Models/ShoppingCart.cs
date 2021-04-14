@@ -11,12 +11,11 @@ namespace ESSD_CA.Models
     {
         [MaxLength(50)]
         public string Id { get; set; }
-
-        public bool GuestUser { get; set; }
+        [MaxLength(50)]
+        public string GuestId { get; set; }
 
         [MaxLength(36)]
         public string UserId { get; set; }
-        [ForeignKey("UserId")]
         public virtual User User { get; set; }
         
         [MaxLength(50)]
