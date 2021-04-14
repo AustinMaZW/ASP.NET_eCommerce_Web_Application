@@ -41,7 +41,9 @@ namespace ESSD_CA.Controllers
         //    return View("Index", "Login");
         //}
 
-        public IActionResult Authenticate (string username, string password)
+        [HttpPost]
+        public IActionResult Index (string username, string password)
+        //public IActionResult Authenticate (string username, string password)
         {
             User user = db.Users.FirstOrDefault(x => x.Username == username);
             string sessionId = Request.Cookies["sessionId"];

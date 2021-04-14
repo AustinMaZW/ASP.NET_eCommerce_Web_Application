@@ -20,18 +20,16 @@
         margin: 10px 0;
     }
     .purchased-item{
-        width:100%;
         height: fit-content();
     }
     .product-info {
-        width:30%;
         display: inline-block;
     }
     .purchase-info {
         display: inline-block;
     }
 </style>
-<div>
+@*<div>
     <a class="text-white" asp-area="" asp-controller="" asp-action="">My Purchases</a>
 
     <div class="d-sm-inline-flex menu">
@@ -43,13 +41,13 @@
             <a asp-area="" asp-controller="Home" asp-action="Privacy">Logout</a>
         </span>
     </div>
-</div>
+</div>*@
 
 <div class="purchased-item">
     <div class="product-info">
         <table>
             <tr>
-                <td>photo</td>
+                <td><img src="https://cna-sg-res.cloudinary.com/image/upload/q_auto,f_auto/image/13750910/16x9/670/377/fa3e200ec242270cc14d0367d27179c5/OX/state-courts-file-photo-13.jpg" width="350"/></td>
             </tr>
             <tr>
                 <td>Product Name</td>
@@ -58,25 +56,31 @@
                 <td>Product Description</td>
             </tr>
             <tr>
-                <td><button><a href="#">Download</a></button></td>
+                <td><button href="#">Download</button></td>
             </tr>
         </table>
     </div>
 
     <div class="purchase-info">
-        <table>
+        <table class="purchase-details">
             <tr>
-                <td>photo</td>
+                <td>Purchased On:</td>
+                <td>Purcahsed date Logic here</td>
             </tr>
+
             <tr>
-                <td>Product Name</td>
+                <td>Quantity:</td>
+                <td>Quantity logic here</td>
             </tr>
+
             <tr>
-                <td>Product Description</td>
-            </tr>
-            <tr>
+                <td>Activation Code:</td>
               
-                <td><select name="Acivation-Code">Activation Code</select></td>
+                <td>
+                    <select name="Acivation-Code">
+                        <option value="activationCode">Activation code logic</option>
+                    </select>
+                </td>
                 
             </tr>
         </table>
