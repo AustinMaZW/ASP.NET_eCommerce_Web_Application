@@ -23,6 +23,9 @@ namespace ESSD_CA.Db
             // e.g. unique columns in a table
             // composite keys
 
+            //composite key for ShoppingCart 
+            model.Entity<ShoppingCart>().HasKey(x => new { x.Id, x.ProductId });
+
             model.Entity<User>().HasIndex(x => x.Username).IsUnique();
         }
 

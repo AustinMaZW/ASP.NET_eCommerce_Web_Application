@@ -1,7 +1,83 @@
-﻿@*
+@*
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    var items = (List<ShoppingCart>)ViewData["userItems"];    //
+    var addItems = (List<Product>)ViewData["addItems"];
 }
 
-Shopping cart 
+@section Scripts{
+    <script src="~/js/ShoppingCart/Cart.js"></script>
+}
+
+<a class="nav-link text-dark" asp-area="" asp-controller="Shop" asp-action="Index">Continue Shopping</a>
+<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>
+<a class="nav-link text-dark" asp-area="" asp-controller="Checkout" asp-action="Index">Checkout</a>
+@{
+    var totalcost = 0.0;
+    for (int i = 0; i < addItems.Count; i++)
+    {
+        for (int j = 0; j < items.Count; j++)
+        {
+            if (items[j].ProductId == addItems[i].Id)
+            {
+                totalcost += items[j].Count * addItems[i].UnitPrice;
+            }
+        }
+    }
+}
+<div>Total: $<b id="totalP">@totalcost</b></div>
+
+<form method="post" action="/Item/AdditemCart">
+    <table id="main_cart_page">
+        <thead>
+            <tr id="first_row">
+                <td class="columns_name">Product Info</td>
+                <td class="columns_name">Product Detail</td>
+                <td class="columns_name">Unit Price</td>
+                <td class="columns_name">Quantity</td>
+                <td class="columns_name">Total price</td>
+                <td class="columns_name">Option</td>
+            </tr>
+        </thead>
+        <tbody id="tbd">
+            @{
+                if (addItems != null)
+                {
+                    for (var i = 0; i < addItems.Count; i++)
+                    {
+                        <tr>
+                            <td class="productInfo">
+                                <img src="@addItems[i].ImagePath" width="260" height="173" />
+                            </td>
+                            <td class="productInfo">
+                                <span>@addItems[i].ProductDescription</span>
+                            </td>
+                            <td class="unitPrice productInfo">
+                                @addItems[i].UnitPrice
+                            </td>
+                            <td class="productInfo">
+                                @{
+                                    var nums = 0;
+                                    nums = items.Find(x => x.ProductId == addItems[i].Id).Count;
+                                }
+
+                                <input type="number" class="numberInCart" onfocus="this.blur();" value="@nums" product_id="@addItems[i].Id" />
+
+                            </td>
+                            <td class="productInfo">
+                                @{
+                                    var tt = nums * addItems[i].UnitPrice;
+                                }
+                                <div class="total">@tt</div>
+                            </td>
+                            <td>
+                                <button class="deleteBtn" product_id="@addItems[i].Id">Delete</button>
+                            </td>
+                        </tr>
+                    }
+                }
+            }
+        </tbody>
+    </table>
+</form>
