@@ -9,8 +9,9 @@
 
 function Delete(event) {
     let elem = event.currentTarget;
-    sendNumOption(0, elem.getAttribute("product_id"));
+    sendNumOption(0, elem.getAttribute("product_id"));    
     var tbody = document.getElementById("tbd");
+    
     tbody.removeChild(this.parentNode.parentNode);
     let totals = document.getElementsByClassName("total");
     let divtotal = document.getElementById("totalP");
@@ -19,7 +20,7 @@ function Delete(event) {
         totalPrice += Number(totals[i].innerHTML);
     }
     divtotal.innerHTML = Number(totalPrice.toFixed(2));
-
+    
 }
 function changeIn(event) {
     let elem = event.currentTarget;
@@ -60,6 +61,8 @@ function changeIn(event) {
 
 function sendNumOption(nums, productId)
 {
+        
+
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "/ShoppingCart/AdditemCart");
     xhr.setRequestHeader("Content-Type", "application/json; charset=utf8");
@@ -71,6 +74,11 @@ function sendNumOption(nums, productId)
             {
                 let data = JSON.parse(this.responseText);
                 console.log("Operation Status: " + data.success);
+                if (nums === 0) {
+                    parent.location.reload();
+                }
+                
+                
             }
 
         }

@@ -26,6 +26,7 @@ namespace ESSD_CA.Controllers
             if (sessionId != null)  //Is it a registered user? Not null means he is a registered user.
             {
                 ViewData["sessionId"] = sessionId;
+                SetShopIconCount(sessionId);
                 User user = db.Users.FirstOrDefault(x => x.SessionId == sessionId);     //Retrive all users and find the certain user. can be replaced by one code, will change it later.
                 if (user == null)           //If this user is not exist in database, kick him out to other page
                 {
@@ -38,6 +39,7 @@ namespace ESSD_CA.Controllers
             }
             else if (guestId != null)
             {
+                
                 GuestUserCart(guestId);
                 return View();
             }
@@ -65,7 +67,8 @@ namespace ESSD_CA.Controllers
                 else
                 {
                     UpdateItems(addItem,user);
-                }                
+                }
+                SetShopIconCount(sessionId);
                 return Json(new { success = true });
             }
             else if (guestId != null)
@@ -78,6 +81,7 @@ namespace ESSD_CA.Controllers
                 {
                     UpdateItems(addItem, null, guestId);
                 }
+                SetShopIconCount(guestId);
                 return Json(new { success = true });
             }
             return Json(new { success = false });
@@ -93,7 +97,7 @@ namespace ESSD_CA.Controllers
         {
 
             ShoppingCart item = db.ShoppingCarts.FirstOrDefault(a => (user == null ? a.GuestId : a.UserId) == (user == null ? guestId : a.UserId) && a.ProductId == addItem.ProductId);
-            db.ShoppingCarts.Remove(item);       
+            db.ShoppingCarts.Remove(item);
             db.SaveChanges();
         }
 
@@ -169,6 +173,22 @@ namespace ESSD_CA.Controllers
             }
             ViewData["addItems"] = _prods;      // the products' detail that user added
             Calculation(_prods, _guestCart);
+        }
+        private void SetShopIconCount(string sessionId)
+        {
+            //below for setting up shop cart icon count
+            User user = db.Users.FirstOrDefault(x => x.SessionId == sessionId && x.SessionId != null);
+            if (user != null)
+            {
+                int count = db.ShoppingCarts.Where(x => x.UserId == user.UserId).ToList().Count();
+                HttpContext.Session.SetInt32("ShoppingCartIcon", count);
+            }
+            else
+            {
+                int count = db.ShoppingCarts.Where(x => x.GuestId ==
+                    HttpContext.Session.GetString("guestId")).ToList().Count();
+                HttpContext.Session.SetInt32("ShoppingCartIcon", count);
+            }
         }
     }
 }
