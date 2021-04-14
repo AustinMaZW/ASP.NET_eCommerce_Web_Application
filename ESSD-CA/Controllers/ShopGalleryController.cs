@@ -18,11 +18,13 @@ namespace ESSD_CA.Controllers
         {
             this.db = db;
         }
-        public IActionResult Index()
+        public IActionResult Index(string searchString)
         {
-            List<Product> products = db.Products.ToList();  //retrieving products from database and putting into a list
+            ViewData["Products"] = db.Products.Where(s => 
+                (s.ProductName.Contains(searchString) || s.ProductDescription.Contains(searchString)) || searchString == null).ToList();
 
-            ViewData["products"] = products;    //sending data view ViewData
+
+            ViewData["searchString"] = searchString;
 
             if (HttpContext.Session.GetString("guestId") == null)
             {

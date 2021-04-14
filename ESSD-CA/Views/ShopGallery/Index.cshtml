@@ -1,44 +1,68 @@
 ﻿@{
+    string searchString = (string)ViewData["searchString"];
     List<Product> products = (List<Product>)ViewData["products"];
     @model ESSD_CA.Models.ShoppingCart;
 
 }
 
+@{
+    int searchReturned = products.Count;
+}
+
+
+
+<br />
+
+@if (searchString != null)
+{
+    <h5>Your search for "@searchString" returned @searchReturned result(s)</h5>
+}
+
+@if (searchReturned == 0)
+{
+<br />
+<a class="nav-item text-black-50" asp-area="" asp-controller="ShopGallery" asp-action="Index">Go back to Products</a>
+}
+
+
+
 <div class="row pb-3 backgroundWhite">
 
     @foreach (Product product in products)
     {
-        
-    <div class="col-lg-3 col-md-6">
-        <form action="/ShopGallery/AddToCart" method="post">
-            <input hidden asp-for="@product.Id" />
-            <div class="row p-2">
-                <div class="col-12  p-1" style="border:1px solid #008cba; border-radius: 5px;">
-                    <div class="card" style="border:0px;">
-                        <img src=@product.ImagePath class="card-img-top rounded" />
-                        <div class="pl-1">
-                            <p class="card-title h5"><b style="color:#2c3e50">@product.ProductName</b></p>
-                            <p class="card-title text-primary">by <b>Author</b></p>
+
+        <div class="col-lg-3 col-md-6">
+            <form action="/ShopGallery/AddToCart" method="post">
+                <input hidden asp-for="@product.Id" />
+                <div class="row p-2">
+                    <div class="col-12  p-1" style="border:1px solid #008cba; border-radius: 5px;">
+                        <div class="card" style="border:0px;">
+                            <img src=@product.ImagePath class="card-img-top rounded" />
+                            <div class="pl-1">
+                                <p class="card-title h5"><b style="color:#2c3e50">@product.ProductName</b></p>
+                                <p class="card-title text-primary">by <b>Author</b></p>
+                            </div>
+                            <div style="padding-left:5px;">
+                                <p>List Price: <strike><b class="">@product.UnitPrice</b></strike></p>
+                            </div>
+                            <div style="padding-left:5px;">
+                                <p style="color:maroon">As low as: <b class="">@product.UnitPrice</b></p>
+                            </div>
                         </div>
-                        <div style="padding-left:5px;">
-                            <p>List Price: <strike><b class="">@product.UnitPrice</b></strike></p>
+                        <div class="row pl-2">
+                            <div class="col-4 text-primary"><h4>Count</h4></div>
+                            <div class="col-10"><input type="number" class="form-control" name="count" min="1" max="1000" /></div>
                         </div>
-                        <div style="padding-left:5px;">
-                            <p style="color:maroon">As low as: <b class="">@product.UnitPrice</b></p>
+                        <div>
+                            <button type="submit" value="Add to Cart" class="btn btn-primary btn-square btn-lg form-control" style="height:50px;">Add to Cart</button>
                         </div>
-                    </div>
-                    <div class="row pl-2">
-                        <div class="col-4 text-primary"><h4>Count</h4></div>
-                        <div class="col-10"><input type="number" class="form-control" name="count" min="1" max="1000"/></div>
-                    </div>
-                    <div>
-                        <button type="submit" value="Add to Cart" class="btn btn-primary btn-square btn-lg form-control" style="height:50px;">Add to Cart</button>
                     </div>
                 </div>
-            </div>
-        </form>
-    </div>
+            </form>
+        </div>
     }
 </div>
+
+
 
 
