@@ -10,74 +10,217 @@
     <script src="~/js/ShoppingCart/Cart.js"></script>
 }
 
-<a class="nav-link text-dark" asp-area="" asp-controller="Shop" asp-action="Index">Continue Shopping</a>
-<span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>
-<a class="nav-link text-dark" asp-area="" asp-controller="Checkout" asp-action="Index">Checkout</a>
-@{
-    var totalcost = 0.0;
-    for (int i = 0; i < addItems.Count; i++)
-    {
-        for (int j = 0; j < items.Count; j++)
-        {
-            if (items[j].ProductId == addItems[i].Id)
+<div>
+    <a asp-area="" asp-controller="Shop" asp-action="Index"><b>Continue Shopping</b></a>
+    <span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>
+    <a asp-area="" asp-controller="Checkout" asp-action="Index"><b id="spaceU">Checkout</b></a>
+    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <b style="font-weight: bold;">Total: $</b><b id="totalP" style="font-weight: bold;">@ViewData["TotalPrice"]</b>
+</div>
+
+
+<table id="main_cart_page">
+    <thead>
+        <tr id="first_row">
+            <td class="columns_name_img" id="productIMG">Product Photo</td>
+            <td class="columns_name">Product Info</td>
+            <td class="columns_name">Unit Price (S$)</td>
+            <td class="columns_name">Quantity</td>
+            <td class="columns_name">Total price (S$)</td>
+            <td class="columns_name">Option</td>
+        </tr>
+    </thead>
+    <tbody id="tbd">
+        @{
+            if (addItems != null)
             {
-                totalcost += items[j].Count * addItems[i].UnitPrice;
-            }
-        }
-    }
-}
-<div>Total: $<b id="totalP">@totalcost</b></div>
-
-<form method="post" action="/Item/AdditemCart">
-    <table id="main_cart_page">
-        <thead>
-            <tr id="first_row">
-                <td class="columns_name">Product Info</td>
-                <td class="columns_name">Product Detail</td>
-                <td class="columns_name">Unit Price</td>
-                <td class="columns_name">Quantity</td>
-                <td class="columns_name">Total price</td>
-                <td class="columns_name">Option</td>
-            </tr>
-        </thead>
-        <tbody id="tbd">
-            @{
-                if (addItems != null)
+                for (var i = 0; i < addItems.Count; i++)
                 {
-                    for (var i = 0; i < addItems.Count; i++)
-                    {
-                        <tr>
-                            <td class="productInfo">
+                    <tr>
+                        <td class="productIMG productInfo itemfontstyle">
+                            <div>
                                 <img src="@addItems[i].ImagePath" width="260" height="173" />
-                            </td>
-                            <td class="productInfo">
-                                <span>@addItems[i].ProductDescription</span>
-                            </td>
-                            <td class="unitPrice productInfo">
-                                @addItems[i].UnitPrice
-                            </td>
-                            <td class="productInfo">
-                                @{
-                                    var nums = 0;
-                                    nums = items.Find(x => x.ProductId == addItems[i].Id).Count;
-                                }
+                            </div>
+                                
+                        </td>
+                        <td class="productInfo- productInfo">
+                            <span class="itemfontstyle">@addItems[i].ProductDescription</span>
+                        </td>
+                        <td class="unitPrice productInfo itemfontstyle">
+                            @addItems[i].UnitPrice
+                        </td>
+                        <td class="productInfo quantt itemfontstyle">
+                            @{
+                                var nums = 0;
+                                nums = items.Find(x => x.ProductId == addItems[i].Id).Count;
+                            }
 
-                                <input type="number" class="numberInCart" onfocus="this.blur();" value="@nums" product_id="@addItems[i].Id" />
+                            <input type="number" class="numberInCart itemfontstyle" min="1" value="@nums" product_id="@addItems[i].Id" oninput="value=value.replace(/[^\d]/g,'')"style="width:70px; border:none;background:#F3F6F9;"/>
 
-                            </td>
-                            <td class="productInfo">
-                                @{
-                                    var tt = nums * addItems[i].UnitPrice;
-                                }
-                                <div class="total">@tt</div>
-                            </td>
-                            <td>
-                                <button class="deleteBtn" product_id="@addItems[i].Id">Delete</button>
-                            </td>
-                        </tr>
-                    }
+                        </td>
+                        <td class="productInfo ttprice itemfontstyle">
+                            @{
+                                var tt = nums * addItems[i].UnitPrice;
+                            }
+                            <div class="total">@tt</div>
+                        </td>
+                        <td class="bbt">
+                            <button type="button" class="deleteBtn " product_id="@addItems[i].Id" UseSubmitBehavior="false"><b class="namebtn">Delete</b></button>
+                        </td>
+                    </tr>
                 }
             }
-        </tbody>
-    </table>
-</form>
+        }
+    </tbody>
+</table>
+
+
+
+
+<style>
+    #spaceU {
+        margin-right:40%;
+    }
+    #position {
+        margin-left: 120px;
+        margin-top: 285px;
+    }
+
+    table, tr, th, td {
+        border: none;
+        border-collapse: collapse;
+        text-align: center;
+        table-layout: fixed;
+        word-wrap: break-word;
+    }
+
+    #main_cart_page {
+        width: 910px;
+    }
+    .itemfontstyle {
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 14px;
+        line-height: 21px;
+        color: #464E5F;
+    }
+    .columns_name {
+        align-content: center;
+        height: 80px;
+        width: 130px;
+        height: 43px;
+        left: 30px;
+        right: 30px;
+        top: 100px;
+        background: #F3F6F9;
+        border-radius: 6px;
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 18px;
+        /* identical to box height */
+        @* display: flex;
+        *@ align-items: center;
+        letter-spacing: 0.03em;
+        color: #464E5F;
+    }
+    .columns_name_img {
+        align-content: center;
+        height: 80px;
+        width: 260px;
+        height: 43px;
+        left: 30px;
+        right: 30px;
+        top: 100px;
+        background: #F3F6F9;
+        border-radius: 6px;
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 18px;
+        /* identical to box height */
+        @*        display: flex;*@
+        align-items: center;
+        letter-spacing: 0.03em;
+        color: #464E5F;
+    }
+
+    .productIMG {
+        @*        align-content: center;
+        height: 173px;
+        width: 260px;*@
+
+        width: 260px;
+        height: 173px;
+        left: 30px;
+        top: 113px;
+    }
+    .productInfo- {
+        width: 130px;
+        height: 173px;
+        left: 365px;
+        top: 113px;
+    }
+    .unitPrice {
+        width: 130px;
+        height: 173px;
+        left: 540px;
+        top: 113px;
+    }
+    .quantt {
+        width: 130px;
+        height: 173px;
+        left: 698px;
+        top: 113px;
+    }
+    .ttprice {
+        width: 130px;
+        height: 173px;
+        left: 698px;
+        top: 113px;
+    }
+    .bbt {
+        width: 130px;
+        height: 173px;
+        left: 1058px;
+        top: 181px;
+    }
+    .deleteBtn {
+        width: 90px;
+        height: 34px;
+        right: 30px;
+        top: 181px;
+        background: #C9F7F5;
+        border-radius: 6px;
+    }
+    #first_row {
+        align-content: center;
+        border: 0px,solid,#4AB1DD;
+    }
+
+    .btn:hover {
+        color: #fff;
+        background: #0a90f5;
+    }
+
+    .btn:focus {
+        color: #fff;
+        background: #0a90f5;
+        outline: none;
+    }
+    .namebtn {
+        font-family: Poppins;
+        font-style: normal;
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 18px;
+        /* identical to box height */
+        color: #1BC5BD;
+    }
+    .deleteBtn {
+        border: none;
+    }
+</style>
