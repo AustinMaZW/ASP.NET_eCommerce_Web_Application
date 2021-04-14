@@ -2,7 +2,7 @@
     let inputs = document.getElementsByClassName("numberInCart");
     let deletes = document.getElementsByClassName("deleteBtn");
     for (var i = 0; i < inputs.length; i++) {
-        inputs[i].addEventListener("click", changeIn);
+        inputs[i].addEventListener("change", changeIn);
         deletes[i].addEventListener("click", Delete);
     }
 }
@@ -18,7 +18,7 @@ function Delete(event) {
     for (var i = 0; i < totals.length; i++) {
         totalPrice += Number(totals[i].innerHTML);
     }
-    divtotal.innerHTML = totalPrice;
+    divtotal.innerHTML = Number(totalPrice.toFixed(2));
 
 }
 function changeIn(event) {
@@ -33,7 +33,7 @@ function changeIn(event) {
         for (var i = 0; i < totals.length; i++) {
             totalPrice += Number(totals[i].innerHTML);
         }
-        divtotal.innerHTML = totalPrice;
+        divtotal.innerHTML = Number(totalPrice.toFixed(2));
     }
     else
     {
@@ -45,7 +45,7 @@ function changeIn(event) {
         {
             if (input[i] === elem)
             {
-                totals[i].innerHTML = String(Number(prices[i].innerHTML) * Number(elem.value));
+                totals[i].innerHTML = Number((Number(prices[i].innerHTML) * Number(elem.value)).toFixed(2));
             }
         }
         let divtotal = document.getElementById("totalP");
@@ -54,7 +54,7 @@ function changeIn(event) {
         {
             totalPrice += Number(totals[i].innerHTML);
         }
-        divtotal.innerHTML = totalPrice;
+        divtotal.innerHTML = Number(totalPrice.toFixed(2));
     }
 }
 
