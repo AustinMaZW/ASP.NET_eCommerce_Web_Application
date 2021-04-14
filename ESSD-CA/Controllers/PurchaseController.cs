@@ -15,7 +15,15 @@ namespace ESSD_CA.Controllers
         public IActionResult History()
         {
             // retrieve all purchased items by customer id from db
-            // 
+
+            // Halfway Coding
+            //string userId = Request.Cookies["userId"];
+            //if (userId != null)
+            //    return RedirectToAction("ValidateSession", "Login");
+
+            //List<PurchaseOrder> purchaseOrders = db.PurchaseOrders.Where(x => x.UserId == userId).ToList();
+
+
             return View();
         }
 

@@ -14,6 +14,7 @@ namespace ESSD_CA.Models
         public DateTime ProductDate { get; set; }
         public double GrandTotal { get; set; }
         public int Quantity { get; set; }
+        public string UserId { get; set; }
         public virtual Customer Customer { get; set; }
 
     }
