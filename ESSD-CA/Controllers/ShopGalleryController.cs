@@ -23,6 +23,12 @@ namespace ESSD_CA.Controllers
             List<Product> products = db.Products.ToList();  //retrieving products from database and putting into a list
 
             ViewData["products"] = products;    //sending data view ViewData
+            
+            if (HttpContext.Session.GetString("guestId") == null)
+            {
+                string guestId = Guid.NewGuid().ToString();
+                HttpContext.Session.SetString("guestId", guestId);
+            }
 
             ViewData["sessionId"] = HttpContext.Request.Cookies["sessionId"];
 

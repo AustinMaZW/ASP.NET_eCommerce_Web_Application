@@ -30,6 +30,17 @@ namespace ESSD_CA.Controllers
             return View();
         }
 
+        //Test out only (TO BE DELETED)
+        //public IActionResult ValidateSession()
+        //{
+        //    string sessionId = Request.Cookies["sessionId"];
+        //    if (sessionId != null)
+        //    {
+        //        return Redirect(Request.Headers["Referer"].ToString());
+        //    }
+        //    return View("Index", "Login");
+        //}
+
         public IActionResult Authenticate (string username, string password)
         {
             User user = db.Users.FirstOrDefault(x => x.Username == username);
@@ -47,6 +58,7 @@ namespace ESSD_CA.Controllers
                     db.Users.Update(user);
                     db.SaveChanges();
                     Response.Cookies.Append("sessionId", user.SessionId);
+                    Response.Cookies.Append("userId", user.UserId);
                     return RedirectToAction("Index", "Home");
 
                 }
