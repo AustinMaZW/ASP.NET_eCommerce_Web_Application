@@ -23,6 +23,8 @@ namespace ESSD_CA.Controllers
 
             //List<PurchaseOrder> purchaseOrders = db.PurchaseOrders.Where(x => x.UserId == userId).ToList();
 
+            string sessionId = Request.Cookies["sessionId"];
+            ViewData["sessionId"] = sessionId;
 
             return View();
         }
