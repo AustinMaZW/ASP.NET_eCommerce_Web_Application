@@ -33,7 +33,7 @@ namespace ESSD_CA.Controllers
             
             ResetShopCartSettings();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "ShopGallery");
         }
 
         private void ResetShopCartSettings()

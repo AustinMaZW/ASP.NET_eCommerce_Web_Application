@@ -25,7 +25,7 @@ namespace ESSD_CA.Controllers
             string sessionId = Request.Cookies["sessionId"];
             if(sessionId != null)
             {
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "ShopGallery");
             }
             return View();
         }
@@ -46,7 +46,7 @@ namespace ESSD_CA.Controllers
             User user = db.Users.FirstOrDefault(x => x.Username == username);
             string sessionId = Request.Cookies["sessionId"];
             if (sessionId != null)
-                return RedirectToAction("Index", "Home");
+                return RedirectToAction("Index", "ShopGallery");
                             
             if (user != null)
             {
@@ -60,7 +60,7 @@ namespace ESSD_CA.Controllers
                     db.SaveChanges();
                     Response.Cookies.Append("sessionId", user.SessionId);
                     Response.Cookies.Append("userId", user.UserId);
-                    return RedirectToAction("Index", "Home");
+                    return RedirectToAction("Index", "ShopGallery");
 
                 }
                 else
