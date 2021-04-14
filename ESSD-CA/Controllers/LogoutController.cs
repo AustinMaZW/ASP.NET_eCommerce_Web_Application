@@ -5,6 +5,7 @@ using System.Linq;
 using ESSD_CA.Db;
 using ESSD_CA.Models;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Http;
 
 namespace ESSD_CA.Controllers
 {
@@ -29,8 +30,20 @@ namespace ESSD_CA.Controllers
             }
 
             Response.Cookies.Delete("sessionId");
+            
+            ResetShopCartSettings();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "ShopGallery");
+        }
+
+        private void ResetShopCartSettings()
+        {
+            //generate new guest id when log out from db
+            string guestId = Guid.NewGuid().ToString();
+            HttpContext.Session.SetString("guestId", guestId);
+
+            //set shop cart to 0 again
+            HttpContext.Session.SetInt32("ShoppingCartIcon", 0);
         }
     }
 }

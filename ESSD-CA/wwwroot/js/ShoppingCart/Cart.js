@@ -2,15 +2,16 @@
     let inputs = document.getElementsByClassName("numberInCart");
     let deletes = document.getElementsByClassName("deleteBtn");
     for (var i = 0; i < inputs.length; i++) {
-        inputs[i].addEventListener("click", changeIn);
+        inputs[i].addEventListener("change", changeIn);
         deletes[i].addEventListener("click", Delete);
     }
 }
 
 function Delete(event) {
     let elem = event.currentTarget;
-    sendNumOption(0, elem.getAttribute("product_id"));
+    sendNumOption(0, elem.getAttribute("product_id"));    
     var tbody = document.getElementById("tbd");
+    
     tbody.removeChild(this.parentNode.parentNode);
     let totals = document.getElementsByClassName("total");
     let divtotal = document.getElementById("totalP");
@@ -18,8 +19,8 @@ function Delete(event) {
     for (var i = 0; i < totals.length; i++) {
         totalPrice += Number(totals[i].innerHTML);
     }
-    divtotal.innerHTML = totalPrice;
-
+    divtotal.innerHTML = Number(totalPrice.toFixed(2));
+    
 }
 function changeIn(event) {
     let elem = event.currentTarget;
@@ -33,7 +34,7 @@ function changeIn(event) {
         for (var i = 0; i < totals.length; i++) {
             totalPrice += Number(totals[i].innerHTML);
         }
-        divtotal.innerHTML = totalPrice;
+        divtotal.innerHTML = Number(totalPrice.toFixed(2));
     }
     else
     {
@@ -45,21 +46,23 @@ function changeIn(event) {
         {
             if (input[i] === elem)
             {
-                totals[i].innerHTML = String(Number(prices[i].innerHTML) * Number(elem.value));
+                totals[i].innerHTML = Number((Number(prices[i].innerHTML) * Number(elem.value)).toFixed(2));
             }
         }
         let divtotal = document.getElementById("totalP");
         var totalPrice = 0;
         for (var i = 0; i < totals.length; i++)
         {
-            tata += Number(totals[i].innerHTML);
+            totalPrice += Number(totals[i].innerHTML);
         }
-        divtotal.innerHTML = totalPrice;
+        divtotal.innerHTML = Number(totalPrice.toFixed(2));
     }
 }
 
 function sendNumOption(nums, productId)
 {
+        
+
     let xhr = new XMLHttpRequest();
     xhr.open("POST", "/ShoppingCart/AdditemCart");
     xhr.setRequestHeader("Content-Type", "application/json; charset=utf8");
@@ -71,6 +74,11 @@ function sendNumOption(nums, productId)
             {
                 let data = JSON.parse(this.responseText);
                 console.log("Operation Status: " + data.success);
+                if (nums === 0) {
+                    parent.location.reload();
+                }
+                
+                
             }
 
         }

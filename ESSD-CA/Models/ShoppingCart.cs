@@ -11,20 +11,19 @@ namespace ESSD_CA.Models
     {
         [MaxLength(50)]
         public string Id { get; set; }
-
-        public bool GuestUser { get; set; }
+        [MaxLength(50)]
+        public string GuestId { get; set; }
 
         [MaxLength(36)]
         public string UserId { get; set; }
-        [ForeignKey("UserId")]
         public virtual User User { get; set; }
 
         [MaxLength(50)]
         public string ProductId { get; set; }
         [ForeignKey("ProductId")]
         public virtual Product Product { get; set; }
-
-        [Range(1, 1000, ErrorMessage = "Please enter a value between 1 and 1000")]
+   
+        [Range(1,1000)]
         public int Count { get; set; }
 
         [NotMapped]
