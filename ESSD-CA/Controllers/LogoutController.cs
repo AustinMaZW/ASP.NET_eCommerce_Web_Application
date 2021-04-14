@@ -31,17 +31,19 @@ namespace ESSD_CA.Controllers
 
             Response.Cookies.Delete("sessionId");
             
-            //generate new guest id when log out from db
-            GenerateNewGuestId();
+            ResetShopCartSettings();
 
-            return RedirectToAction("Index", "Home");
+            return RedirectToAction("Index", "ShopGallery");
         }
 
-        private void GenerateNewGuestId()
+        private void ResetShopCartSettings()
         {
-            
+            //generate new guest id when log out from db
             string guestId = Guid.NewGuid().ToString();
             HttpContext.Session.SetString("guestId", guestId);
+
+            //set shop cart to 0 again
+            HttpContext.Session.SetInt32("ShoppingCartIcon", 0);
         }
     }
 }
