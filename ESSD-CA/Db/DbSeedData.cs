@@ -95,14 +95,14 @@ namespace ESSD_CA.Db
             db.Add(new PurchaseOrder
             {
                 OrderId = poId[0],
-                PurchaseDate = DateTime.Parse(purchaseDate[0]),
+                PurchaseDate = DateTime.Now.ToUniversalTime(),
                 GrandTotal = grandTotal[0],
                 User = users[0] // user1
             });
             db.Add(new PurchaseOrder
             {
                 OrderId = poId[1],
-                PurchaseDate = DateTime.Parse(purchaseDate[1]),
+                PurchaseDate = DateTime.Now.ToUniversalTime(),
                 GrandTotal = grandTotal[1],
                 User = users[0] // user1
             });
@@ -110,7 +110,7 @@ namespace ESSD_CA.Db
             db.Add(new PurchaseOrder
             {
                 OrderId = poId[2],
-                PurchaseDate = DateTime.Parse(purchaseDate[2]),
+                PurchaseDate = DateTime.Now.ToUniversalTime(),
                 GrandTotal = grandTotal[2],
                 User = users[1] // user2
             });
