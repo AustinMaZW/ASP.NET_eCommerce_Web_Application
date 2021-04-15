@@ -22,6 +22,7 @@
     }
     .product-info {
         display: inline-block;
+        width:40%
     }
     .purchase-info {
         display: inline-block;
@@ -29,6 +30,13 @@
     .page-title {
         font-size: 24px;
     }
+    table.PHtable{
+        border-collapse:collapse;
+        display:inline-table;
+        vertical-align:middle;        
+    }
+
+
 </style>
 <div>
     <a class="page-title" asp-area="" asp-controller="" asp-action="">My Purchases</a>
@@ -54,7 +62,7 @@ else
 @foreach (HistoryViewModel history in Model)
 {
     <div class="product-info">
-        <table>
+        <table class="PHtable">
             <tr>
                 <td><img src=@history.Product.ImagePath class="card-img-top rounded" /></td>
             </tr>
@@ -65,7 +73,11 @@ else
                 <td>@history.Product.ProductDescription</td>
             </tr>
             <tr>
-                <td><a href=@history.Product.DownloadLink><button>Download</button></a></td>
+                <td>
+                    <a href=@history.Product.DownloadLink>
+                        <button type="button" class="btn btn-primary btn-block">Download</button>
+                    </a>
+                </td>
             </tr>
         </table>
     </div>
@@ -99,5 +111,7 @@ else
             </tr>
         </table>
     </div>
+    <br />
+    <br />
 }
 }
