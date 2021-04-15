@@ -20,7 +20,7 @@ namespace ESSD_CA.Db
             //add code for generating data
             AddProduct();
             AddUser();
-            AddPurchaseOrderAndDetails(); // just for testing
+            //AddPurchaseOrderAndDetails(); // just for testing
             /*AddPO(); // for populating PO only, to be deleted
             AddPOD();*/ // for populating PODetail only, to be deleted
         }
