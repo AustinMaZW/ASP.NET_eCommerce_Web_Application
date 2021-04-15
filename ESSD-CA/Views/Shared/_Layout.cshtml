@@ -30,7 +30,7 @@
                     <li class="nav-item">
                         <a class="nav-link" asp-area="" asp-controller="ShopGallery" asp-action="Index">Products</a>
                     </li>
-                    @if (ViewData["sessionId"] != null)
+                    @if (HttpContextAccessor.HttpContext.Request.Cookies["sessionId"] != null)
                     {
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Purchase" asp-action="History">My&nbsp;Purchases</a>
