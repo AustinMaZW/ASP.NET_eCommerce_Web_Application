@@ -2,23 +2,7 @@
 
 
 
-/*//////////////////////////////////////////////////////////////////
-[ FONT ]*/
 
-@font-face {
-  font-family: Oswald-Regular;
-  src: url('../fonts/oswald/Oswald-Regular.ttf'); 
-}
-
-@font-face {
-  font-family: Oswald-Medium;
-  src: url('../fonts/oswald/Oswald-Medium.ttf'); 
-}
-
-
-
-/*//////////////////////////////////////////////////////////////////
-[ RESTYLE TAG ]*/
 
 * {
 	margin: 0px; 
@@ -28,13 +12,10 @@
 
 body, html {
 	height: 100%;
-	font-family: Oswald-Regular, sans-serif;
 }
 
 /*---------------------------------------------*/
 a {
-	font-family: Oswald-Regular;
-	font-size: 14px;
 	line-height: 1.7;
 	color: #666666;
 	margin: 0px;
@@ -58,8 +39,6 @@ h1,h2,h3,h4,h5,h6 {
 }
 
 p {
-	font-family: Oswald-Regular;
-	font-size: 14px;
 	line-height: 1.7;
 	color: #666666;
 	margin: 0px;
@@ -176,8 +155,6 @@ iframe {
 
 .contact100-form-title {
   display: block;
-  font-family: Oswald-Medium;
-  font-size: 30px;
   color: #43383e;
   line-height: 1.2;
   text-align: left;
@@ -210,7 +187,6 @@ iframe {
   top: 0;
   left: 0;
   cursor: pointer;
-  font-size: 18px;
   color: #999999;
 }
 
@@ -218,8 +194,6 @@ iframe {
   display: block;
   width: 100%;
   background: transparent;
-  font-family: Oswald-Medium;
-  font-size: 15px;
   color: #43383e;
   line-height: 1.2;
   padding: 0 5px;
@@ -256,8 +230,6 @@ textarea.input100 {
   position: relative;
   padding-left: 32px;
   cursor: pointer;
-  font-family: Oswald-Regular;
-  font-size: 15px;
   color: #43383e;
   line-height: 1.2;
 }
@@ -265,7 +237,6 @@ textarea.input100 {
 .label-checkbox100::before {
   content: "\f00c";
   font-family: FontAwesome;
-  font-size: 15px;
   color: transparent;
   display: -webkit-box;
   display: -webkit-flex;
@@ -344,8 +315,6 @@ textarea.input100 {
   min-width: 160px;
   height: 62px;
 
-  font-family: Oswald-Medium;
-  font-size: 16px;
   color: #fff;
   line-height: 1.2;
 }
@@ -383,9 +352,7 @@ textarea.input100 {
   right: 2px;
   pointer-events: none;
 
-  font-family: Oswald-Regular;
   color: #c80000;
-  font-size: 13px;
   line-height: 1.4;
   text-align: left;
 
@@ -404,7 +371,6 @@ textarea.input100 {
   display: block;
   position: absolute;
   color: #c80000;
-  font-size: 16px;
   top: 50%;
   -webkit-transform: translateY(-50%);
   -moz-transform: translateY(-50%);
