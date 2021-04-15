@@ -17,14 +17,14 @@ namespace ESSD_CA.Models
 
         [MaxLength(36)]
         public string OrderId { get; set; }
-        //[ForeignKey("OrderId")]
-        //public virtual PurchaseOrder Order { get; set; }
+        [ForeignKey("OrderId")]
+        public virtual PurchaseOrder Order { get; set; }
 
 
         [MaxLength(50)]
         public string ProductId { get; set; }
-        //[ForeignKey("ProductId")]
-        //public virtual Product Product { get; set; }
+        [ForeignKey("ProductId")]
+        public virtual Product Product { get; set; }
 
         public PurchaseOrderDetails()
         {
