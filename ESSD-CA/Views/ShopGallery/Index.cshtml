@@ -29,20 +29,21 @@
 
 @foreach (Product product in products)
 {
-    <div class="d-inline-flex ml-1 mr-1 mt-2">
-        <div class="row-12 row-sm-8 row-md-6 row-lg-4">
+    <div class="d-inline-flex mt-1 justify-content-center" >
+        <div style="width: 15rem;">
             <div class="card">
-                <img class="card-img rounded" src="@product.ImagePath">
+                <img class="card-img rounded" style="height: 9rem;" src="@product.ImagePath">
                 <div class="card-body">
-                    <h4 class="card-title">@product.ProductName</h4>
-                    <p class="card-text">@product.ProductDescription</p>
-                    <div class="price text-success"><h5 class="mt-4">S$@product.UnitPrice</h5></div>
-                    <p class="card-text mt-4">Quantity</p>
+                    <h5 class="card-title" style="height: 2.5rem;">@product.ProductName</h5>
+                    <p class="card-text" style="height: 2rem;">@product.ProductDescription</p>
+                    <div class="price text-success" style="height: 0rem;"><h6 class="mt-4">S$@product.UnitPrice</h6></div>
+                    <p class="card-text mt-4" style="height: 1rem;">Quantity</p>
                     <div class="justify-content-between">
-                        <form action="/ShopGallery/AddToCart" method="post" class="form-inline">
+                        <form action="/ShopGallery/AddToCart" method="post" class="form-inline justify-content-between">
                             <input hidden asp-for="@product.Id" />
-                            <input type="number" class="form-control mr-2 flex-grow-1" name="count" min="1" max="1000" value="1"/>
-                            <button type="submit" value="Add to Cart ml-2 flex-grow-0" class="btn btn-outline-danger flex-grow-1">Add to Cart &nbsp<img src="~/img/shopping-cart.png" width="20"></button>
+                            <input type="number" class="form-control w-75" name="count" min="1" max="1000" value="1" />
+                            <button type="submit" value="Add to Cart" class="btn btn-warning w-25"><img src="~/img/shopping-cart.png" width="20" /></button>
+                            <button type="submit" value="Checkout" class="btn btn-danger flex-grow-1 mt-1" style="width: 100%;">Checkout</button>
                         </form>
                     </div>
                 </div>
