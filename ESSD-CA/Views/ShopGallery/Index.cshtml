@@ -30,13 +30,13 @@
 @foreach (Product product in products)
 {
     <div class="d-inline-flex mt-1 justify-content-center" >
-        <div style="width: 15rem;">
+        <div style="width: 14rem;">
             <div class="card">
                 <img class="card-img rounded" style="height: 9rem;" src="@product.ImagePath">
                 <div class="card-body">
-                    <h5 class="card-title" style="height: 2.5rem;">@product.ProductName</h5>
-                    <p class="card-text" style="height: 2rem;">@product.ProductDescription</p>
-                    <div class="price text-success" style="height: 0rem;"><h6 class="mt-4">S$@product.UnitPrice</h6></div>
+                    <h5 class="card-title" style="height: 3rem;">@product.ProductName</h5>
+                    <p class="card-text" style="height: 4rem;">@product.ProductDescription</p>
+                    <div class="price text-success" style="height: 0rem;"><h6>S$@product.UnitPrice</h6></div>
                     <p class="card-text mt-4" style="height: 1rem;">Quantity</p>
                     <div class="justify-content-between">
                         <form action="/ShopGallery/AddToCart" method="post" class="form-inline justify-content-between">
