@@ -1,0 +1,65 @@
+﻿.book-photo {
+    width: 35%;
+    margin: auto;
+}
+@media (min-width: 576px) {
+    .book-sm-photo {
+        width: 30%;
+        margin: auto;
+    }
+}
+@media (min-width: 768px) {
+    .book-md-photo {
+        width: 50%;
+        margin: auto;
+    }
+}
+@media (min-width: 992px) {
+    .book-lg-photo {
+        width: 35%;
+        margin: auto;
+    }
+}
+@media (min-width: 1200px) {
+    .book-xl-photo {
+        width: 30%;
+        margin: auto;
+    }
+}
+.history-img {
+    width: 160px;
+    height: 200px;
+    margin: auto;
+}
+
+.book-title {
+    text-align: center;
+    margin: 15px auto;
+    width: 70%;
+}
+.book-text, .book-download {
+    margin: 15px auto;
+    width: 90%;
+}
+@media (min-width: 992px) {
+    .book-lg-text, .book-lg-download {
+        margin: 15px auto;
+        width: 80%;
+    }
+}
+.product-info {
+    width: 90%;
+    margin: auto;
+}
+.property {
+    margin: 10px 0;
+}
+.property-title {
+    font-weight: bold;
+    display: inline-block;
+    width: 130px;
+}
+#actCd {
+    display: inline-block;
+    width: 320px;
+}

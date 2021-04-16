@@ -27,11 +27,14 @@ namespace ESSD_CA.Db
 
         private void AddProduct()
         {
-            string[] productNames = { "Retention Graph", "Churn Analysis", "Software Estimation", "Code Complete 2", "More Effective Agile" };
-            string[] productDescription = { "Visual representation of retention rates", "Detailed Analysis of customer churn",
-            "Unravels the mystery to successful software estimation", "A Practical Handbook of Software Construction",
-            "A Roadmap for Software Leaders" };
-            double[] unitPrice = { 120, 299.99, 32.57, 45, 34.95 };
+            string[] productNames = { "Photoshop Elements 2021", "Successful Software Manager", "Software Estimation", "Code Complete 2", "More Effective Agile" };
+            string[] productDescription = 
+                { "Deliver the photo editing power that non-professional photographers and designers need to get eye-catching and art-quality results.",
+                "The definitive guide to growing from developer to manager.",
+                "Unravels the mystery to successful software estimation - distilling academic information and real-world experience into a practical guide for working software professionals.",
+                "The original CODE COMPLETE has been fully updated and revised with leading-edge practices—and hundreds of new code samples—illustrating the art and science of software construction.",
+                "A Roadmap for Software Leaders covering the practical considerations needed to ensure you reap the full benefits of effective Agile." };
+            double[] unitPrice = { 25.65, 299.99, 19.8, 45.2, 34.95 };
             // to replace with real links later
             string[] downloadLink =
             {
@@ -41,6 +44,14 @@ namespace ESSD_CA.Db
                 "https://images.unsplash.com/photo-1438907046657-4ae137eb8c5e?w=350",
                 "https://images.unsplash.com/photo-1453487021979-5b739b2849f4?w=350"
             };
+            /*string[] downloadLink =
+            {
+                "PhotoshopElements2021.pdf",
+                "SuccessfulSoftwareManager.pdf",
+                "SoftwareEstimation.pdf",
+                "CodeComplete2.pdf",
+                "MoreEffectiveAgile.pdf"
+            };*/
             // to replace with real links later
             string[] imagePath =
             {
@@ -50,6 +61,14 @@ namespace ESSD_CA.Db
                 "https://images.unsplash.com/photo-1438907046657-4ae137eb8c5e?w=350",
                 "https://images.unsplash.com/photo-1453487021979-5b739b2849f4?w=350"
             };
+            /*string[] imagePath =
+            {
+                "PhotoshopElements2021.jpg",
+                "SuccessfulSoftwareManager.jpg",
+                "SoftwareEstimation.jpg",
+                "CodeComplete2.jpg",
+                "MoreEffectiveAgile.jpg"
+            };*/
             for (int i = 0; i < productNames.Length; i++)
             {
                 db.Products.Add(new Product
@@ -95,14 +114,14 @@ namespace ESSD_CA.Db
             db.Add(new PurchaseOrder
             {
                 OrderId = poId[0],
-                PurchaseDate = DateTime.Parse(purchaseDate[0]),
+                PurchaseDate = DateTime.Parse(purchaseDate[0]).ToUniversalTime(),
                 GrandTotal = grandTotal[0],
                 User = users[0] // user1
             });
             db.Add(new PurchaseOrder
             {
                 OrderId = poId[1],
-                PurchaseDate = DateTime.Parse(purchaseDate[1]),
+                PurchaseDate = DateTime.Parse(purchaseDate[1]).ToUniversalTime(),
                 GrandTotal = grandTotal[1],
                 User = users[0] // user1
             });
@@ -110,7 +129,7 @@ namespace ESSD_CA.Db
             db.Add(new PurchaseOrder
             {
                 OrderId = poId[2],
-                PurchaseDate = DateTime.Parse(purchaseDate[2]),
+                PurchaseDate = DateTime.Parse(purchaseDate[2]).ToUniversalTime(),
                 GrandTotal = grandTotal[2],
                 User = users[1] // user2
             });

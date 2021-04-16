@@ -5,99 +5,65 @@
     bool hasData = (bool)ViewData["hasHistory"];
 
 }
-<style>
-    @*.text-dark {
-        color: #272b30 !important;
-    }*@
-    .menu {
-        margin-left: 20px;
-    }
-    .menu-list {
-        padding: 10px;
-        text-decoration: underline;
-    }
-    .vl {
-        border-left: 3px solid green;
-        margin: 10px 0;
-    }
-    .product-info {
-        display: inline-block;
-    }
-    .purchase-info {
-        display: inline-block;
-    }
-    .page-title {
-        font-size: 24px;
-    }
-</style>
-<div>
-    <a class="page-title" asp-area="" asp-controller="" asp-action="">My Purchases</a>
 
-    <div class="d-sm-inline-flex menu">
-        <span class="menu-list">
-            <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-        </span>
-        <span class="vl"></span>
-        <span class="menu-list">
-            <a asp-area="" asp-controller="Logout" asp-action="Index">Logout</a>
-        </span>
-    </div>
-</div>
+@section Style{
+    <link rel="stylesheet" href="~/css/history.css" />
+}
+
 @if (!hasData)
 {
-    <h2>no purchase history</h2>
+    <h5>No purchase history</h5>
 }
 else
-            {
-
-            
-@foreach (HistoryViewModel history in Model)
 {
-    <div class="product-info">
-        <table>
-            <tr>
-                <td><img src=@history.Product.ImagePath class="card-img-top rounded" /></td>
-            </tr>
-            <tr>
-                <td>@history.Product.ProductName</td>
-            </tr>
-            <tr>
-                <td>@history.Product.ProductDescription</td>
-            </tr>
-            <tr>
-                <td><a href=@history.Product.DownloadLink><button>Download</button></a></td>
-            </tr>
-        </table>
-    </div>
-    <div class="purchase-info">
-        <table>
-            <tr>
-                <td>Purchased On:</td>
-                <td>@history.Order.PurchaseDate.ToString("dd MMM yyyy")</td>
-            </tr>
-            <tr>
-                <td>Quantity:</td>
-                <td>@history.ActivationCdList.Count</td>
-            </tr>
-            <tr>
-                <td>Activation Code:</td>
-                <td>
-                    @if (@history.ActivationCdList.Count > 1)
-                    {
-                        <select>
-                            @foreach (string activationCd in history.ActivationCdList)
+    @foreach (HistoryViewModel history in Model)
+    {
+        <div class="row">
+            <div class="col-12 col-md-6 mt-5">
+                <div class="book-photo book-sm-photo book-md-photo book-lg-photo book-xl-photo">
+                    <img src=@history.Product.ImagePath class="history-img rounded" />
+                </div>
+
+                <h4 class="book-title">@history.Product.ProductName</h4>
+
+                <div class="book-text book-lg-text">
+                    <p class="text-justify">@history.Product.ProductDescription</p>
+                </div>
+
+                <div class="book-download book-lg-download">
+                    <a href=@history.Product.DownloadLink class="btn btn-block btn-info">Download</a>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 mt-auto mb-auto">
+                <div class="product-info">
+                    <div class="property">
+                        <span class="property-title">Purchased On:</span>
+                        <span>@history.Order.PurchaseDate.ToString("dd MMM yyyy")</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-title">Quantity:</span>
+                        <span>@history.ActivationCdList.Count</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-title">Activation Code:</span>
+                        <span id="actCd">
+                            @if (@history.ActivationCdList.Count > 1)
                             {
-                                <option>@activationCd</option>
+                                <select>
+                                    @foreach (string activationCd in history.ActivationCdList)
+                                    {
+                                        <option>@activationCd</option>
+                                    }
+                                </select>
                             }
-                        </select>
-                    }
-                    else
-                    {
-                    @history.ActivationCdList[0]
-                    }
-                </td>
-            </tr>
-        </table>
-    </div>
-}
+                            else
+                            {
+                                @history.ActivationCdList[0]
+                            }
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 }

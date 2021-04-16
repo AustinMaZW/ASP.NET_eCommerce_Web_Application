@@ -22,10 +22,13 @@ namespace ESSD_CA.Controllers
             string sessionId = Request.Cookies["sessionId"];
             if (String.IsNullOrEmpty(sessionId))
                 return RedirectToAction("Index", "Login");
-
+            
             // retrieve all purchased items by user id from db
             User user = db.Users.FirstOrDefault(x => x.SessionId == sessionId);
-            List<PurchaseOrder> userOrders = db.PurchaseOrders.Where(x => x.UserId == user.UserId).ToList();
+            
+            List<PurchaseOrder> userOrders = null;
+            if (user != null)
+                userOrders  = db.PurchaseOrders.Where(x => x.UserId == user.UserId).ToList();
 
             IEnumerable<HistoryViewModel> iter = null;
             if (userOrders != null && userOrders.Count > 0)
@@ -58,6 +61,9 @@ namespace ESSD_CA.Controllers
             {
                 ViewData["hasHistory"] = false;
             }
+
+            ViewData["sessionId"] = sessionId;
+
             return View(iter);
         }
 

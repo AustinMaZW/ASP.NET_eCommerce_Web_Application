@@ -9,6 +9,7 @@
     <title>@ViewData["Title"] - .NET Core CA Project</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    @RenderSection("Style", required: false)
 </head>
 <body>
     <header>
@@ -49,6 +50,13 @@
             <div class="navbar-collapse collapse w-100 order-2 dual-collapse2">
                 <ul class="navbar-nav ml-auto">
                     @*Use IHttpContextAccessor injection to retrieve session key value pair*@
+                    @if (HttpContextAccessor.HttpContext.Request.Cookies["username"] != null)
+                    {
+                        var name = HttpContextAccessor.HttpContext.Request.Cookies["username"];
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="" asp-action="">@name</a>
+                        </li>
+                    }
                     @if (HttpContextAccessor.HttpContext.Request.Cookies["sessionId"] == null)
                     {
                         <li class="nav-item">
