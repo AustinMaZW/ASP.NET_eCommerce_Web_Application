@@ -19,6 +19,7 @@ namespace ESSD_CA.Controllers
 
         public IActionResult History()
         {
+            ViewData["Is_PurchaseHistory"] = "bold_menu";
             // Check logged in?
             string sessionId = Request.Cookies["sessionId"];
             if (String.IsNullOrEmpty(sessionId))

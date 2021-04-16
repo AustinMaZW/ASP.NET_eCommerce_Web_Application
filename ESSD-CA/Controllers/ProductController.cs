@@ -20,7 +20,6 @@ namespace ESSD_CA.Controllers
             List<Product> products = db.Products.ToList();  //retrieving products from database and putting into a list
 
             ViewData["products"] = products;    //sending data view ViewData
-
             return View();
         }
     }
