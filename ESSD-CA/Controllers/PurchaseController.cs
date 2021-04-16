@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using ESSD_CA.Models;
 using ESSD_CA.Db;
+using Microsoft.AspNetCore.Http;
 
 namespace ESSD_CA.Controllers
 {
@@ -130,8 +131,26 @@ namespace ESSD_CA.Controllers
 
             db.SaveChanges();
 
+            SetShopIconCount(sessionId);
 
             return RedirectToAction("History", "Purchase");
+        }
+
+        private void SetShopIconCount(string sessionId)
+        {
+            //below for setting up shop cart icon count
+            User user = db.Users.FirstOrDefault(x => x.SessionId == sessionId && x.SessionId != null);
+            if (user != null)
+            {
+                int count = db.ShoppingCarts.Where(x => x.UserId == user.UserId).ToList().Count();
+                HttpContext.Session.SetInt32("ShoppingCartIcon", count);
+            }
+            else
+            {
+                int count = db.ShoppingCarts.Where(x => x.GuestId ==
+                    HttpContext.Session.GetString("guestId")).ToList().Count();
+                HttpContext.Session.SetInt32("ShoppingCartIcon", count);
+            }
         }
     }
 }
