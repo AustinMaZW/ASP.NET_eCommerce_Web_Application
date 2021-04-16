@@ -22,6 +22,7 @@
     }
     .product-info {
         display: inline-block;
+        width:40%
     }
     .purchase-info {
         display: inline-block;
@@ -29,6 +30,15 @@
     .page-title {
         font-size: 24px;
     }
+    table.PHtable{
+        border-collapse:collapse;
+        display:inline-table;
+        vertical-align:middle;
+        max-width:350px;
+    }
+
+
+
 </style>
 <div>
     <a class="page-title" asp-area="" asp-controller="" asp-action="">My Purchases</a>
@@ -48,24 +58,26 @@
     <h2>no purchase history</h2>
 }
 else
-            {
-
-            
-@foreach (HistoryViewModel history in Model)
+{
+    @foreach (HistoryViewModel history in Model)
 {
     <div class="product-info">
-        <table>
+        <table class="PHtable">
             <tr>
-                <td><img src=@history.Product.ImagePath class="card-img-top rounded" /></td>
+                <td class="pt-3"><img src=@history.Product.ImagePath class="card-img-top rounded" /></td>
             </tr>
             <tr>
-                <td>@history.Product.ProductName</td>
+                <td class="pt-2">@history.Product.ProductName</td>
             </tr>
             <tr>
-                <td>@history.Product.ProductDescription</td>
+                <td class="pt-2">@history.Product.ProductDescription</td>
             </tr>
             <tr>
-                <td><a href=@history.Product.DownloadLink><button>Download</button></a></td>
+                <td class="pt-2">
+                    <a href=@history.Product.DownloadLink>
+                        <button type="button" class="btn btn-primary btn-block">Download</button>
+                    </a>
+                </td>
             </tr>
         </table>
     </div>
@@ -73,15 +85,15 @@ else
         <table>
             <tr>
                 <td>Purchased On:</td>
-                <td>@history.Order.PurchaseDate.ToString("dd MMM yyyy")</td>
+                <td class="px-4 py-2">@history.Order.PurchaseDate.ToString("dd MMM yyyy")</td>
             </tr>
             <tr>
                 <td>Quantity:</td>
-                <td>@history.ActivationCdList.Count</td>
+                <td class="px-4 py-2">@history.ActivationCdList.Count</td>
             </tr>
             <tr>
                 <td>Activation Code:</td>
-                <td>
+                <td class="px-4 py-2">
                     @if (@history.ActivationCdList.Count > 1)
                     {
                         <select>
@@ -99,5 +111,6 @@ else
             </tr>
         </table>
     </div>
+
 }
 }

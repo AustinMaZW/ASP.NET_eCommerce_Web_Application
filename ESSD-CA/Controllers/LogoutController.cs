@@ -33,6 +33,8 @@ namespace ESSD_CA.Controllers
             
             ResetShopCartSettings();
 
+            HttpContext.Session.Remove("AccountType");
+
             return RedirectToAction("Index", "ShopGallery");
         }
 
