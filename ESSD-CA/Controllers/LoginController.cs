@@ -62,6 +62,7 @@ namespace ESSD_CA.Controllers
                 db.Users.Update(user);
                 db.SaveChanges();
                 Response.Cookies.Append("sessionId", user.SessionId);
+                Response.Cookies.Append("username", user.Username);
                 return RedirectToAction("Index", "ShopGallery");
             }
 
