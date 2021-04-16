@@ -2,7 +2,6 @@
     ViewData["Title"] = "Home";
     string searchString = (string)ViewData["searchString"];
     List<Product> products = (List<Product>)ViewData["products"];
-    @model ESSD_CA.Models.ShoppingCart;
 
 }
 
@@ -10,7 +9,9 @@
     int searchReturned = products.Count;
 }
 
-
+@section Scripts{
+    <script src="~/js/ShopGallery/AddToCart.js"></script>
+}
 
 <br />
 
@@ -29,7 +30,7 @@
 
 @foreach (Product product in products)
 {
-    <div class="d-inline-flex mt-1 justify-content-center" >
+    <div class="d-inline-flex mt-1 justify-content-center">
         <div style="width: 14rem;">
             <div class="card">
                 <img class="card-img rounded" style="height: 9rem;" src="@product.ImagePath">
@@ -38,13 +39,10 @@
                     <p class="card-text" style="height: 4rem;">@product.ProductDescription</p>
                     <div class="price text-success" style="height: 0rem;"><h6>$ @product.UnitPrice</h6></div>
                     <p class="card-text mt-4" style="height: 1rem;">Quantity</p>
-                    <div class="justify-content-between">
-                        <form action="/ShopGallery/AddToCart" method="post" class="form-inline justify-content-between">
-                            <input hidden asp-for="@product.Id" />
-                            <input type="number" class="form-control w-75" name="count" min="1" max="1000" value="1" />
-                            <button type="submit" value="Add to Cart" class="btn btn-warning w-25"><img src="~/img/shopping-cart.png" width="20" /></button>
-                            <button type="submit" value="Checkout" class="btn btn-danger flex-grow-1 mt-1" style="width: 100%;">Checkout</button>
-                        </form>
+                    <div class="form-inline justify-content-between">
+                        <input type="number" class="form-control w-75" name="count" min="1" max="1000" value="1" />
+                        <button type="button" value="Add to Cart" class="addQuantity btn btn-warning w-25" productId="@product.Id"><img src="~/img/shopping-cart.png" width="20" /></button>
+                        <button type="submit" value="Checkout" class="btn btn-danger flex-grow-1 mt-1" style="width: 100%;">Checkout</button>
                     </div>
                 </div>
             </div>
