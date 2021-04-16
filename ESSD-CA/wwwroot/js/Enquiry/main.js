@@ -9,13 +9,17 @@
 
     $('.validate-form').on('submit',function(){
         var check = true;
+        var checkcount = 0;
 
         for(var i=0; i<input.length; i++) {
             if(validate(input[i]) == false){
                 showValidate(input[i]);
-                check=false;
+                check = false;
+                checkcount++;
             }
         }
+        if (checkcount>0)
+            alert("Oops, looks like there are some missing or incorrect information. ");
 
         return check;
     });

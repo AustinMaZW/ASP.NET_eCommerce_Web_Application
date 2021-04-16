@@ -1,4 +1,9 @@
-﻿
+﻿@section Scripts
+{
+    <script src="~/js/Enquiry/main.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script>
+}
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -16,19 +21,18 @@
     <link rel="stylesheet" type="text/css" href="vendor/select2/select2.min.css">
     <link rel="stylesheet" type="text/css" href="vendor/daterangepicker/daterangepicker.css">
     <link rel="stylesheet" type="text/css" href="css/util.css">
-    <!--===============================================================================================-->
-    <link rel="stylesheet" type="text/css" href=~/css/main.css/>
+    <!--=======================================================================================================================-->
+    <link rel="stylesheet" type="text/css" href=~/css/main.css />
 </head>
 <body>
 
 
     <div class="container-contact100">
         <div class="wrap-contact100">
-            <form class="contact100-form validate-form">
+            <form action="/Enquiry/SendMessage" method="post" class="contact100-form validate-form">
                 <span class="contact100-form-title">
-                    Get in Touch
+                    <b>Get in Touch</b>
                 </span>
-
                 <div class="wrap-input100 validate-input" data-validate="Name is required">
                     <input class="input100" id="name" type="text" name="name" placeholder="Name">
                     <label class="label-input100" for="name">
@@ -54,18 +58,11 @@
                     <textarea class="input100" name="message" placeholder="Your message..."></textarea>
                 </div>
 
-                <div class="contact100-form-checkbox">
-                    <input class="input-checkbox100" id="ckb1" type="checkbox" name="copy-mail">
-                    <label class="label-checkbox100" for="ckb1">
-                        Send copy to my-email
-                    </label>
-                </div>
-
                 <div class="container-contact100-form-btn">
                     <div class="wrap-contact100-form-btn">
                         <div class="contact100-form-bgbtn"></div>
-                        <button class="contact100-form-btn">
-                            Send Email
+                        <button type="submit" class="contact100-form-btn">
+                            Send Message
                         </button>
                     </div>
                 </div>

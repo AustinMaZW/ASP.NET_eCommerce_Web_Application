@@ -30,8 +30,10 @@ namespace ESSD_CA.Controllers
             }
 
             Response.Cookies.Delete("sessionId");
-            
+            Response.Cookies.Delete("username");
             ResetShopCartSettings();
+
+            HttpContext.Session.Remove("AccountType");
 
             return RedirectToAction("Index", "ShopGallery");
         }
