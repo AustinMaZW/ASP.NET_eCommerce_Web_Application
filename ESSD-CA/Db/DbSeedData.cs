@@ -73,7 +73,8 @@ namespace ESSD_CA.Db
                 new User("john"),
                 new User("mary"),
                 new User("jane"),
-                new User("peter")
+                new User("peter"),
+                new User("admin")
             });
             db.SaveChanges();
 
