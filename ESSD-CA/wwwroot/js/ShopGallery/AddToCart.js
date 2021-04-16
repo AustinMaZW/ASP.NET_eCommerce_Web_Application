@@ -8,8 +8,8 @@
 
 function onAddToCart(event) {
     let elem = event.currentTarget.parentNode;
-    var elemValue = Number(elem.children[0].value);
-    var productId = elem.children[1].getAttribute("productId");
+    var elemValue = Number(elem.children[2].value);
+    var productId = elem.children[3].getAttribute("productId");
     sendQty(productId, elemValue);
 }
 
@@ -19,7 +19,6 @@ function sendQty(productId, qty) {
 
     xhr.open("POST", "/ShopGallery/AddToCart");
     xhr.setRequestHeader("Content-Type", "application/json; charset=utf8");
-
     xhr.onreadystatechange = function () {
         if (this.readyState === XMLHttpRequest.DONE) {
             if (this.status == 200) {
