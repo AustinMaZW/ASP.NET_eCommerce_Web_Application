@@ -41,16 +41,24 @@
                 <li class="nav-item">
                     <a class="nav-link" asp-area="" asp-controller="ShopGallery" asp-action="Index">Products</a>
                 </li>
-                @if (HttpContextAccessor.HttpContext.Request.Cookies["sessionId"] != null)
-                {
+
+                    @if (HttpContextAccessor.HttpContext.Request.Cookies["sessionId"] != null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Purchase" asp-action="History">My&nbsp;Purchases</a>
+                        </li>
+                    }
                     <li class="nav-item">
-                        <a class="nav-link" style="display:inline-block; white-space:nowrap" asp-area="" asp-controller="Purchase" asp-action="History">My Purchases</a>
+                        <a class="nav-link" style="width:10rem" asp-area="" asp-controller="Enquiry" asp-action="Index">Contact&nbsp;Us</a>
                     </li>
-                }
-                <li class="nav-item">
-                    <a class="nav-link" style="display:inline-block; white-space:nowrap" asp-area="" asp-controller="Product" asp-action="Index">Manage Products</a>
-                </li>    
-            </ul>
+                    <li class="nav-item">
+                        <a class="nav-link" style="display:inline-block; white-space:nowrap" asp-area="" asp-controller="Product" asp-action="Index">Manage Products</a>
+                    </li>    
+                    @* Can use below code to set pages for admin access only
+                    @if (HttpContextAccessor.HttpContext.Session.GetString("AccountType") == "Admin")
+                    {
+                    }*@
+                </ul>
 
 
         </div>
