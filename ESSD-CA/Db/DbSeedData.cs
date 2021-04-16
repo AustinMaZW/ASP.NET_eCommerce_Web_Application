@@ -94,6 +94,12 @@ namespace ESSD_CA.Db
                 new User("jane"),
                 new User("peter")
             });
+
+            db.Users.Add(new User("admin")
+            {
+                AccountType = "Admin"       // Admin dictates role as Admin, User dictates User
+            });
+
             db.SaveChanges();
 
         }
