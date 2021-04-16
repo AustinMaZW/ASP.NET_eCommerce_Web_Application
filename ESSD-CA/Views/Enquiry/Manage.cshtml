@@ -1,0 +1,42 @@
+﻿@{
+    var CustomerMessage = (List<CustomerMessage>)ViewData["CustomerMessages"];    
+}
+
+@*@section Scripts{
+}*@
+
+<table id="manage_enquiries" style="padding:initial">
+    <thead>
+        <tr class ="header">
+            <td style="width:25rem"><b>Customer Name</b></td>
+            <td style="width:75rem"><b>Message</b></td>
+            <td style="width:25rem"><b>Enquiry Status</b></td>
+            <td style="width:10rem"><b>Update</b></td>
+        </tr>
+    </thead>
+    <tbody>
+        @{
+            if (CustomerMessage != null)
+            {
+                for (var i = 0; i < CustomerMessage.Count; i++)
+                {
+                <tr>
+                    <td><a href="mailto:@CustomerMessage[i].Email">@CustomerMessage[i].Name</a></td>
+                    <td>@CustomerMessage[i].Message</td>
+                    <td>@CustomerMessage[i].EnquiryStatus</td>
+                </tr>
+                }
+            }
+        }
+    </tbody>
+</table>
+
+<style>
+    .header {
+    width:100rem;
+    background-color:lightgrey;
+    }
+    td {
+    padding:1rem;
+    }
+</style>

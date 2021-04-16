@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    @RenderSection("Style", required: false)
 </head>
 <body>
     <header class="navbar-fixed-top">
@@ -71,6 +72,13 @@
 
 
                     @*Use IHttpContextAccessor injection to retrieve session key value pair*@
+                    @if (HttpContextAccessor.HttpContext.Request.Cookies["username"] != null)
+                    {
+                        var name = HttpContextAccessor.HttpContext.Request.Cookies["username"];
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="" asp-action="">@name</a>
+                        </li>
+                    }
                     @if (HttpContextAccessor.HttpContext.Request.Cookies["sessionId"] == null)
                     {
                         <li class="nav-item">
