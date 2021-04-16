@@ -62,7 +62,17 @@ namespace ESSD_CA.Controllers
             return View(iter);
         }
 
-        public void AddPODetail(string orderId, string productId)
+        private void AddPO(double totalPrice, string orderid, string userid)
+        {           
+            db.PurchaseOrders.Add(new PurchaseOrder
+            {
+                OrderId = orderid,
+                PurchaseDate = DateTime.Now.ToUniversalTime(),
+                GrandTotal = totalPrice,
+                UserId = userid,
+            });
+        }
+        private void AddPODetail(string orderId, string productId)
         {
             db.PODetails.Add(new PurchaseOrderDetails
             {
@@ -70,15 +80,31 @@ namespace ESSD_CA.Controllers
                 ProductId = productId,
                 OrderId = orderId
             });
-
-            db.SaveChanges();
-
         }
 
 
         private string GenerateActivationCode()
         {
-            return (Guid.NewGuid().ToString());
+            return (Guid.NewGuid().ToString() ); //additional logic can be added to return string 
+        }
+
+        private double PriceCalculation(List<ShoppingCart> shoppingCart)
+        {
+            double totalPrice = 0;
+            foreach (var sc in shoppingCart)
+            {
+                Product product = db.Products.FirstOrDefault(x => x.Id == sc.Product.Id);
+                totalPrice += product.UnitPrice * sc.Count;
+            }
+            return totalPrice;
+        }
+
+        private double DiscountAmt(/*future argument to be added*/)
+        {
+            //future discount logic here
+
+            double discountAmt = 0;
+            return discountAmt;
         }
 
         public IActionResult Checkout()
@@ -93,35 +119,15 @@ namespace ESSD_CA.Controllers
             if (shoppingCart == null)
                 return RedirectToAction("Product", "Index"); // divert empty shopping cart back to product page.
 
-
-
-            double totalPrice = 0;
-            foreach (var sc in shoppingCart)
-            {
-                Product product = db.Products.FirstOrDefault(x => x.Id == sc.Product.Id);
-                totalPrice = product.UnitPrice * sc.Count;
-            }
-
+            double totalPrice = PriceCalculation(shoppingCart) - DiscountAmt(/*future argument to be passed*/);
             string orderid = Guid.NewGuid().ToString();
-            db.PurchaseOrders.Add(new PurchaseOrder
-            {
-                OrderId = orderid,
-                PurchaseDate = DateTime.Now.ToUniversalTime(),
-                GrandTotal = totalPrice,
-                UserId = user.UserId,
-            });
+            AddPO(totalPrice, orderid, user.UserId);
 
             foreach (var sc in shoppingCart)
             {
                 for (int i = 0; i < sc.Count; i++)
                 {
-
-                    db.PODetails.Add(new PurchaseOrderDetails
-                    {
-                        ActivationCode = GenerateActivationCode(),
-                        ProductId = sc.ProductId,
-                        OrderId = orderid
-                    });
+                    AddPODetail(orderid, sc.ProductId);
                 }
                 db.SaveChanges();
             }
