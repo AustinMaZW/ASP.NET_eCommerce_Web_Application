@@ -45,24 +45,31 @@ namespace ESSD_CA.Controllers
         [HttpPost]
         public IActionResult Index (string username, string password)
         {
-            User user = db.Users.FirstOrDefault(x => x.Username == username && 
-                x.Password == password);
+            User user = db.Users.FirstOrDefault(x => x.Username == username);
             string sessionId = Request.Cookies["sessionId"];
             if (sessionId != null)
                 return RedirectToAction("Index", "ShopGallery");
                             
             if (user != null)
             {
-                CheckForGuestCart(user);
-                UpdateCartIcon(user);
+                if (user.Password == password)
+                {
+                    CheckForGuestCart(user);
+                    UpdateCartIcon(user);
 
-                HttpContext.Session.SetString("AccountType", user.AccountType);     // to set account type to session id
-                    
-                user.SessionId = Guid.NewGuid().ToString();
-                db.Users.Update(user);
-                db.SaveChanges();
-                Response.Cookies.Append("sessionId", user.SessionId);
-                return RedirectToAction("Index", "ShopGallery");
+                    user.SessionId = Guid.NewGuid().ToString();
+                    db.Users.Update(user);
+                    db.SaveChanges();
+                    Response.Cookies.Append("sessionId", user.SessionId);
+                    Response.Cookies.Append("userId", user.UserId);
+                    return RedirectToAction("Index", "ShopGallery");
+                }
+                else
+                {
+                    ViewData["username"] = username;
+                    ViewData["errLogin"] = "Please enter valid username or password.";
+                    return View("Index");
+                }
             }
 
             else

@@ -30,8 +30,6 @@ namespace ESSD_CA.Controllers
             }
 
             Response.Cookies.Delete("sessionId");
-
-            HttpContext.Session.Remove("AccountType");
             
             ResetShopCartSettings();
 
