@@ -22,15 +22,11 @@ namespace ESSD_CA.Models
         [MaxLength(36)]
         public string SessionId { get; set; }
 
-        [MaxLength(36)]
-        public string AccountType { get; set; }
-
         public User(string Username)
         {
             this.UserId = Guid.NewGuid().ToString();
             this.Username = Username;
             this.Password = Username;
-            this.AccountType = "User";
         }
     }
 

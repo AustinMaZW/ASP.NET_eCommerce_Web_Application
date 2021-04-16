@@ -20,7 +20,7 @@ namespace ESSD_CA.Db
             //add code for generating data
             AddProduct();
             AddUser();
-            //AddPurchaseOrderAndDetails(); // just for testing
+            AddPurchaseOrderAndDetails(); // just for testing
             /*AddPO(); // for populating PO only, to be deleted
             AddPOD();*/ // for populating PODetail only, to be deleted
         }
@@ -76,12 +76,6 @@ namespace ESSD_CA.Db
                 new User("peter"),
                 new User("admin")
             });
-
-            db.Users.Add(new User("admin")
-            {
-                AccountType = "Admin"       // Admin dictates role as Admin, User dictates User
-            });
-
             db.SaveChanges();
 
         }

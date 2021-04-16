@@ -35,6 +35,5 @@ namespace ESSD_CA.Db
         public DbSet<ShoppingCart> ShoppingCarts { get; set; }
         public DbSet<PurchaseOrder> PurchaseOrders { get; set; }
         public DbSet<PurchaseOrderDetails> PODetails { get; set; }
-        public DbSet<CustomerMessage> CustomerMessages { get; set; }
     }
 }
