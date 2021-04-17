@@ -44,5 +44,57 @@ namespace ESSD_CA.Controllers
             }
             return View(product);
         }
+        public async Task<IActionResult> Edit(string id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await db.Products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }
+            return View(product);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Edit(string id, [Bind("Id,ProductName,ProductDescription,UnitPrice,DownloadLink,ImagePath")] Product product)
+        {
+            if (id != product.Id)
+            {
+                return NotFound();
+            }
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    db.Update(product);
+                    await db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductExists(product.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            return View(product);
+        }
+
+        private bool ProductExists(string id)
+        {
+            return db.Products.Any(e => e.Id == id);
+        }
+
     }
 }
