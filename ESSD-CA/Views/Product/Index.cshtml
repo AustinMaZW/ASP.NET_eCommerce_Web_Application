@@ -55,7 +55,10 @@
             </td>
             <td style="white-space:nowrap">
                 <a asp-action="Edit" asp-route-id="@product.Id"><img src="~/img/pencil-fill.svg"></a>
+                @if (!product.ProductStatus.Equals("Discontinued"))
+                {
                 <a asp-action="Delete" asp-route-id="@product.Id"><img src="~/img/trash-fill.svg" class="ml-1"></a>
+                }
             </td>
         </tr>
         }

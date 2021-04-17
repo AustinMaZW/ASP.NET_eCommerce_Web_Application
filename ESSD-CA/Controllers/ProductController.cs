@@ -99,6 +99,49 @@ namespace ESSD_CA.Controllers
             return db.Products.Any(e => e.Id == id);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Restore(string id, [Bind("Id,ProductName,ProductDescription,UnitPrice,DownloadLink,ImagePath,ProductStatus")] Product product)
+        {
+            if (id != product.Id)
+            {
+                return NotFound();
+            }
+            /*if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await db.Products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }*/
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    product.ProductStatus = "Available";
+                    db.Update(product);
+                    await db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductExists(product.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
+        }
+
         public async Task<IActionResult> Delete(string id)
         {
             ViewData["Is_ProductMgmt"] = "bold_menu";
