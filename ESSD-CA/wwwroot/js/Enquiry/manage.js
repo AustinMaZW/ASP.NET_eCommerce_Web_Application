@@ -32,7 +32,7 @@ function sendArchive(archive, messageId)
 
     xhr.send(JSON.stringify({
         Id: messageId,
-        EnquiryStatus: true
+        EnquiryStatus: archive
     }))
 }
 
