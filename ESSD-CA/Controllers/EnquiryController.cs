@@ -43,9 +43,10 @@ namespace ESSD_CA.Controllers
         }
         public IActionResult Manage()
         {
+            //to-add: navigate away from page if not admin
+            
             ViewData["CustomerMessages"] = db.CustomerMessages.OrderBy(c=>c.MessageDate).ToList();
 
-            Debug.WriteLine("testing");
             return View();
         }
     }
