@@ -23,6 +23,9 @@ namespace ESSD_CA.Models
         public string DownloadLink { get; set; }
         [MaxLength(200)]
         public string ImagePath { get; set; }
+        [Required]
+        [MaxLength(30)]
+        public string ProductStatus { get; set; }
 
     }
 }
