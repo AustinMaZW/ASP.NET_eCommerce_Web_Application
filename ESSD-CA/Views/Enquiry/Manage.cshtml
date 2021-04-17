@@ -1,14 +1,17 @@
 ﻿@{
-    var CustomerMessage = (List<CustomerMessage>)ViewData["CustomerMessages"];    
+    var CustomerMessage = (List<CustomerMessage>)ViewData["CustomerMessages"];
 }
 
 @section Scripts{
-    <script src="~/js/Enquiry/manage.js"></script>  
+    <script src="~/js/Enquiry/manage.js"></script>
 }
 
-<table id="manage_enquiries" style="padding:initial">
-    <thead>
-        <tr class ="header">
+<h3 class="mt-4">Customer Enquiries</h3>
+<p></p>
+
+<table class="table mt-3" id="manage_enquiries" style="padding:initial">
+    <thead style="white-space:nowrap">
+        <tr class="header">
             <td style="width:25rem"><b>Customer Name</b></td>
             <td style="width:75rem"><b>Message</b></td>
             <td style="width:25rem"><b>Enquiry Status</b></td>
@@ -21,27 +24,17 @@
             {
                 for (var i = 0; i < CustomerMessage.Count; i++)
                 {
-                <tr>
-                    <td><a href="mailto:@CustomerMessage[i].Email">@CustomerMessage[i].Name</a></td>
-                    <td>@CustomerMessage[i].Message</td>
-                    <td>
-                    @if (CustomerMessage[i].EnquiryStatus == false)
-                    {<b>pending</b>}
-                    </td>
-                    <td><a href="#" message_id="@CustomerMessage[i].Id" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Complete & Archive</a> </td>
-                </tr>
+                    <tr>
+                        <td><a href="mailto:@CustomerMessage[i].Email">@CustomerMessage[i].Name</a></td>
+                        <td>@CustomerMessage[i].Message</td>
+                        <td>
+                            @if (CustomerMessage[i].EnquiryStatus == false)
+                            {<b style="text-align:center">pending</b>}
+                        </td>
+                        <td><a href="#" message_id="@CustomerMessage[i].Id" class="btn btn-primary" role="button" aria-pressed="true">Complete & Archive</a> </td>
+                    </tr>
                 }
             }
         }
     </tbody>
 </table>
-
-<style>
-    .header {
-    width:100rem;
-    background-color:lightgrey;
-    }
-    td {
-    padding:1rem;
-    }
-</style>
