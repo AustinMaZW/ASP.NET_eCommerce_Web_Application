@@ -69,3 +69,16 @@ body {
   white-space: nowrap;
   line-height: 60px; /* Vertically center the text there */
 }
+.txt-dark {
+    color: #404550 !important;
+}
+
+a.txt-dark:hover, a.txt-dark:focus {
+    color: #19D075 !important;
+    font-weight: bold;
+}
+
+.bold_menu {
+    font-weight: bold;
+}
+

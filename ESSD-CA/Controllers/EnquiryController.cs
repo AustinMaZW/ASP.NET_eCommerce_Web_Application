@@ -19,7 +19,7 @@ namespace ESSD_CA.Controllers
         }
         public IActionResult Index()
         {
-            
+            ViewData["Is_ContactUs"] = "bold_menu";
             return View();
         }
         public IActionResult SendMessage(string name, string email, string phone, string message)

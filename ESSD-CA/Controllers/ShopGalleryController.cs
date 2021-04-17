@@ -20,6 +20,7 @@ namespace ESSD_CA.Controllers
         }
         public IActionResult Index(string searchString)
         {
+            ViewData["Is_Gallery"] = "bold_menu";
             ViewData["Products"] = db.Products.Where(s => 
                 (s.ProductName.Contains(searchString) || s.ProductDescription.Contains(searchString)) || searchString == null).OrderBy(s => s.ProductName).ToList();
 
