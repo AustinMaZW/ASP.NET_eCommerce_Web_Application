@@ -27,45 +27,45 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
-            @if (HttpContextAccessor.HttpContext.Session.GetString("uname") == null)
-            {
-                <a style="width:18rem;">Hello, Guest!</a>
-            }
-            else
-            {
-                <a style="width:18rem;">Hello, @HttpContextAccessor.HttpContext.Session.GetString("uname")!</a>
-            }
 
             @*Menu buttons - to flush left*@
-            <div class="navbar-collapse collapse w-100 order-1 dual-collapse2">
-                <ul class="navbar-nav mr-auto">
+        <div class="navbar-collapse collapse w-100 order-1 dual-collapse2">
+            <ul class="navbar-nav mr-auto">
 
+                <li class="nav-item">
+                    <a class="nav-link txt-dark @ViewData["Is_Gallery"]" asp-area="" asp-controller="ShopGallery" asp-action="Index">Products</a>
+                </li>
+                @if (HttpContextAccessor.HttpContext.Request.Cookies["sessionId"] != null)
+                {
                     <li class="nav-item">
-                        <a class="nav-link txt-dark @ViewData["Is_Gallery"]" asp-area="" asp-controller="ShopGallery" asp-action="Index">Products</a>
+                        <a class="nav-link txt-dark @ViewData["Is_PurchaseHistory"]" asp-area="" asp-controller="Purchase" asp-action="History">My&nbsp;Purchases</a>
                     </li>
-                    @if (HttpContextAccessor.HttpContext.Request.Cookies["sessionId"] != null)
-                    {
-                        <li class="nav-item">
-                            <a class="nav-link txt-dark @ViewData["Is_PurchaseHistory"]" asp-area="" asp-controller="Purchase" asp-action="History">My&nbsp;Purchases</a>
-                        </li>
-                    }
-                    <li class="nav-item">
-                        <a class="nav-link txt-dark @ViewData["Is_ContactUs"]" style="width:10rem" asp-area="" asp-controller="Enquiry" asp-action="Index">Contact&nbsp;Us</a>
-                    </li>
-                    @* Can use below code to set pages for admin access only
+                }
+                <li class="nav-item">
+                    <a class="nav-link txt-dark @ViewData["Is_ContactUs"]" asp-area="" asp-controller="Enquiry" asp-action="Index">Contact&nbsp;Us</a>
+                </li>
+
+
+                @* Can use below code to set pages for admin access only*@
                 @if (HttpContextAccessor.HttpContext.Session.GetString("AccountType") == "Admin")
                 {
-                }*@
-                </ul>
+                    <li class="nav-item">
+                        <a class="nav-link txt-dark @ViewData["Is_ProductMgmt"]" asp-area="" asp-controller="Product" asp-action="Index">Manage&nbsp;Products</a>
+                    </li>
+                }
+            </ul>
 
-                @*Search form*@
-                <form class="form-inline container-fluid" asp-controller="ShopGallery" asp-action="Index">
-                    <input class="form-control mr-sm-2" type="search" placeholder="Search..." name="searchString">
-                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" hidden> </button>
-                </form>
-            </div>
+            @*Search form*@
+            <form class="form-inline container-fluid" asp-controller="ShopGallery" asp-action="Index">
+                <input class="form-control" type="search" placeholder="Search..." name="searchString">
+                <button class="btn" type="submit" hidden> </button>
+            </form>
+        </div>
 
-            @*Login and cart - to flush right*@
+            
+    
+    
+    @*Login and cart - to flush right*@
 
             <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
                 <ul class="navbar-nav ml-auto">
@@ -76,9 +76,17 @@
                     {
                         var name = HttpContextAccessor.HttpContext.Request.Cookies["username"];
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="" asp-action="">@name</a>
+                            <a class="nav-link">Hello, @name!</a>
                         </li>
                     }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link">Hello, Guest!</a>
+                        </li>
+                    }
+
+
                     @if (HttpContextAccessor.HttpContext.Request.Cookies["sessionId"] == null)
                     {
                         <li class="nav-item">
@@ -99,7 +107,7 @@
                                 @{
                                     var count = HttpContextAccessor.HttpContext.Session.GetInt32("ShoppingCartIcon");
                                 }
-                                <img src="/img/shopping-cart.png" width="25" /> &nbsp; <span class="badge" style="border-radius: 30px; padding: 7px 11px;">@count</span>
+                                <img src="/img/shopping-cart.png" width="25" class="mb-1" /> &nbsp; <span class="badge mb-1" style="border-radius: 30px; padding: 7px 11px;">@count</span>
                             </a>
                         </li>
                     }
