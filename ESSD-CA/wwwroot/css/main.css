@@ -393,4 +393,6 @@ textarea.input100 {
 }
 
 
-
+footer.border-top.footer.text-muted {
+	position: initial;
+}
