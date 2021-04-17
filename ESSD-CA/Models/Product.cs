@@ -18,6 +18,7 @@ namespace ESSD_CA.Models
         [MaxLength(200)]
         public string ProductDescription { get; set; }
         [Required]
+        [Range(0.01, double.MaxValue, ErrorMessage ="Price must be at least $0.01")]
         public double UnitPrice { get; set; }
         [MaxLength(200)]
         public string DownloadLink { get; set; }
