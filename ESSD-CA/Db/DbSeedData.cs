@@ -21,7 +21,7 @@ namespace ESSD_CA.Db
             AddProduct();
             AddUser();
             AddCustomerEnquiries();
-            //AddPurchaseOrderAndDetails(); // just for testing
+            AddPurchaseOrderAndDetails();
             /*AddPO(); // for populating PO only, to be deleted
             AddPOD();*/ // for populating PODetail only, to be deleted
         }
