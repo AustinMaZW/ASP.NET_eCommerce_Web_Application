@@ -34,14 +34,6 @@
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
-            @if (HttpContextAccessor.HttpContext.Session.GetString("uname") == null)
-            {
-                <a style="width:18rem;">Hello, Guest!</a>
-            }
-            else
-            {
-                <a style="width:18rem;">Hello, @HttpContextAccessor.HttpContext.Session.GetString("uname")!</a>
-            }
 
             @*Menu buttons - to flush left*@
             <div class="navbar-collapse collapse w-100 order-1 dual-collapse2">
@@ -61,13 +53,16 @@
                     @if (HttpContextAccessor.HttpContext.Session.GetString("AccountType") == "Admin")
                     {
                         <li class="nav-item">
-                            <a class="nav-link" style="width:10rem" asp-area="" asp-controller="Enquiry" asp-action="Manage">Manage&nbsp;Enquiries</a>
+                            <a class="nav-link" asp-area="" asp-controller="Enquiry" asp-action="Manage">Manage&nbsp;Enquiries</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link @ViewData["Is_ProductMgmt"]" asp-area="" asp-controller="Product" asp-action="Index">Manage&nbsp;Products</a>
                         </li>
                     }
                     else
-                    { 
+                    {
                         <li class="nav-item">
-                            <a class="nav-link" style="width:10rem" asp-area="" asp-controller="Enquiry" asp-action="Index">Contact&nbsp;Us</a>
+                            <a class="nav-link" asp-area="" asp-controller="Enquiry" asp-action="Index">Contact&nbsp;Us</a>
                         </li>
                     }
                 </ul>
@@ -90,9 +85,17 @@
                     {
                         var name = HttpContextAccessor.HttpContext.Request.Cookies["username"];
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="" asp-action="">@name</a>
+                            <a class="nav-link" asp-area="" asp-controller="" asp-action="">Hello, @name!</a>
                         </li>
                     }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="" asp-action="">Hello, Guest!</a>
+                        </li>
+                    }
+
+
                     @if (HttpContextAccessor.HttpContext.Request.Cookies["sessionId"] == null)
                     {
                         <li class="nav-item">
