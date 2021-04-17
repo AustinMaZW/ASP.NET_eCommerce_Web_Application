@@ -25,5 +25,24 @@ namespace ESSD_CA.Controllers
             ViewData["products"] = products;    //sending data view ViewData
             return View();
         }
+
+        public IActionResult Create()
+        {
+            ViewData["Is_ProductMgmt"] = "bold_menu";
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Create([Bind("Id,ProductName,ProductDescription,UnitPrice,DownloadLink,ImagePath")] Product product)
+        {
+            if (ModelState.IsValid)
+            {
+                db.Add(product);
+                await db.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            return View(product);
+        }
     }
 }
