@@ -3,25 +3,25 @@
     margin: auto;
 }
 @media (min-width: 576px) {
-    .book-sm-photo {
+    .book-photo-sm {
         width: 30%;
         margin: auto;
     }
 }
 @media (min-width: 768px) {
-    .book-md-photo {
+    .book-photo-md {
         width: 50%;
         margin: auto;
     }
 }
 @media (min-width: 992px) {
-    .book-lg-photo {
+    .book-photo-lg {
         width: 35%;
         margin: auto;
     }
 }
 @media (min-width: 1200px) {
-    .book-xl-photo {
+    .book-photo-xl {
         width: 30%;
         margin: auto;
     }
@@ -42,7 +42,7 @@
     width: 90%;
 }
 @media (min-width: 992px) {
-    .book-lg-text, .book-lg-download {
+    .book-text-lg, .book-download-lg {
         margin: 15px auto;
         width: 80%;
     }
