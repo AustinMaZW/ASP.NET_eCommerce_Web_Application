@@ -111,7 +111,10 @@
                                 @{
                                     var count = HttpContextAccessor.HttpContext.Session.GetInt32("ShoppingCartIcon");
                                 }
-                                <img src="/img/shopping-cart.png" width="25" /> &nbsp; <span class="badge" style="border-radius: 30px; padding: 7px 11px;">@count</span>
+                                <img src="/img/shopping-cart.png" width="25" /> &nbsp; 
+                                <span class="badge" style="border-radius: 30px; padding: 7px 11px; background-color: #777; color: #fff">
+                                    @count
+                                </span>
                             </a>
                         </li>
                     }
