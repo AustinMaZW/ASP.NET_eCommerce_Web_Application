@@ -6,6 +6,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using ESSD_CA.Models;
 using System.Diagnostics;
+using Microsoft.AspNetCore.Http;
 
 namespace ESSD_CA.Controllers
 {
@@ -43,7 +44,10 @@ namespace ESSD_CA.Controllers
         }
         public IActionResult Manage()
         {
-            //to-add: navigate away from page if not admin
+            if (HttpContext.Session.GetString("AccountType") != "Admin")
+            {
+                return RedirectToAction("Index");
+            }
             ViewData["Is_ContactMgmt"] = "bold_menu";
             ViewData["CustomerMessages"] = db.CustomerMessages.OrderBy(c=>c.MessageDate).ToList();
 

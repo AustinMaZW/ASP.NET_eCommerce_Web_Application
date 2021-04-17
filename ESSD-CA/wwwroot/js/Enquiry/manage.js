@@ -10,7 +10,7 @@ function onArchive(event) {
     let elem = event.currentTarget;
     var messageId = document.getElementById("message_id");
 
-    sendArchive(true, messageId)
+    sendArchive(true, messageId);
 }
 
 function sendArchive(archive, messageId)
