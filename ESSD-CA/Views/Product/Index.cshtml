@@ -1,50 +1,58 @@
 ﻿@{
-    ViewData["Title"] = "Products";
-
+    ViewData["Title"] = "Product Management";
     List<Product> products = (List<Product>)ViewData["products"];
 }
 
-@*code for search bar*@
-<form asp-controller="Products" asp-action="Index">
-    <p>
-        <input type="text" class="form-control" placeholder="Enter your search here..." name="SearchString" />
-        <input type="submit" value="Search" hidden />
-    </p>
-</form>
+<h3 class="mt-4">All Products</h3>
 
-<div class="row pb-3 backgroundWhite">
+<a class="btn btn-primary" asp-controller="Product" asp-action="Create">Create New</a>
 
-    @foreach (Product product in products)
-    {
 
-        <div class="col-lg-3 col-md-6">
-            <form action="/ShopGallery/AddToCart" method="post">
-                <input hidden asp-for="@product.Id" />
-                <div class="row p-2">
-                    <div class="col-12  p-1" style="border:1px solid #008cba; border-radius: 5px;">
-                        <div class="card" style="border:0px;">
-                            <img src=@product.ImagePath class="card-img-top rounded" />
-                            <div class="pl-1">
-                                <p class="card-title h5"><b style="color:#2c3e50">@product.ProductName</b></p>
-                                <p class="card-title text-primary">by <b>Author</b></p>
-                            </div>
-                            <div style="padding-left:5px;">
-                                <p>List Price: <strike><b class="">@product.UnitPrice</b></strike></p>
-                            </div>
-                            <div style="padding-left:5px;">
-                                <p style="color:maroon">As low as: <b class="">@product.UnitPrice</b></p>
-                            </div>
-                        </div>
-                        <div class="row pl-2">
-                            <div class="col-4 text-primary"><h4>Count</h4></div>
-                            <div class="col-10"><input class="form-control" name="count" /></div>
-                        </div>
-                        <div>
-                            <button type="submit" value="Add to Cart" class="btn btn-primary btn-square btn-lg form-control" style="height:50px;">Add to Cart</button>
-                        </div>
-                    </div>
-                </div>
-            </form>
-        </div>
-    }
-</div>
+<table class="table mt-3">
+    <thead style="white-space:nowrap">
+        <tr>
+            <th>
+                Product Name
+            </th>
+            <th>
+                Product Description
+            </th>
+            <th>
+                Unit Price
+            </th>
+            <th>
+                Download Link
+            </th>
+            <th>
+                Image Path
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (Product product in products)
+        {
+            <tr>
+                <td>
+                    @product.ProductName
+                </td>
+                <td>
+                    @product.ProductDescription
+                </td>
+                <td>
+                    $ @product.UnitPrice
+                </td>
+                <td>
+                    @product.DownloadLink
+                </td>
+                <td>
+                    @product.ImagePath
+                </td>
+                <td style="white-space:nowrap">
+                    <a asp-action="Edit" asp-route-id="@product.Id"><img src="~/img/pencil-fill.svg"></a>
+                    <a asp-action="Delete" asp-route-id="@product.Id"><img src="~/img/trash-fill.svg" class="ml-1"></a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
