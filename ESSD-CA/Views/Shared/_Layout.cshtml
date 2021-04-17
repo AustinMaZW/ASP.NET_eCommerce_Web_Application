@@ -13,7 +13,6 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - .NET Core CA Project</title>
-    @*<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">*@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/navbar.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
@@ -112,7 +111,7 @@
                                     var count = HttpContextAccessor.HttpContext.Session.GetInt32("ShoppingCartIcon");
                                 }
                                 <img src="/img/shopping-cart.png" width="25" /> &nbsp; 
-                                <span class="badge" style="border-radius: 30px; padding: 7px 11px; background-color: #777; color: #fff">
+                                <span class="badge" style="border-radius: 30px; padding: 7px 11px;">
                                     @count
                                 </span>
                             </a>
