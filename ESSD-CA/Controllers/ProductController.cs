@@ -34,7 +34,7 @@ namespace ESSD_CA.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ProductName,ProductDescription,UnitPrice,DownloadLink,ImagePath")] Product product)
+        public async Task<IActionResult> Create([Bind("Id,ProductName,ProductDescription,UnitPrice,DownloadLink,ImagePath,ProductStatus")] Product product)
         {
             if (ModelState.IsValid)
             {
