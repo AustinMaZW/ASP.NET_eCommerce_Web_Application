@@ -282,8 +282,8 @@ namespace ESSD_CA.Db
                     Name = userNames[i],
                     Email = userEmails[i],
                     Message = userMessages[i],
-                    EnquiryStatus = "pending"
-                });
+                    EnquiryStatus = false
+                }); ;
             }
             db.SaveChanges();
         }
