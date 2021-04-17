@@ -80,7 +80,8 @@ namespace ESSD_CA.Db
                     UnitPrice = unitPrice[i],
                     DownloadLink = downloadLink[i],
                     ImagePath = imagePath[i],
-                });
+                    ProductStatus = "Available"
+                }) ;
 
                 db.SaveChanges();
             }
