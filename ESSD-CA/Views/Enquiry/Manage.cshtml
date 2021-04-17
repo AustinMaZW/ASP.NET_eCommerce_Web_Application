@@ -14,7 +14,7 @@
         <tr class="header">
             <td style="width:25rem"><b>Customer Name</b></td>
             <td style="width:75rem"><b>Message</b></td>
-            <td style="width:25rem"><b>Enquiry Status</b></td>
+            <td style="width:25rem; padding-right:2rem"><b>Enquiry Status</b></td>
             <td style="width:10rem"></td>
         </tr>
     </thead>
@@ -24,17 +24,17 @@
             {
                 for (var i = 0; i < CustomerMessage.Count; i++)
                 {
+                    if (CustomerMessage[i].EnquiryStatus == false)
+                    {
                     <tr>
                         <td><a href="mailto:@CustomerMessage[i].Email">@CustomerMessage[i].Name</a></td>
                         <td>@CustomerMessage[i].Message</td>
-                        <td>
-                            @if (CustomerMessage[i].EnquiryStatus == false)
-                            {<b style="text-align:center">pending</b>}
-                        </td>
+                        <td><b style="text-align:center">Pending</b></td>
                         <td><a href="#" message_id="@CustomerMessage[i].Id" class="btn btn-primary" role="button" aria-pressed="true">Complete & Archive</a> </td>
                     </tr>
+                        }
+                    }
                 }
             }
-        }
     </tbody>
 </table>
