@@ -13,10 +13,12 @@ namespace ESSD_CA.Controllers
     public class ProductController : Controller
     {
         private readonly DbESSDCA db;
+
         public ProductController(DbESSDCA db)
         {
             this.db = db;
         }
+
         public IActionResult Index()
         {
             List<Product> products = db.Products.OrderBy(s => s.ProductName).OrderBy(s => s.ProductStatus).ToList();  //retrieving products from database and putting into a list
@@ -112,7 +114,6 @@ namespace ESSD_CA.Controllers
             }
             return View(product);
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]

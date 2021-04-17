@@ -13,7 +13,6 @@ namespace ESSD_CA.Controllers
     public class LoginController : Controller
     {
         private readonly DbESSDCA db;
-        
 
         public LoginController(DbESSDCA db)
         {
@@ -30,40 +29,32 @@ namespace ESSD_CA.Controllers
             return View();
         }
 
-        //Test out only (TO BE DELETED)
-        //public IActionResult ValidateSession()
-        //{
-        //    string sessionId = Request.Cookies["sessionId"];
-        //    if (sessionId != null)
-        //    {
-        //        return Redirect(Request.Headers["Referer"].ToString());
-        //    }
-        //    return View("Index", "Login");
-        //}
-
-
         [HttpPost]
         public IActionResult Index (string username, string password)
         {
-            User user = db.Users.FirstOrDefault(x => x.Username == username &&
-                x.Password == password);
             string sessionId = Request.Cookies["sessionId"];
             if (sessionId != null)
                 return RedirectToAction("Index", "ShopGallery");
-                            
+
+            User user = db.Users.FirstOrDefault(x => x.Username == username &&
+                x.Password == password);
             if (user != null)
             {
                 CheckForGuestCart(user);
                 UpdateCartIcon(user);
 
-                HttpContext.Session.SetString("AccountType", user.AccountType);     // to set account type to session id
-
                 user.SessionId = Guid.NewGuid().ToString();
                 db.Users.Update(user);
                 db.SaveChanges();
+
                 HttpContext.Session.SetString("uname",user.Username);
                 Response.Cookies.Append("sessionId", user.SessionId);
                 Response.Cookies.Append("username", user.Username);
+                HttpContext.Session.SetString("AccountType", user.AccountType); // to set account type to session id
+
+                if (user.AccountType.Equals("Admin"))
+                    return RedirectToAction("Index", "Product");
+
                 return RedirectToAction("Index", "ShopGallery");
             }
 
@@ -71,6 +62,7 @@ namespace ESSD_CA.Controllers
             {
                 ViewData["username"] = username;
                 ViewData["errLogin"] = "Please enter valid username and password.";
+
                 return View("Index");
             }
         }
