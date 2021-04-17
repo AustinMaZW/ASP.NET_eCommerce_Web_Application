@@ -26,7 +26,6 @@ namespace ESSD_CA.Models
         [MaxLength(2000)]
         public string Message { get; set; }
         
-        [MaxLength(30)]
         public bool EnquiryStatus { get; set; }
         public DateTime MessageDate{ get; set; }
         
