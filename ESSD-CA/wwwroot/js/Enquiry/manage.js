@@ -1,5 +1,5 @@
 ﻿window.onload = function () {
-    let updatebtns = document.getElementsByClassName("btn");
+    let updatebtns = document.getElementsByClassName("CnA");
 
     for (let i = 0; i < updatebtns.length; i++) 
         updatebtns[i].addEventListener("click", onArchive);
@@ -8,7 +8,7 @@
 
 function onArchive(event) {
     let elem = event.currentTarget;
-    var messageId = document.getElementById("message_id");
+    var messageId = document.getElementsByClassName("CnA")[0].getAttribute("id");
 
     sendArchive(true, messageId);
 }

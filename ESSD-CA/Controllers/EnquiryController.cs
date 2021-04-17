@@ -53,9 +53,17 @@ namespace ESSD_CA.Controllers
 
             return View();
         }
-        public IActionResult Archive([FromBody] CustomerMessage message)
+
+        public JsonResult Archive([FromBody] MessageStatus message)
         {
+            Debug.WriteLine("Message ID: " + message.Id);
             Debug.WriteLine("Status: " + message.EnquiryStatus);
+
+            CustomerMessage customerMessage =  db.CustomerMessages.FirstOrDefault(x => x.Id == message.Id);
+            customerMessage.EnquiryStatus = message.EnquiryStatus;
+            db.Update(customerMessage);
+            db.SaveChanges();
+
 
             return Json(new { success = true });
         }
