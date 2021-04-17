@@ -2,8 +2,9 @@
     var CustomerMessage = (List<CustomerMessage>)ViewData["CustomerMessages"];    
 }
 
-@*@section Scripts{
-}*@
+@section Scripts{
+    <script src="~/js/Enquiry/manage.js"></script>  
+}
 
 <table id="manage_enquiries" style="padding:initial">
     <thead>
@@ -11,10 +12,10 @@
             <td style="width:25rem"><b>Customer Name</b></td>
             <td style="width:75rem"><b>Message</b></td>
             <td style="width:25rem"><b>Enquiry Status</b></td>
-            <td style="width:10rem"><b>Update</b></td>
+            <td style="width:10rem"></td>
         </tr>
     </thead>
-    <tbody>
+    <tbody id="tbd">
         @{
             if (CustomerMessage != null)
             {
@@ -23,7 +24,11 @@
                 <tr>
                     <td><a href="mailto:@CustomerMessage[i].Email">@CustomerMessage[i].Name</a></td>
                     <td>@CustomerMessage[i].Message</td>
-                    <td>@CustomerMessage[i].EnquiryStatus</td>
+                    <td>
+                    @if (CustomerMessage[i].EnquiryStatus == false)
+                    {<b>pending</b>}
+                    </td>
+                    <td><a href="#" message_id="@CustomerMessage[i].Id" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Complete & Archive</a> </td>
                 </tr>
                 }
             }
