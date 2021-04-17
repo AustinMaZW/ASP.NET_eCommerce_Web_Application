@@ -20,6 +20,7 @@ namespace ESSD_CA.Db
             //add code for generating data
             AddProduct();
             AddUser();
+            AddCustomerEnquiries();
             //AddPurchaseOrderAndDetails(); // just for testing
             /*AddPO(); // for populating PO only, to be deleted
             AddPOD();*/ // for populating PODetail only, to be deleted
@@ -28,7 +29,7 @@ namespace ESSD_CA.Db
         private void AddProduct()
         {
             string[] productNames = { "Photoshop Elements 2021", "Successful Software Manager", "Software Estimation", "Code Complete 2", "More Effective Agile" };
-            string[] productDescription = 
+            string[] productDescription =
                 { "Deliver the photo editing power that non-professional photographers and designers need to get eye-catching and art-quality results.",
                 "The definitive guide to growing from developer to manager.",
                 "Unravels the mystery to successful software estimation - distilling academic information and real-world experience into a practical guide for working software professionals.",
@@ -112,8 +113,8 @@ namespace ESSD_CA.Db
             string[] purchaseDate = { "1/4/2021", "1/12/2021", "2/15/2021" }; // MM/dd/yyyy
             double[] grandTotal = { 128.0, 90.5, 110.7 };
             string[] poId = new string[3];
-            for (int i=0; i< poId.Length; i++)
-            { 
+            for (int i = 0; i < poId.Length; i++)
+            {
                 poId[i] = Guid.NewGuid().ToString();
             }
             // add two orders for user1
@@ -218,7 +219,7 @@ namespace ESSD_CA.Db
             db.SaveChanges();
         }
 
-         // To be deleted, for populating PODetail only
+        // To be deleted, for populating PODetail only
         private void AddPOD()
         {
             db.PODetails.AddRange(new PurchaseOrderDetails[]
@@ -262,6 +263,29 @@ namespace ESSD_CA.Db
             });
             db.SaveChanges();
 
+        }
+        private void AddCustomerEnquiries()
+        {
+            string[] userNames = { "John", "Mary", "Jane"};
+            string[] userEmails = { "john@email.com", "mary@email.com", "jane@email.com"};
+            string[] userMessages =
+                {"Hi, what types of license are available for the ebook 'PhotoshopElements2021'?",
+                 "I'm looking to bulk license 'CodeComplete2', do you have a separate quotation for this?",
+                 "Are your e-book licenses two-year terms/limit in perpetuity?",
+                };
+
+            for (int i = 0; i < userMessages.Length; i++)
+            {
+                db.CustomerMessages.Add(new CustomerMessage
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = userNames[i],
+                    Email = userEmails[i],
+                    Message = userMessages[i],
+                    EnquiryStatus = false
+                }); ;
+            }
+            db.SaveChanges();
         }
 
     }

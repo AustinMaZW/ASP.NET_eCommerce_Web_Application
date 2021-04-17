@@ -2,6 +2,13 @@
 @inject IHttpContextAccessor HttpContextAccessor
 
 <style>
+    .navbar-anchor {
+        top: 0;
+        left: 0;
+        position: fixed;
+        width: 100%
+    }
+
 
 
 
@@ -38,22 +45,33 @@
                 @if (HttpContextAccessor.HttpContext.Request.Cookies["sessionId"] != null)
                 {
                     <li class="nav-item">
-                        <a class="nav-link txt-dark @ViewData["Is_PurchaseHistory"]" asp-area="" asp-controller="Purchase" asp-action="History">My&nbsp;Purchases</a>
-                    </li>
-                }
-                <li class="nav-item">
-                    <a class="nav-link txt-dark @ViewData["Is_ContactUs"]" asp-area="" asp-controller="Enquiry" asp-action="Index">Contact&nbsp;Us</a>
-                </li>
 
-
-                @* Can use below code to set pages for admin access only*@
-                @if (HttpContextAccessor.HttpContext.Session.GetString("AccountType") == "Admin")
-                {
-                    <li class="nav-item">
-                        <a class="nav-link txt-dark @ViewData["Is_ProductMgmt"]" asp-area="" asp-controller="Product" asp-action="Index">Manage&nbsp;Products</a>
+                        <a class="nav-link txt-dark @ViewData["Is_Gallery"]" asp-area="" asp-controller="ShopGallery" asp-action="Index">Products</a>
                     </li>
-                }
-            </ul>
+                    @if (HttpContextAccessor.HttpContext.Request.Cookies["sessionId"] != null)
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link txt-dark @ViewData["Is_PurchaseHistory"]" asp-area="" asp-controller="Purchase" asp-action="History">My&nbsp;Purchases</a>
+                        </li>
+                    }
+
+                    @* Can use below code to set pages for admin access only*@
+                    @if (HttpContextAccessor.HttpContext.Session.GetString("AccountType") == "Admin")
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link" style="width:10rem" asp-area="" asp-controller="Enquiry" asp-action="Manage">Manage&nbsp;Enquiries</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link txt-dark @ViewData["Is_ProductMgmt"]" asp-area="" asp-controller="Product" asp-action="Index">Manage&nbsp;Products</a>
+                        </li>
+                    }
+                    else
+                    { 
+                        <li class="nav-item">
+                            <a class="nav-link" style="width:10rem" asp-area="" asp-controller="Enquiry" asp-action="Index">Contact&nbsp;Us</a>
+                        </li>
+                    }
+                </ul>
 
             @*Search form*@
             <form class="form-inline container-fluid" asp-controller="ShopGallery" asp-action="Index">

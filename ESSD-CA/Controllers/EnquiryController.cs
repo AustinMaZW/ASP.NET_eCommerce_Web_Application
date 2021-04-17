@@ -33,7 +33,7 @@ namespace ESSD_CA.Controllers
                 PhoneNumber = phone,
                 Message = message,
                 MessageDate = DateTime.Now,
-                EnquiryStatus = "pending"
+                EnquiryStatus = false
             };
             db.CustomerMessages.Add(newMessage);
 
@@ -43,10 +43,17 @@ namespace ESSD_CA.Controllers
         }
         public IActionResult Manage()
         {
+            //to-add: navigate away from page if not admin
+            
             ViewData["CustomerMessages"] = db.CustomerMessages.OrderBy(c=>c.MessageDate).ToList();
 
-            Debug.WriteLine("testing");
             return View();
+        }
+        public IActionResult Archive([FromBody] CustomerMessage message)
+        {
+            Debug.WriteLine("Status: " + message.EnquiryStatus);
+
+            return Json(new { success = true });
         }
     }
 }
