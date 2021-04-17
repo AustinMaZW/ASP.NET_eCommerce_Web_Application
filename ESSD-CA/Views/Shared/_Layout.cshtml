@@ -53,16 +53,16 @@
                     @if (HttpContextAccessor.HttpContext.Session.GetString("AccountType") == "Admin")
                     {
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Enquiry" asp-action="Manage">Manage&nbsp;Enquiries</a>
+                            <a class="nav-link txt-dark @ViewData["Is_ContactMgmt"]" asp-area="" asp-controller="Enquiry" asp-action="Manage">Manage&nbsp;Enquiries</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link @ViewData["Is_ProductMgmt"]" asp-area="" asp-controller="Product" asp-action="Index">Manage&nbsp;Products</a>
+                            <a class="nav-link txt-dark @ViewData["Is_ProductMgmt"]" asp-area="" asp-controller="Product" asp-action="Index">Manage&nbsp;Products</a>
                         </li>
                     }
                     else
                     {
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Enquiry" asp-action="Index">Contact&nbsp;Us</a>
+                            <a class="nav-link txt-dark @ViewData["Is_ContactUs"]" asp-area="" asp-controller="Enquiry" asp-action="Index">Contact&nbsp;Us</a>
                         </li>
                     }
                 </ul>
