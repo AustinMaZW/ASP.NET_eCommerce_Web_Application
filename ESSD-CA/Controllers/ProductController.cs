@@ -19,7 +19,7 @@ namespace ESSD_CA.Controllers
         }
         public IActionResult Index()
         {
-            List<Product> products = db.Products.ToList();  //retrieving products from database and putting into a list
+            List<Product> products = db.Products.OrderBy(s => s.ProductName).OrderBy(s => s.ProductStatus).ToList();  //retrieving products from database and putting into a list
 
             ViewData["Is_ProductMgmt"] = "bold_menu";
             ViewData["products"] = products;    //sending data view ViewData
@@ -34,7 +34,7 @@ namespace ESSD_CA.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ProductName,ProductDescription,UnitPrice,DownloadLink,ImagePath")] Product product)
+        public async Task<IActionResult> Create([Bind("Id,ProductName,ProductDescription,UnitPrice,DownloadLink,ImagePath,ProductStatus")] Product product)
         {
             if (ModelState.IsValid)
             {
