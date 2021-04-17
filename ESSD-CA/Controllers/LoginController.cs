@@ -61,6 +61,7 @@ namespace ESSD_CA.Controllers
                 user.SessionId = Guid.NewGuid().ToString();
                 db.Users.Update(user);
                 db.SaveChanges();
+                HttpContext.Session.SetString("uname",user.Username);
                 Response.Cookies.Append("sessionId", user.SessionId);
                 Response.Cookies.Append("username", user.Username);
                 return RedirectToAction("Index", "ShopGallery");
@@ -107,7 +108,14 @@ namespace ESSD_CA.Controllers
                 }
             }
         }
+        public ActionResult Username()
+        {
+            string sessionid = Request.Cookies["sessionId"];
+            User user = db.Users.FirstOrDefault(x => x.SessionId == sessionid);
+            string username = user.Username;
 
+            return Content(username);
+        }
         private void UpdateCartIcon(User user)
         {
             //below code to show user shopping cart icon count

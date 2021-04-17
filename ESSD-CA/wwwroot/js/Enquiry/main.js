@@ -18,8 +18,12 @@
                 checkcount++;
             }
         }
-        if (checkcount>0)
+        if (checkcount > 0) {
             alert("Oops, looks like there are some missing or incorrect information. ");
+        }
+        else {
+            alert("Message received! We will get back to you within 3 working days. ");
+        }
 
         return check;
     });

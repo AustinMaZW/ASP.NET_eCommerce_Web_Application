@@ -12,7 +12,18 @@
 @section Scripts{
     <script src="~/js/ShopGallery/AddToCart.js"></script>
 }
+<style>
+    .product_qty,
+    .product_price {
+        width: 100%;
+    }
 
+    .add_cart {
+        padding-left: 20px;
+        padding-right: 20px;
+        padding-bottom: 20px;
+    }
+</style>
 <br />
 
 @if (searchString != null)
@@ -28,28 +39,35 @@
 
 
 
-@foreach (Product product in products)
-{
-    <div class="d-inline-flex mt-1 justify-content-center">
-        <div style="width: 14rem;">
-            <div class="card">
-                <img class="card-img rounded" style="height: 9rem;" src="@product.ImagePath">
-                <div class="card-body">
-                    <h5 class="card-title" style="height: 3rem;">@product.ProductName</h5>
-                    <p class="card-text" style="height: 4rem;">@product.ProductDescription</p>
-                    <div class="price text-success" style="height: 0rem;"><h6>S$@product.UnitPrice</h6></div>
-                    <p class="card-text mt-4" style="height: 1rem;">Quantity</p>
-                    <div class="form-inline justify-content-between">
-                        <input type="number" class="form-control w-75" name="count" min="1" max="1000" value="1" />
-                        <button type="button" value="Add to Cart" class="addQuantity btn btn-warning w-25" productId="@product.Id"><img src="~/img/shopping-cart.png" width="20" /></button>
-                        <button type="submit" value="Checkout" class="btn btn-danger flex-grow-1 mt-1" style="width: 100%;">Checkout</button>
+
+<div class="row pb-3 backgroundWhite">
+    @foreach (Product product in products)
+    {
+        <div class="col-lg-3 col-md-6 d-inline-flex">
+
+            <div class="row" style="padding-bottom:20px">
+
+                <div class="col-12" style="border-radius: 5px; ">
+                    <div class="card" style="height:100%">
+                        <img class="card-img rounded" src="@product.ImagePath">
+                        <div class="card-body">
+                            <h5 class="card-title">@product.ProductName</h5>
+                            <p class="card-text">@product.ProductDescription</p>
+                        </div>
+                        <div class="form-inline justify-content-between add_cart">
+                            <div class="price text-success product_price"><h6>S$@product.UnitPrice</h6></div>
+                            <p class="card-text mt-4 product_qty">Quantity</p>
+                            <input type="number" class="form-control w-75" name="count" min="1" max="1000" value="1" />
+                            <button type="button" value="Add to Cart" class="addQuantity btn btn-warning w-25" productId="@product.Id"><img src="~/img/shopping-cart.png" width="20" /></button>
+                            <button type="submit" value="Checkout" class="btn btn-danger flex-grow-1 mt-1" style="width: 100%;">Checkout</button>
+                        </div>
                     </div>
+
                 </div>
+
             </div>
+
         </div>
-    </div>
-}
+    }
 
-
-
-
+</div>
