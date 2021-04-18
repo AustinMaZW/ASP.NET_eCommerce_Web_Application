@@ -8,7 +8,7 @@
 
 function onArchive(event) {
     let elem = event.currentTarget;
-    var messageId = document.getElementsByClassName("CnA")[0].getAttribute("id");
+    var messageId = elem.getAttribute("id");
 
     sendArchive(true, messageId);
 }
@@ -26,7 +26,6 @@ function sendArchive(archive, messageId)
             if (this.status == 200)
             {
                 let data = JSON.parse(this.responseText);
-                parent.location.reload();
             }
         }
     }

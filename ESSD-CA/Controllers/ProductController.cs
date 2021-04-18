@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace ESSD_CA.Controllers
 {
@@ -21,6 +22,11 @@ namespace ESSD_CA.Controllers
 
         public IActionResult Index()
         {
+            if (HttpContext.Session.GetString("AccountType") != "Admin")
+            {
+                return RedirectToAction("Index","ShopGallery");
+            }
+
             List<Product> products = db.Products.OrderBy(s => s.ProductName).OrderBy(s => s.ProductStatus).ToList();  //retrieving products from database and putting into a list
 
             ViewData["Is_ProductMgmt"] = "bold_menu";
@@ -30,6 +36,11 @@ namespace ESSD_CA.Controllers
 
         public IActionResult Create()
         {
+            if (HttpContext.Session.GetString("AccountType") != "Admin")
+            {
+                return RedirectToAction("Index", "ShopGallery");
+            }
+
             ViewData["Is_ProductMgmt"] = "bold_menu";
             return View();
         }
@@ -48,6 +59,11 @@ namespace ESSD_CA.Controllers
         }
         public async Task<IActionResult> Edit(string id)
         {
+            if (HttpContext.Session.GetString("AccountType") != "Admin")
+            {
+                return RedirectToAction("Index", "ShopGallery");
+            }
+
             ViewData["Is_ProductMgmt"] = "bold_menu";
             if (id == null)
             {
@@ -97,6 +113,49 @@ namespace ESSD_CA.Controllers
         private bool ProductExists(string id)
         {
             return db.Products.Any(e => e.Id == id);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Restore(string id, [Bind("Id,ProductName,ProductDescription,UnitPrice,DownloadLink,ImagePath,ProductStatus")] Product product)
+        {
+            if (id != product.Id)
+            {
+                return NotFound();
+            }
+            /*if (id == null)
+            {
+                return NotFound();
+            }
+
+            var product = await db.Products.FindAsync(id);
+            if (product == null)
+            {
+                return NotFound();
+            }*/
+
+            if (ModelState.IsValid)
+            {
+                try
+                {
+                    product.ProductStatus = "Available";
+                    db.Update(product);
+                    await db.SaveChangesAsync();
+                }
+                catch (DbUpdateConcurrencyException)
+                {
+                    if (!ProductExists(product.Id))
+                    {
+                        return NotFound();
+                    }
+                    else
+                    {
+                        throw;
+                    }
+                }
+            }
+
+            return RedirectToAction(nameof(Index));
         }
 
         public async Task<IActionResult> Delete(string id)

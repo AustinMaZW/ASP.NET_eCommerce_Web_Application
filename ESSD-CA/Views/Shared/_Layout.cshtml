@@ -84,13 +84,13 @@
                     {
                         var name = HttpContextAccessor.HttpContext.Request.Cookies["username"];
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="" asp-action="">Hello, @name!</a>
+                            <a class="nav-link" asp-area="" asp-controller="Purchase" asp-action="History">Hello, @name!</a>
                         </li>
                     }
                     else
                     {
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="" asp-action="">Hello, Guest!</a>
+                            <a class="nav-link">Hello, Guest!</a>
                         </li>
                     }
 
