@@ -7,6 +7,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Http;
 
 namespace ESSD_CA.Controllers
 {
@@ -21,6 +22,11 @@ namespace ESSD_CA.Controllers
 
         public IActionResult Index()
         {
+            if (HttpContext.Session.GetString("AccountType") != "Admin")
+            {
+                return RedirectToAction("Index","ShopGallery");
+            }
+
             List<Product> products = db.Products.OrderBy(s => s.ProductName).OrderBy(s => s.ProductStatus).ToList();  //retrieving products from database and putting into a list
 
             ViewData["Is_ProductMgmt"] = "bold_menu";
@@ -30,6 +36,11 @@ namespace ESSD_CA.Controllers
 
         public IActionResult Create()
         {
+            if (HttpContext.Session.GetString("AccountType") != "Admin")
+            {
+                return RedirectToAction("Index", "ShopGallery");
+            }
+
             ViewData["Is_ProductMgmt"] = "bold_menu";
             return View();
         }
@@ -48,6 +59,11 @@ namespace ESSD_CA.Controllers
         }
         public async Task<IActionResult> Edit(string id)
         {
+            if (HttpContext.Session.GetString("AccountType") != "Admin")
+            {
+                return RedirectToAction("Index", "ShopGallery");
+            }
+
             ViewData["Is_ProductMgmt"] = "bold_menu";
             if (id == null)
             {
