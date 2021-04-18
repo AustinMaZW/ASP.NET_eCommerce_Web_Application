@@ -38,7 +38,11 @@ else
                 </div>
 
                 <div class="book-download book-download-lg">
-                    <a href=@history.Product.DownloadLink class="btn btn-block btn-info">Download</a>
+                    <form asp-controller="Purchase" asp-action="DownloadFile" method="post">
+                        <input type="hidden" name="downloadLink" value="@history.Product.DownloadLink" />
+                        <input type="hidden" name="productName" value="@history.Product.ProductName" />
+                        <button type="submit" class="btn btn-block btn-info">Download</button>
+                    </form>
                 </div>
             </div>
             <div class="col-12 col-md-6 mt-auto mb-auto">

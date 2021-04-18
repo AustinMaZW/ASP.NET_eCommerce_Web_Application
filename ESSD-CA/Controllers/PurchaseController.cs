@@ -5,6 +5,9 @@ using System.Linq;
 using ESSD_CA.Models;
 using ESSD_CA.Db;
 using Microsoft.AspNetCore.Http;
+using System.Net;
+using System.IO;
+using System.Diagnostics;
 
 namespace ESSD_CA.Controllers
 {
@@ -164,6 +167,13 @@ namespace ESSD_CA.Controllers
                     HttpContext.Session.GetString("guestId")).ToList().Count();
                 HttpContext.Session.SetInt32("ShoppingCartIcon", count);
             }
+        }
+
+        public FileContentResult DownloadFile(string downloadLink, string productName)
+        {
+            var filePath = Directory.GetCurrentDirectory() + downloadLink;
+
+            return File(System.IO.File.ReadAllBytes(filePath), "application/octet-stream", productName);
         }
     }
 }
