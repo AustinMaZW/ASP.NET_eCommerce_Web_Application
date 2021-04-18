@@ -2,10 +2,12 @@
 using ESSD_CA.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ESSD_CA.Data;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace ESSD_CA.Controllers
@@ -36,37 +38,45 @@ namespace ESSD_CA.Controllers
             if (sessionId != null)
                 return RedirectToAction("Index", "ShopGallery");
 
-            User user = db.Users.FirstOrDefault(x => x.Username == username &&
-                x.Password == password);
-            if (user != null)
+            User user = db.Users.FirstOrDefault(x => x.Username == username /*&& x.Password == hashPassword*/);
+
+            using (MD5 md5Hash = MD5.Create())
             {
-                bool isThereGuestCart = CheckForGuestCart(user);
-                UpdateCartIcon(user);
+                string hashPassword = MD5Hash.Md5hash(md5Hash, password);
 
-                user.SessionId = Guid.NewGuid().ToString();
-                db.Users.Update(user);
-                db.SaveChanges();
+                if (user == null || user.Password != hashPassword)
+                {
+                    ViewData["username"] = username;
+                    ViewData["errLogin"] = "Please enter valid username and password.";
 
-                HttpContext.Session.SetString("uname",user.Username);
-                Response.Cookies.Append("sessionId", user.SessionId);
-                Response.Cookies.Append("username", user.Username);
-                HttpContext.Session.SetString("AccountType", user.AccountType); // to set account type to session id
+                    return View("Index");
+                }
 
-                if (user.AccountType.Equals("Admin"))
-                    return RedirectToAction("Index", "Product");
+                else 
+                {
+                    bool isThereGuestCart = CheckForGuestCart(user);
+                    UpdateCartIcon(user);
 
-                if (isThereGuestCart)
-                    return RedirectToAction("Index", "ShoppingCart");
+                    user.SessionId = Guid.NewGuid().ToString();
+                    db.Users.Update(user);
+                    db.SaveChanges();
 
-                return RedirectToAction("Index", "ShopGallery");
-            }
+                    HttpContext.Session.SetString("uname", user.Username);
+                    Response.Cookies.Append("sessionId", user.SessionId);
+                    Response.Cookies.Append("username", user.Username);
+                    HttpContext.Session.SetString("AccountType", user.AccountType); // to set account type to session id
 
-            else
-            {
-                ViewData["username"] = username;
-                ViewData["errLogin"] = "Please enter valid username and password.";
+                    if (user.AccountType.Equals("Admin"))
+                        return RedirectToAction("Index", "Product");
 
-                return View("Index");
+                    if (isThereGuestCart)
+                        return RedirectToAction("Index", "ShoppingCart");
+
+                    return RedirectToAction("Index", "ShopGallery");
+                }
+
+                
+
             }
         }
 
