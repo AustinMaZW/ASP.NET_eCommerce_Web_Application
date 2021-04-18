@@ -26,7 +26,6 @@ function sendArchive(archive, messageId)
             if (this.status == 200)
             {
                 let data = JSON.parse(this.responseText);
-                parent.location.reload();
             }
         }
     }
