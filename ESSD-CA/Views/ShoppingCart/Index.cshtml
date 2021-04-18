@@ -11,20 +11,25 @@
     <script src="~/js/ShoppingCart/Cart.js"></script>
 }
 
-<div>
-    <a asp-area="" asp-controller="ShopGallery" asp-action="Index"><b>Continue Shopping</b></a>
-    <span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>
-    <a asp-area="" asp-controller="Purchase" asp-action="Checkout"><b id="spaceU">Checkout</b></a>
-    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-    <b style="font-weight: bold;">Total: $</b><b id="totalP" style="font-weight: bold;">@ViewData["TotalPrice"]</b>
+<div class="row" style="width:910px;">
+    <div class="col" style="margin-right:1%;max-width:20%;">
+        <a asp-area="" asp-controller="ShopGallery" asp-action="Index"><b>Continue Shopping</b></a>
+    </div>
+    <span style="margin-right:1%">|</span>
+    <div class="col" style="margin-right:1%;max-width:20%;">
+        <a asp-area="" asp-controller="Purchase" asp-action="Checkout"><b style="margin-right:0%;" id="spaceU">Checkout</b></a>
+    </div>
+    <div class="col" style="margin-right:0%;text-align:right;">
+        <b style="font-weight: bold;">Total: $</b><b id="totalP" style="font-weight: bold;">@ViewData["TotalPrice"]</b>
+    </div>
 </div>
 
-
+<meta name=" viewport " content=" width=device-width, initial-scale=1.0, minimum-scale=0.5, maximum-scale=2.0, user-scalable=yes " />
 <table id="main_cart_page">
     <thead>
         <tr id="first_row">
             <td class="columns_name_img" id="productIMG">Product Photo</td>
-            <td class="columns_name">Product Info</td>
+            <td class="columns_name">Product Name</td>
             <td class="columns_name">Unit Price (S$)</td>
             <td class="columns_name">Quantity</td>
             <td class="columns_name">Total Price (S$)</td>
@@ -40,12 +45,12 @@
                     <tr>
                         <td class="productIMG productInfo itemfontstyle">
                             <div>
-                                <img src="@addItems[i].ImagePath" width="260" height="173" />
+                                <img src="@addItems[i].ImagePath" width="128" height="160" />
                             </div>
-                                
+
                         </td>
                         <td class="productInfo- productInfo">
-                            <span class="itemfontstyle">@addItems[i].ProductDescription</span>
+                            <span class="itemfontstyle">@addItems[i].ProductName</span>
                         </td>
                         <td class="unitPrice productInfo itemfontstyle">
                             @addItems[i].UnitPrice
@@ -56,17 +61,17 @@
                                 nums = items.Find(x => x.ProductId == addItems[i].Id).Count;
                             }
 
-                            <input type="number" class="numberInCart itemfontstyle" min="0" value="@nums" product_id="@addItems[i].Id" oninput="value=value.replace(/[^\d]/g,'')"style="width:70px; border:none;background:#F3F6F9;text-align:center;"/>
+                            <input type="number" class="numberInCart itemfontstyle" min="0" max="1000" value="@nums" product_id="@addItems[i].Id" oninput="value=value.replace(/[^\d]/g,'')" style="width:70px; border:none;background:#F3F6F9;text-align:center;" />
 
                         </td>
                         <td class="productInfo ttprice itemfontstyle">
                             @{
-                                var tt = Math.Round(nums * addItems[i].UnitPrice,2);
+                                var tt = Math.Round(nums * addItems[i].UnitPrice, 2);
                             }
                             <div class="total">@tt</div>
                         </td>
                         <td class="bbt">
-                            <button type="button" class="deleteBtn " product_id="@addItems[i].Id" UseSubmitBehavior="false"><b class="namebtn">Delete</b></button>
+                            <button type="button" class="deleteBtn btn" product_id="@addItems[i].Id" UseSubmitBehavior="false"><b class="namebtn">Delete</b></button>
                         </td>
                     </tr>
                 }
@@ -119,7 +124,7 @@
         font-family: Poppins;
         font-style: normal;
         font-weight: 600;
-        font-size: 12px;
+        font-size: 16px;
         line-height: 18px;
         /* identical to box height */
         @* display: flex;
@@ -130,7 +135,7 @@
     .columns_name_img {
         align-content: center;
         height: 80px;
-        width: 260px;
+        width: 128px;
         height: 43px;
         left: 30px;
         right: 30px;
@@ -140,7 +145,7 @@
         font-family: Poppins;
         font-style: normal;
         font-weight: 600;
-        font-size: 12px;
+        font-size: 16px;
         line-height: 18px;
         /* identical to box height */
         @*        display: flex;*@
@@ -150,12 +155,8 @@
     }
 
     .productIMG {
-        @*        align-content: center;
-        height: 173px;
-        width: 260px;*@
-
-        width: 260px;
-        height: 173px;
+        width: 128px;
+        height: 160px;
         left: 30px;
         top: 113px;
     }
@@ -194,7 +195,7 @@
         height: 34px;
         right: 30px;
         top: 181px;
-        background: #C9F7F5;
+        background: #ff150a;
         border-radius: 6px;
     }
     #first_row {
@@ -204,12 +205,12 @@
 
     .btn:hover {
         color: #fff;
-        background: #0a90f5;
+        background: #ff807a;
     }
 
     .btn:focus {
         color: #fff;
-        background: #0a90f5;
+        background: #ad0200;
         outline: none;
     }
     .namebtn {
@@ -219,9 +220,6 @@
         font-size: 12px;
         line-height: 18px;
         /* identical to box height */
-        color: #1BC5BD;
-    }
-    .deleteBtn {
-        border: none;
+        color: #ffffff;
     }
 </style>
