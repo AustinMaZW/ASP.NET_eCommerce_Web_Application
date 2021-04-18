@@ -46,7 +46,7 @@ namespace ESSD_CA.Db
             double[] unitPrice = { 25.65, 35.99, 19.8, 45.2, 34.95,
                 53.99, 35.99, 25, 22.5, 32.4 }; //44
 
-            string[] downloadLink =
+            string[] downloadLink =         
             {
                 "PhotoshopElements2021.pdf",
                 "SuccessfulSoftwareManager.pdf",
@@ -82,7 +82,7 @@ namespace ESSD_CA.Db
                     ProductName = productNames[i],
                     ProductDescription = productDescription[i],
                     UnitPrice = unitPrice[i],
-                    DownloadLink = "/products/pdf/" + downloadLink[i],
+                    DownloadLink = "/Download/pdf/" + downloadLink[i],
                     ImagePath = "/products/img/" + imagePath[i],
                     ProductStatus = "Available"
                 }) ;
