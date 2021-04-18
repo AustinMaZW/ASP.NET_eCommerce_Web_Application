@@ -40,7 +40,7 @@ namespace ESSD_CA.Controllers
                 x.Password == password);
             if (user != null)
             {
-                CheckForGuestCart(user);
+                bool isThereGuestCart = CheckForGuestCart(user);
                 UpdateCartIcon(user);
 
                 user.SessionId = Guid.NewGuid().ToString();
@@ -55,6 +55,9 @@ namespace ESSD_CA.Controllers
                 if (user.AccountType.Equals("Admin"))
                     return RedirectToAction("Index", "Product");
 
+                if (isThereGuestCart)
+                    return RedirectToAction("Index", "ShoppingCart");
+
                 return RedirectToAction("Index", "ShopGallery");
             }
 
@@ -67,14 +70,14 @@ namespace ESSD_CA.Controllers
             }
         }
 
-        private void CheckForGuestCart(User user)
+        private bool CheckForGuestCart(User user)
         {
             // check if a guest shopping cart exists that matches user session
             string guestId = HttpContext.Session.GetString("guestId");
             List<ShoppingCart> guestCartObjs = db.ShoppingCarts.Where(x => x.GuestId
                 == guestId).ToList();
 
-            if (guestCartObjs != null)
+            if (guestCartObjs.Count > 0)
             {
                 foreach (ShoppingCart cartObj in guestCartObjs)
                 {
@@ -98,7 +101,10 @@ namespace ESSD_CA.Controllers
                     }
                     db.SaveChanges();
                 }
+
+                return true;
             }
+            return false;
         }
         public ActionResult Username()
         {
