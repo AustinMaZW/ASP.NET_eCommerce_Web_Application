@@ -30,7 +30,7 @@ namespace ESSD_CA.Db
         {
             string[] productNames = { "Photoshop Elements 2021", "Successful Software Manager", "Software Estimation", "Code Complete 2", "More Effective Agile",
                 "Adobe Photoshop Classroom in a Book", "Python Basics", "System Design Interview", "SQL Quick Start Guide", "C# 9 and .NET 5",
-                "Java: The Complete Reference" };
+                 }; // additional for demo purpose - "Java: The Complete Reference"
             string[] productDescription =
                 { "Deliver the photo editing power that non-professional photographers and designers need to get eye-catching and art-quality results.",
                 "The definitive guide to growing from developer to manager.",
@@ -41,20 +41,11 @@ namespace ESSD_CA.Db
                 "Your Complete Python Curriculum—With Exercises, Interactive Quizzes, and Sample Projects.",
                 "Second Edition, Provides a step-by-step framework on how to tackle a system design question.",
                 "The Simplified Beginner's Guide to Managing, Analyzing, and Manipulating Data With SQL.",
-                "Build intelligent apps, websites, and services with Blazor, ASP.NET Core, and Entity Framework Core using Visual Studio Code, 5th Edition.",
-                "The Complete Reference, Eleventh Edition explains how to develop, compile, debug, and run Java programs." };
+                "Build intelligent apps, websites, and services with Blazor, ASP.NET Core, and Entity Framework Core using Visual Studio Code, 5th Edition."};
+            // for demo - "The Complete Reference, Eleventh Edition explains how to develop, compile, debug, and run Java programs." 
             double[] unitPrice = { 25.65, 35.99, 19.8, 45.2, 34.95,
-                53.99, 35.99, 25, 22.5, 32.4,
-                44 };
-            // to replace with real links later
-            /*string[] downloadLink =
-            {
-                "https://images.unsplash.com/photo-1482012792084-a0c3725f289f?w=350",
-                "https://images.unsplash.com/photo-1464454709131-ffd692591ee5?w=350",
-                "https://images.unsplash.com/photo-1471194402529-8e0f5a675de6?w=350",
-                "https://images.unsplash.com/photo-1438907046657-4ae137eb8c5e?w=350",
-                "https://images.unsplash.com/photo-1453487021979-5b739b2849f4?w=350"
-            };*/
+                53.99, 35.99, 25, 22.5, 32.4 }; //44
+
             string[] downloadLink =
             {
                 "PhotoshopElements2021.pdf",
@@ -67,17 +58,9 @@ namespace ESSD_CA.Db
                 "SystemDesignInterview.pdf",
                 "SQLQuickStart.pdf",
                 "CSharp9andDotNet5.pdf",
-                "JavaCompleteReference.pdf"
-            };
-            // to replace with real links later
-            /*string[] imagePath =
-            {
-                "https://images.unsplash.com/photo-1482012792084-a0c3725f289f?w=350",
-                "https://images.unsplash.com/photo-1464454709131-ffd692591ee5?w=350",
-                "https://images.unsplash.com/photo-1471194402529-8e0f5a675de6?w=350",
-                "https://images.unsplash.com/photo-1438907046657-4ae137eb8c5e?w=350",
-                "https://images.unsplash.com/photo-1453487021979-5b739b2849f4?w=350"
-            };*/
+                
+            }; //for demo "JavaCompleteReference.pdf"
+
             string[] imagePath =
             {
                 "PhotoshopElements2021.jpg",
@@ -89,9 +72,8 @@ namespace ESSD_CA.Db
                 "PythonBasics.jpg",
                 "SystemDesignInterview.jpg",
                 "SQLQuickStart.jpg",
-                "CSharp9andDotNet5.jpg",
-                "JavaCompleteReference.jpg"
-            };
+                "CSharp9andDotNet5.jpg"
+            }; // for demo "JavaCompleteReference.jpg"
             for (int i = 0; i < productNames.Length; i++)
             {
                 db.Products.Add(new Product

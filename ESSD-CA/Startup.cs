@@ -65,9 +65,12 @@ namespace ESSD_CA
                     pattern: "{controller=ShopGallery}/{action=Index}/{id?}");
             });
 
-            db.Database.EnsureDeleted();    // Delete all existing Tables
-            db.Database.EnsureCreated();    // Recreate Tables
-            new DbSeedData(db).Init();      // seed our database with data
+            if (! db.Database.CanConnect())
+            {
+                db.Database.EnsureCreated();    // create db 
+                new DbSeedData(db).Init();      // seed our database with data
+            }
+            
 
         }
     }
