@@ -8,7 +8,7 @@
         deletes[i].addEventListener("click", Delete);
     }
 }
-function checkOut()
+function checkOut(event)
 {
     let checkOutTags = document.getElementsByClassName("checkOutTag");
     for (var i = 0; i < checkOutTags.length; i++)
