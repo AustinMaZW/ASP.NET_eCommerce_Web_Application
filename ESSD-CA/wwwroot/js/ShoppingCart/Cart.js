@@ -4,37 +4,11 @@
     let checkOutLink = document.getElementById("check-out");    //add event to check unavailable item
     checkOutLink.addEventListener("click", checkOut);
     for (var i = 0; i < inputs.length; i++) {
-        inputs[i].addEventListener("click", changeIn);     //Add event to check numbers' change of input tags
+        inputs[i].addEventListener("change", changeIn);     //Add event to check numbers' change of input tags
         deletes[i].addEventListener("click", DeleteItem);
     }
 }
 
-function add()
-{
-    let elemBTN = event.currentTarget;
-    let adds = document.getElementsByClassName("addBtn");
-    let inputs_price = document.getElementsByClassName("numberInCart");
-    for (var t = 0; t < adds.length; t++)
-    {
-        if (adds[t] == elemBTN)
-        {
-            inputs_price[t].value = Number(inputs_price[t].value) + 1;
-            inputs_price[t].click();
-
-        }
-    }
-}
-function sub() {
-    let elemBTN = event.currentTarget;
-    let adds = document.getElementsByClassName("subBtn");
-    let inputs_price = document.getElementsByClassName("numberInCart");
-    for (var t = 0; t < adds.length; t++) {
-        if (adds[t] == elemBTN) {            
-            inputs_price[t].value = Number(inputs_price[t].value) - 1;
-            inputs_price[t].click();
-        }
-    }
-}
 function checkOut(event)    //check unavailable item when click the checkout link
 {
     let checkOutTags = document.getElementsByClassName("checkOutTag");
@@ -65,7 +39,13 @@ function DeleteItem(event)      //delete the product when click the delete butto
     sendNumOption(0, elem.getAttribute("product_id"));    
     var tbody = document.getElementById("tbd");    
     tbody.removeChild(this.parentNode.parentNode);
-    ComputeCost();
+    let totals = document.getElementsByClassName("total");
+    let divtotal = document.getElementById("totalP");
+    var totalPrice = 0;
+    for (var i = 0; i < totals.length; i++) {
+        totalPrice += Number(totals[i].innerHTML);
+    }
+    divtotal.innerHTML = Number(totalPrice.toFixed(2));
     
 }
 function changeIn(event)    //change the number of items / recalculate the total cost
@@ -75,9 +55,14 @@ function changeIn(event)    //change the number of items / recalculate the total
         sendNumOption(Number(elem.value), elem.getAttribute("product_id"));
         var tbody = document.getElementById("tbd");
         tbody.removeChild(this.parentNode.parentNode);
-        let totals = document.getElementsByClassName("total");
         //compute the total cost
-        ComputeCost();
+        let totals = document.getElementsByClassName("total");
+        let divtotal = document.getElementById("totalP");
+        var totalPrice = 0;
+        for (var i = 0; i < totals.length; i++) {
+            totalPrice += Number(totals[i].innerHTML);
+        }
+        divtotal.innerHTML = Number(totalPrice.toFixed(2));
     }
     else{                                       //if number not less and equal to 0, mean number of products change
         sendNumOption(Number(elem.value), elem.getAttribute("product_id"));
@@ -87,8 +72,9 @@ function changeIn(event)    //change the number of items / recalculate the total
         let prices = document.getElementsByClassName("unitPrice");
         for (var i = 0; i < input.length; i++)
         {
-            if (input[i] === elem)
+            if (input[i] === elem )
             {
+                if (totals[i].innerHTML === "Not Available!" )
                 totals[i].innerHTML = Number((Number(prices[i].innerHTML) * Number(elem.value)).toFixed(2));
             }
         }
