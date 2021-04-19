@@ -43,7 +43,10 @@ function DeleteItem(event)      //delete the product when click the delete butto
     let divtotal = document.getElementById("totalP");
     var totalPrice = 0;
     for (var i = 0; i < totals.length; i++) {
-        totalPrice += Number(totals[i].innerHTML);
+        if (totals[i].innerHTML != "Not Available!") {
+            totalPrice += Number(totals[i].innerHTML);
+        }
+        
     }
     divtotal.innerHTML = Number(totalPrice.toFixed(2));
     
@@ -83,7 +86,10 @@ function changeIn(event)    //change the number of items / recalculate the total
         var totalPrice = 0;
         for (var i = 0; i < totals.length; i++)
         {
-            totalPrice += Number(totals[i].innerHTML);
+
+            if (totals[i].innerHTML != "Not Available!") {
+                totalPrice += Number(totals[i].innerHTML);
+            }
         }
         divtotal.innerHTML = Number(totalPrice.toFixed(2));
     }
