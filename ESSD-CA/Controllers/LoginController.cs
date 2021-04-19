@@ -120,8 +120,14 @@ namespace ESSD_CA.Controllers
 
         private void UpdateCartIcon(User user)
         {
-            //below code to show user shopping cart icon count
-            int count = db.ShoppingCarts.Where(x => x.UserId == user.UserId).ToList().Count();
+            //below for setting up shop cart icon count
+
+            List<ShoppingCart> items = db.ShoppingCarts.Where(x => x.UserId == user.UserId).ToList();
+            int count = 0;
+            foreach (ShoppingCart item in items)
+            {
+                count += item.Count;
+            }
             HttpContext.Session.SetInt32("ShoppingCartIcon", count);
         }
     }
