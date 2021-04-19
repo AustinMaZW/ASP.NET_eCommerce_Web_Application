@@ -19,7 +19,6 @@ function add()
         if (adds[t] == elemBTN)
         {
             inputs_price[t].value = Number(inputs_price[t].value) + 1;
-            ComputeCost();
             inputs_price[t].click();
 
         }
