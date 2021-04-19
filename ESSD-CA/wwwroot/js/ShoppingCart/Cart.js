@@ -2,7 +2,7 @@
     let inputs = document.getElementsByClassName("numberInCart");
     let deletes = document.getElementsByClassName("deleteBtn");
     let checkOutLink = document.getElementById("check-out");    //add event to check unavailable item
-    checkOutLink.addEventListener("click",checkOut);
+    checkOutLink.addEventListener("click", checkOut);
     for (var i = 0; i < inputs.length; i++) {
         inputs[i].addEventListener("change", changeIn);     //Add event to check numbers' change of input tags
         deletes[i].addEventListener("click", DeleteItem);       //add event to check delete button
@@ -89,9 +89,10 @@ function sendNumOption(nums, productId)         //send the JSON to the server
             {
                 let data = JSON.parse(this.responseText);
                 console.log("Operation Status: " + data.success);
-                if (nums === 0) {           //when product numbers in any one input tag is going to delete, refresh the parent frame to change the icon number
+                parent.location.reload();
+/*                if (nums === 0) {           //when product numbers in any one input tag is going to delete, refresh the parent frame to change the icon number
                     parent.location.reload();
-                }             
+                } */            
             }
         }
     }
