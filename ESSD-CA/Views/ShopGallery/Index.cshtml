@@ -54,12 +54,15 @@
                             <h5 class="card-title">@product.ProductName</h5>
                             <p class="card-text">@product.ProductDescription</p>
                         </div>
-                        <div class="form-inline justify-content-between add_cart">
-                            <div class="price text-success product_price"><h6>S$@product.UnitPrice</h6></div>
-                            <p class="card-text mt-4 product_qty">Quantity</p>
-                            <input type="number" class="form-control w-75 h-25" name="count" min="1" max="1000" value="1" />
-                            <button type="button" value="Add to Cart" class="addQuantity btn btn-warning w-25 h-25" productId="@product.Id"><img src="~/img/shopping-cart.png" width="20" /></button>
-                        </div>
+                        <form action="">
+                            <div class="form-inline justify-content-between add_cart">
+                                <div class="price text-success product_price"><h6>S$@product.UnitPrice</h6></div>
+                                <p class="card-text mt-4 product_qty">Quantity</p>
+                                <input type="number" class="form-control w-75 h-25" name="count" min="1" max="1000" value="1" />
+                                <button type="submit" value="Add to Cart" class="addQuantity btn btn-warning w-25 h-25" productId="@product.Id"><img src="~/img/shopping-cart.png" width="20" /></button>
+                            </div>
+                        </form>
+
                     </div>
 
                 </div>

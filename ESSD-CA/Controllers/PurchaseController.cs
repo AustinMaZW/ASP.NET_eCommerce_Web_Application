@@ -181,9 +181,12 @@ namespace ESSD_CA.Controllers
 
         public FileContentResult DownloadFile(string downloadLink, string productName)
         {
+            // set up download directory
             var filePath = Directory.GetCurrentDirectory() + downloadLink;
 
-            return File(System.IO.File.ReadAllBytes(filePath), "application/octet-stream", productName);
+            string fileName = productName + ".pdf";
+
+            return File(System.IO.File.ReadAllBytes(filePath), "application/octet-stream", fileName);
         }
     }
 }

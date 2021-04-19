@@ -52,7 +52,7 @@ namespace ESSD_CA.Controllers
                     return View("Index");
                 }
 
-                else 
+                else
                 {
                     bool isThereGuestCart = CheckForGuestCart(user);
                     UpdateCartIcon(user);
@@ -61,10 +61,7 @@ namespace ESSD_CA.Controllers
                     db.Users.Update(user);
                     db.SaveChanges();
 
-                    HttpContext.Session.SetString("uname", user.Username);
-                    Response.Cookies.Append("sessionId", user.SessionId);
-                    Response.Cookies.Append("username", user.Username);
-                    HttpContext.Session.SetString("AccountType", user.AccountType); // to set account type to session id
+                    SetSessionData(user);
 
                     if (user.AccountType.Equals("Admin"))
                         return RedirectToAction("Index", "Product");
@@ -74,10 +71,14 @@ namespace ESSD_CA.Controllers
 
                     return RedirectToAction("Index", "ShopGallery");
                 }
-
-                
-
             }
+        }
+
+        private void SetSessionData(User user)
+        {
+            Response.Cookies.Append("sessionId", user.SessionId);
+            HttpContext.Session.SetString("uname", user.Username);
+            HttpContext.Session.SetString("AccountType", user.AccountType);     // to save account type for navigation and validation of admin
         }
 
         private bool CheckForGuestCart(User user)
@@ -116,14 +117,7 @@ namespace ESSD_CA.Controllers
             }
             return false;
         }
-        public ActionResult Username()
-        {
-            string sessionid = Request.Cookies["sessionId"];
-            User user = db.Users.FirstOrDefault(x => x.SessionId == sessionid);
-            string username = user.Username;
 
-            return Content(username);
-        }
         private void UpdateCartIcon(User user)
         {
             //below code to show user shopping cart icon count

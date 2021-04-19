@@ -80,9 +80,9 @@
 
 
                     @*Use IHttpContextAccessor injection to retrieve session key value pair*@
-                    @if (HttpContextAccessor.HttpContext.Request.Cookies["username"] != null)
+                    @if (HttpContextAccessor.HttpContext.Session.GetString("uname") != null)
                     {
-                        var name = HttpContextAccessor.HttpContext.Request.Cookies["username"];
+                        var name = HttpContextAccessor.HttpContext.Session.GetString("uname");
                         <li class="nav-item">
                             <a class="nav-link" asp-area="" asp-controller="Purchase" asp-action="History">Hello, @name!</a>
                         </li>

@@ -123,16 +123,6 @@ namespace ESSD_CA.Controllers
             {
                 return NotFound();
             }
-            /*if (id == null)
-            {
-                return NotFound();
-            }
-
-            var product = await db.Products.FindAsync(id);
-            if (product == null)
-            {
-                return NotFound();
-            }*/
 
             if (ModelState.IsValid)
             {

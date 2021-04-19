@@ -58,10 +58,7 @@ namespace ESSD_CA.Controllers
 
         public IActionResult AddToCart([FromBody] ShoppingCart addItem)
         {
-            if (addItem == null || addItem.Count <= 0) { return RedirectToAction("Index"); }
-
-            Debug.WriteLine("Product Id: " + addItem.ProductId);               //just for debug purposes, can delete
-            Debug.WriteLine("count: " + addItem.Count);
+            if (addItem == null || addItem.Count <= 0 || addItem.Count >1000) { return RedirectToAction("Index"); }
 
             string sessionId = Request.Cookies["sessionId"];
             User user = db.Users.FirstOrDefault(x => x.SessionId == sessionId && x.SessionId != null);
@@ -71,12 +68,10 @@ namespace ESSD_CA.Controllers
             if (user != null)
             {
                 UserAddToCart(addItem, guestId, user);
-
             }
             else
             {
                 GuestAddToCart(addItem, guestId);
-
             }
             return Json(new { success = true });
 
