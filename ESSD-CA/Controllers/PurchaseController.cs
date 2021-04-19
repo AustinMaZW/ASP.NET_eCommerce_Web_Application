@@ -168,13 +168,23 @@ namespace ESSD_CA.Controllers
             User user = db.Users.FirstOrDefault(x => x.SessionId == sessionId && x.SessionId != null);
             if (user != null)
             {
-                int count = db.ShoppingCarts.Where(x => x.UserId == user.UserId).ToList().Count();
+                List<ShoppingCart> items = db.ShoppingCarts.Where(x => x.UserId == user.UserId).ToList();
+                int count = 0;
+                foreach (ShoppingCart item in items)
+                {
+                    count += item.Count;
+                }
                 HttpContext.Session.SetInt32("ShoppingCartIcon", count);
             }
             else
             {
-                int count = db.ShoppingCarts.Where(x => x.GuestId ==
-                    HttpContext.Session.GetString("guestId")).ToList().Count();
+                List<ShoppingCart> items = db.ShoppingCarts.Where(x => x.GuestId ==
+                    HttpContext.Session.GetString("guestId")).ToList();
+                int count = 0;
+                foreach (ShoppingCart item in items)
+                {
+                    count += item.Count;
+                }
                 HttpContext.Session.SetInt32("ShoppingCartIcon", count);
             }
         }
