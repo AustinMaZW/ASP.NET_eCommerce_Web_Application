@@ -76,11 +76,8 @@ function sendNumOption(nums, productId)
                 console.log("Operation Status: " + data.success);
                 if (nums === 0) {
                     parent.location.reload();
-                }
-                
-                
+                }             
             }
-
         }
     }
     xhr.send(JSON.stringify(

@@ -51,28 +51,29 @@
                                 }
                                 <img src="@addItems[i].ImagePath" width="128" height="160" />
                             </div>
-
                         </td>
+
                         <td class="productInfo- productInfo">
                             <span class="itemfontstyle">@addItems[i].ProductName</span>
                         </td>
+
                         <td class="unitPrice productInfo itemfontstyle">
                             @addItems[i].UnitPrice
                         </td>
+
                         <td class="productInfo quantt itemfontstyle">
 
                             @if (addItems[i].ProductStatus != "Available")
                             {
                                 nums = 0;
-                                <input disabled type="number" style="width:70px; border:none;background:#F3F6F9;text-align:center;" />
+                                <input disabled type="number" class="numberInCart itemfontstyle" style="width:70px; border:none;background:#F3F6F9;text-align:center;" />
                             }
                             else
                             {
                                 nums = 0;
                                 nums = items.Find(x => x.ProductId == addItems[i].Id).Count;
-                            <input type="number" class="numberInCart itemfontstyle" min="0" max="1000" value="@nums" product_id="@addItems[i].Id" oninput="value=value.replace(/[^\d]/g,'')" style="width:70px; border:none;background:#F3F6F9;text-align:center;" />
+                                <input type="number" class="numberInCart itemfontstyle" min="0" max="1000" value="@nums" product_id="@addItems[i].Id" oninput="value=value.replace(/[^\d]/g,'')" style="width:70px; border:none;background:#F3F6F9;text-align:center;" />
                             }                          
-
                         </td>
 
                         <td class="productInfo ttprice itemfontstyle">
@@ -89,7 +90,7 @@
                             }
                         </td>
                         <td class="bbt">
-                            <button type="button" class="deleteBtn btn" product_id="@addItems[i].Id" UseSubmitBehavior="false"><b class="namebtn">Delete</b></button>
+                            <button type="button" class="deleteBtn btn" product_id="@addItems[i].Id"><b class="namebtn">Delete</b></button>
                         </td>
                     </tr>
                 }
