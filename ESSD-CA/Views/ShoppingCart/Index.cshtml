@@ -5,6 +5,7 @@
     ViewData["Title"] = "Cart";
     var items = (List<ShoppingCart>)ViewData["userItems"];    //
     var addItems = (List<Product>)ViewData["addItems"];
+    var nums = 0;
 }
 
 @section Scripts{
@@ -43,7 +44,11 @@
                 {
                     <tr>
                         <td class="productIMG productInfo itemfontstyle">
-                            <div>
+                            <div class="bg_img">
+                                @if (addItems[i].ProductStatus != "Available")
+                                {
+                                    <span class="ms">Not Available</span>
+                                }
                                 <img src="@addItems[i].ImagePath" width="128" height="160" />
                             </div>
 
@@ -55,19 +60,33 @@
                             @addItems[i].UnitPrice
                         </td>
                         <td class="productInfo quantt itemfontstyle">
-                            @{
-                                var nums = 0;
-                                nums = items.Find(x => x.ProductId == addItems[i].Id).Count;
-                            }
 
+                            @if (addItems[i].ProductStatus != "Available")
+                            {
+                                nums = 0;
+                                <input disabled type="number" style="width:70px; border:none;background:#F3F6F9;text-align:center;" />
+                            }
+                            else
+                            {
+                                nums = 0;
+                                nums = items.Find(x => x.ProductId == addItems[i].Id).Count;
                             <input type="number" class="numberInCart itemfontstyle" min="0" max="1000" value="@nums" product_id="@addItems[i].Id" oninput="value=value.replace(/[^\d]/g,'')" style="width:70px; border:none;background:#F3F6F9;text-align:center;" />
+                            }                          
 
                         </td>
+
                         <td class="productInfo ttprice itemfontstyle">
                             @{
-                                var tt = Math.Round(nums * addItems[i].UnitPrice, 2);
+                                if (addItems[i].ProductStatus != "Available")
+                                {                                 
+                                    <div>Not Available!</div>
+                                }
+                                else
+                                {
+                                    var tt = Math.Round(nums * addItems[i].UnitPrice, 2);
+                                    <div class="total">@tt</div>
+                                }                                
                             }
-                            <div class="total">@tt</div>
                         </td>
                         <td class="bbt">
                             <button type="button" class="deleteBtn btn" product_id="@addItems[i].Id" UseSubmitBehavior="false"><b class="namebtn">Delete</b></button>
@@ -221,4 +240,22 @@
         /* identical to box height */
         color: #ffffff;
     }
+    .ms {
+        position: absolute;
+        background: #a82327;
+        opacity: 0.8;
+        width: 128px;
+        height: 20px;
+        left: 0;
+        bottom: 0.1px;
+        text-align: center;
+        color: white;
+    }
+
+    .bg_img {
+        position: relative;
+        width: 128px;
+        height: 160px;
+    }
+
 </style>

@@ -27,20 +27,20 @@ namespace ESSD_CA.Controllers
             {
                 ViewData["sessionId"] = sessionId;
                 SetShopIconCount(sessionId);
-                User user = db.Users.FirstOrDefault(x => x.SessionId == sessionId);     //Retrive all users and find the certain user. can be replaced by one code, will change it later.
+                User user = db.Users.FirstOrDefault(x => x.SessionId == sessionId);     //Retrive all users and find the certain user.
                 if (user == null)           //If this user is not exist in database, kick him out to other page
                 {
                     return RedirectToAction("Index", "Logout");
                 }
 
-                RegisteredUserCart(user);
+                RegisteredUserCart(user);   //get the registered user's cart information
                 return View();
 
             }
             else if (guestId != null)
             {
                 
-                GuestUserCart(guestId);
+                GuestUserCart(guestId);     //get the registered user's cart information
                 return View();
             }
             else
@@ -49,11 +49,11 @@ namespace ESSD_CA.Controllers
             }
         }
 
-        public IActionResult AdditemCart([FromBody] ShoppingCart addItem)
+        public IActionResult AdditemCart([FromBody] ShoppingCart addItem)   //update the cart information, including remove, add , update
         {
-            string sessionId = HttpContext.Request.Cookies["sessionId"];
-            string guestId = HttpContext.Session.GetString("guestId");
-            if (!string.IsNullOrEmpty(sessionId))
+            string sessionId = HttpContext.Request.Cookies["sessionId"];        //get session id
+            string guestId = HttpContext.Session.GetString("guestId");          //get guest id
+            if (!string.IsNullOrEmpty(sessionId))                   //judge whether the session id is null or not, if not null this user is login
             {
                 User user = db.Users.First(a => a.SessionId == sessionId);
                 if (user == null)
@@ -95,7 +95,7 @@ namespace ESSD_CA.Controllers
         /// <param name="guestId"></param>
         private void RemoveItems(ShoppingCart addItem,User user, string guestId = null )
         {
-
+            //for deleting the product information, use the guestid and uer id to locate the certain cart.
             ShoppingCart item = db.ShoppingCarts.FirstOrDefault(a => (user == null ? a.GuestId : a.UserId) == (user == null ? guestId : a.UserId) && a.ProductId == addItem.ProductId);
             db.ShoppingCarts.Remove(item);
             db.SaveChanges();
@@ -109,6 +109,7 @@ namespace ESSD_CA.Controllers
         /// <param name="guestId"></param>
         private void UpdateItems(ShoppingCart addItem, User user, string guestId = null)
         {
+            //for updating the product information, use the guestid and uer id to locate the certain cart.
             ShoppingCart item = db.ShoppingCarts.FirstOrDefault(a => (user == null ? a.GuestId:a.UserId) == (user == null ? guestId : a.UserId) && a.ProductId == addItem.ProductId);
             item.Count = addItem.Count;
             db.SaveChanges();
@@ -128,7 +129,7 @@ namespace ESSD_CA.Controllers
             {
                 for (int j = 0; j < productList.Count; j++)
                 {
-                    if (cartList[i].ProductId == productList[j].Id)
+                    if (cartList[i].ProductId == productList[j].Id && productList[j].ProductStatus == "Available")
                     {
                         total += cartList[i].Count * productList[j].UnitPrice;
                     }
@@ -143,17 +144,17 @@ namespace ESSD_CA.Controllers
         /// <param name="user"></param>
         private void RegisteredUserCart(User user)
         {
-            List<ShoppingCart> add_list = db.ShoppingCarts.Where(x => x.UserId == user.UserId).ToList();        // Retrieve carts to list.    
-            ViewData["userItems"] = add_list;       //Deliver to viedata(to the cart page)
+            List<ShoppingCart> add_list = db.ShoppingCarts.Where(x => x.UserId == user.UserId).ToList();        // Retrieve carts' items to list.    
+            ViewData["userItems"] = add_list;       //Deliver to viewdata(to the cart page)
             List<Product> prods = db.Products.ToList();     //Retrieve all product details
-            List<Product> _prods = new List<Product>();
+            List<Product> _prods = new List<Product>();         //create a new list to save the product information that are in the cart
 
             foreach (ShoppingCart it in add_list)
             {
-                _prods.Add(prods.Find(x => x.Id == it.ProductId));          //select products which are in the cart
+                _prods.Add(prods.FirstOrDefault(x => x.Id == it.ProductId));          //select products which are in the cart
             }
             ViewData["addItems"] = _prods;          //deliver the cart items to cart page    //update the sessionId in viewData
-            Calculation(_prods, add_list);
+            Calculation(_prods, add_list);          //compute the total price
         }
 
         /// <summary>
@@ -169,7 +170,7 @@ namespace ESSD_CA.Controllers
             List<Product> _prods = new List<Product>();
             foreach (ShoppingCart it in _guestCart)
             {
-                _prods.Add(prods.Find(x => x.Id == it.ProductId));          //select products which are in the cart
+                _prods.Add(prods.FirstOrDefault(x => x.Id == it.ProductId));          //select products which are in the cart
             }
             ViewData["addItems"] = _prods;      // the products' detail that user added
             Calculation(_prods, _guestCart);
