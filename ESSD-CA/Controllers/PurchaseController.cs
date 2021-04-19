@@ -128,6 +128,16 @@ namespace ESSD_CA.Controllers
 
             if (shoppingCart == null)
                 return RedirectToAction("Product", "Index"); // divert empty shopping cart back to product page.
+            foreach (var sc in shoppingCart)
+            {
+                if (sc.Product.ProductStatus != "Available")
+                {
+
+
+                    return RedirectToAction("Index", "ShoppingCart");
+                }
+            }
+
 
             double totalPrice = PriceCalculation(shoppingCart) - DiscountAmt(/*future argument to be passed*/);
             string orderid = Guid.NewGuid().ToString();
