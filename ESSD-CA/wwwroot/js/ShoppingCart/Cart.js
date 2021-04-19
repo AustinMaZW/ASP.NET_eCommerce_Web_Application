@@ -17,6 +17,7 @@ function checkOut(event)    //check unavailable item when click the checkout lin
         {
             alert("Cannot check out the unavailable items! Please delete the Unavailable item!");
             window.event.returnValue = false;
+            break;
         }
     }
 }
