@@ -62,19 +62,21 @@
                         @addItems[i].UnitPrice
                     </td>
                     @* product quantity *@
-                    <td class="productInfo quantt itemfontstyle">
+                <td class="productInfo quantt itemfontstyle">
 
-                        @if (addItems[i].ProductStatus != "Available")
-                        {
-                            <input disabled type="number" class="numberInCart itemfontstyle" style="width:70px; border:none;background:#F3F6F9;text-align:center;" />
-                        }
-                        else
-                        {
-                            nums = 0;
-                            nums = items.Find(x => x.ProductId == addItems[i].Id).Count;
-                            <input type="number" class="numberInCart itemfontstyle" min="0" max="1000" value="@nums" product_id="@addItems[i].Id" oninput="value=value.replace(/[^\d]/g,'')" style="width:70px; border:none;background:#F3F6F9;text-align:center;" />
-                        }
-                    </td>
+                    @if (addItems[i].ProductStatus != "Available")
+                    {
+                        <input disabled type="number" class="numberInCart itemfontstyle" style="width:70px; border:none;background:#F3F6F9;text-align:center;" />
+                    }
+                    else
+                    {
+                        nums = 0;
+                        nums = items.Find(x => x.ProductId == addItems[i].Id).Count;
+                        <button class="btn subBtn" onclick="sub()">-</button>
+                        <input type="number" class="numberInCart itemfontstyle" min="0" max="1000" value="@nums" product_id="@addItems[i].Id" oninput="value=value.replace(/[^\d]/g,'')" style="width:60px; border:none;background:#F3F6F9;text-align:center;" />
+                        <button class="btn addBtn" onclick="add()">+</button>
+                    }
+                </td>
                     @* total price of each product  *@
                     <td class="productInfo ttprice itemfontstyle">
                         @{

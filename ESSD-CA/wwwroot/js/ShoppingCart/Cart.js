@@ -4,8 +4,36 @@
     let checkOutLink = document.getElementById("check-out");    //add event to check unavailable item
     checkOutLink.addEventListener("click", checkOut);
     for (var i = 0; i < inputs.length; i++) {
-        inputs[i].addEventListener("change", changeIn);     //Add event to check numbers' change of input tags
-        deletes[i].addEventListener("click", DeleteItem);       //add event to check delete button
+        inputs[i].addEventListener("click", changeIn);     //Add event to check numbers' change of input tags
+        deletes[i].addEventListener("click", DeleteItem);
+    }
+}
+
+function add()
+{
+    let elemBTN = event.currentTarget;
+    let adds = document.getElementsByClassName("addBtn");
+    let inputs_price = document.getElementsByClassName("numberInCart");
+    for (var t = 0; t < adds.length; t++)
+    {
+        if (adds[t] == elemBTN)
+        {
+            inputs_price[t].value = Number(inputs_price[t].value) + 1;
+            ComputeCost();
+            inputs_price[t].click();
+
+        }
+    }
+}
+function sub() {
+    let elemBTN = event.currentTarget;
+    let adds = document.getElementsByClassName("subBtn");
+    let inputs_price = document.getElementsByClassName("numberInCart");
+    for (var t = 0; t < adds.length; t++) {
+        if (adds[t] == elemBTN) {            
+            inputs_price[t].value = Number(inputs_price[t].value) - 1;
+            inputs_price[t].click();
+        }
     }
 }
 function checkOut(event)    //check unavailable item when click the checkout link
