@@ -5,7 +5,7 @@
     checkOutLink.addEventListener("click",checkOut);
     for (var i = 0; i < inputs.length; i++) {
         inputs[i].addEventListener("change", changeIn);     //Add event to check numbers' change of input tags
-        deletes[i].addEventListener("click", Delete);       //add event to check delete button
+        deletes[i].addEventListener("click", DeleteItem);       //add event to check delete button
     }
 }
 function checkOut(event)    //check unavailable item when click the checkout link
@@ -32,7 +32,7 @@ function ComputeCost()
     }
     divtotal.innerHTML = Number(totalPrice.toFixed(2));
 }
-function Delete(event)      //delete the product when click the delete button / recalculate the total cost
+function DeleteItem(event)      //delete the product when click the delete button / recalculate the total cost
 {
     let elem = event.currentTarget;
     sendNumOption(0, elem.getAttribute("product_id"));    
