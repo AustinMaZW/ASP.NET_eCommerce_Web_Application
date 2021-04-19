@@ -29,16 +29,12 @@ namespace ESSD_CA.Controllers
                 db.SaveChanges();
             }
 
-            Response.Cookies.Delete("sessionId");
-            Response.Cookies.Delete("username");
-            ResetShopCartSettings();
-
-            HttpContext.Session.Remove("AccountType");
+            ResetSession();
 
             return RedirectToAction("Index", "ShopGallery");
         }
 
-        private void ResetShopCartSettings()
+        private void ResetSession()
         {
             //generate new guest id when log out from db
             string guestId = Guid.NewGuid().ToString();
@@ -46,6 +42,10 @@ namespace ESSD_CA.Controllers
 
             //set shop cart to 0 again
             HttpContext.Session.SetInt32("ShoppingCartIcon", 0);
+
+            Response.Cookies.Delete("sessionId");
+            HttpContext.Session.Remove("uname");
+            HttpContext.Session.Remove("AccountType");
         }
     }
 }
