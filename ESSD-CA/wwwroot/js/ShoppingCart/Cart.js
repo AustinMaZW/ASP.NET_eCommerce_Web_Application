@@ -1,12 +1,24 @@
 ﻿window.onload = function () {
     let inputs = document.getElementsByClassName("numberInCart");
     let deletes = document.getElementsByClassName("deleteBtn");
+    let checkOutLink = document.getElementById("check-out");
+    checkOutLink.addEventListener("click",checkOut);
     for (var i = 0; i < inputs.length; i++) {
         inputs[i].addEventListener("change", changeIn);
         deletes[i].addEventListener("click", Delete);
     }
 }
-
+function checkOut()
+{
+    let checkOutTags = document.getElementsByClassName("checkOutTag");
+    for (var i = 0; i < checkOutTags.length; i++)
+    {
+        if (checkOutTags[i].innerHTML === "Not Available!")
+        {
+            alert("Cannot check out the unavailable items! Please delete the Unavailable item!");
+        }
+    }
+}
 function Delete(event) {
     let elem = event.currentTarget;
     sendNumOption(0, elem.getAttribute("product_id"));    

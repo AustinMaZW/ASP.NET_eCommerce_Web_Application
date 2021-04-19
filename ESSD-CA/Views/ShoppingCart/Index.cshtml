@@ -18,7 +18,7 @@
     </div>
     <span style="margin-right:1%">|</span>
     <div class="col" style="margin-right:1%;max-width:20%;">
-        <a asp-area="" asp-controller="Purchase" asp-action="Checkout"><b style="margin-right:0%;" id="spaceU">Checkout</b></a>
+        <a id="check-out" asp-area="" asp-controller="Purchase" asp-action="Checkout"><b style="margin-right:0%;" id="spaceU">Checkout</b></a>
     </div>
     <div class="col" style="margin-right:0%;text-align:right;">
         <b style="font-weight: bold;">Total: $</b><b id="totalP" style="font-weight: bold;">@ViewData["TotalPrice"]</b>
@@ -42,57 +42,59 @@
             {
                 for (var i = 0; i < addItems.Count; i++)
                 {
-                    <tr>
-                        <td class="productIMG productInfo itemfontstyle">
-                            <div class="bg_img">
-                                @if (addItems[i].ProductStatus != "Available")
-                                {
-                                    <span class="ms">Not Available</span>
-                                }
-                                <img src="@addItems[i].ImagePath" width="128" height="160" />
-                            </div>
-                        </td>
-
-                        <td class="productInfo- productInfo">
-                            <span class="itemfontstyle">@addItems[i].ProductName</span>
-                        </td>
-
-                        <td class="unitPrice productInfo itemfontstyle">
-                            @addItems[i].UnitPrice
-                        </td>
-
-                        <td class="productInfo quantt itemfontstyle">
-
+                <tr>
+                    @* product image *@
+                    <td class="productIMG productInfo itemfontstyle">
+                        <div class="bg_img">
                             @if (addItems[i].ProductStatus != "Available")
                             {
-                                nums = 0;
-                                <input disabled type="number" class="numberInCart itemfontstyle" style="width:70px; border:none;background:#F3F6F9;text-align:center;" />
+                                <span class="ms">Not Available</span>
+                            }
+                            <img src="@addItems[i].ImagePath" width="128" height="160" />
+                        </div>
+                    </td>
+                    @* product name *@
+                    <td class="productInfo- productInfo">
+                        <span class="itemfontstyle">@addItems[i].ProductName</span>
+                    </td>
+                    @* product unit ptice *@
+                    <td class="unitPrice productInfo itemfontstyle">
+                        @addItems[i].UnitPrice
+                    </td>
+                    @* product quantity *@
+                    <td class="productInfo quantt itemfontstyle">
+
+                        @if (addItems[i].ProductStatus != "Available")
+                        {
+                            nums = 0;
+                            <input disabled type="number" class="numberInCart itemfontstyle" style="width:70px; border:none;background:#F3F6F9;text-align:center;" />
+                        }
+                        else
+                        {
+                            nums = 0;
+                            nums = items.Find(x => x.ProductId == addItems[i].Id).Count;
+                            <input type="number" class="numberInCart itemfontstyle" min="0" max="1000" value="@nums" product_id="@addItems[i].Id" oninput="value=value.replace(/[^\d]/g,'')" style="width:70px; border:none;background:#F3F6F9;text-align:center;" />
+                        }
+                    </td>
+                    @* total price of each product  *@
+                    <td class="productInfo ttprice itemfontstyle">
+                        @{
+                            if (addItems[i].ProductStatus != "Available")
+                            {
+                                <div class="checkOutTag">Not Available!</div>
                             }
                             else
                             {
-                                nums = 0;
-                                nums = items.Find(x => x.ProductId == addItems[i].Id).Count;
-                                <input type="number" class="numberInCart itemfontstyle" min="0" max="1000" value="@nums" product_id="@addItems[i].Id" oninput="value=value.replace(/[^\d]/g,'')" style="width:70px; border:none;background:#F3F6F9;text-align:center;" />
-                            }                          
-                        </td>
-
-                        <td class="productInfo ttprice itemfontstyle">
-                            @{
-                                if (addItems[i].ProductStatus != "Available")
-                                {                                 
-                                    <div>Not Available!</div>
-                                }
-                                else
-                                {
-                                    var tt = Math.Round(nums * addItems[i].UnitPrice, 2);
-                                    <div class="total">@tt</div>
-                                }                                
+                                var tt = Math.Round(nums * addItems[i].UnitPrice, 2);
+                                <div class="total checkOutTag">@tt</div>
                             }
-                        </td>
-                        <td class="bbt">
-                            <button type="button" class="deleteBtn btn" product_id="@addItems[i].Id"><b class="namebtn">Delete</b></button>
-                        </td>
-                    </tr>
+                        }
+                    </td>
+                    @* delete button *@
+                    <td class="bbt">
+                        <button type="button" class="deleteBtn btn" product_id="@addItems[i].Id"><b class="namebtn">Delete</b></button>
+                    </td>
+                </tr>
                 }
             }
         }
@@ -105,10 +107,6 @@
 <style>
     #spaceU {
         margin-right:40%;
-    }
-    #position {
-        margin-left: 120px;
-        margin-top: 285px;
     }
 
     table, tr, th, td {
