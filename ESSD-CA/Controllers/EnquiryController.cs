@@ -25,7 +25,6 @@ namespace ESSD_CA.Controllers
         }
         public IActionResult SendMessage(string name, string email, string phone, string message)
         {
-            Debug.WriteLine("Hello");
             CustomerMessage newMessage = new CustomerMessage
             {
                 Id = Guid.NewGuid().ToString(),
@@ -56,14 +55,10 @@ namespace ESSD_CA.Controllers
 
         public JsonResult Archive([FromBody] MessageStatus message)
         {
-            Debug.WriteLine("Message ID: " + message.Id);
-            Debug.WriteLine("Status: " + message.EnquiryStatus);
-
             CustomerMessage customerMessage =  db.CustomerMessages.FirstOrDefault(x => x.Id == message.Id);
             customerMessage.EnquiryStatus = message.EnquiryStatus;
             db.Update(customerMessage);
             db.SaveChanges();
-
 
             return Json(new { success = true });
         }
