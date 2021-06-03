@@ -20,36 +20,57 @@ namespace ESSD_CA.Db
             //add code for generating data
             AddProduct();
             AddUser();
-            //AddPurchaseOrderAndDetails(); // just for testing
-            /*AddPO(); // for populating PO only, to be deleted
-            AddPOD();*/ // for populating PODetail only, to be deleted
+            AddCustomerEnquiries();
         }
 
         private void AddProduct()
         {
-            string[] productNames = { "Retention Graph", "Churn Analysis", "Software Estimation", "Code Complete 2", "More Effective Agile" };
-            string[] productDescription = { "Visual representation of retention rates", "Detailed Analysis of customer churn",
-            "Unravels the mystery to successful software estimation", "A Practical Handbook of Software Construction",
-            "A Roadmap for Software Leaders" };
-            double[] unitPrice = { 120, 299.99, 32.57, 45, 34.95 };
-            // to replace with real links later
-            string[] downloadLink =
+            string[] productNames = { "Photoshop Elements 2021", "Successful Software Manager", "Software Estimation", "Code Complete 2", "More Effective Agile",
+                "Adobe Photoshop Classroom in a Book", "Python Basics", "System Design Interview", "SQL Quick Start Guide", "C# 9 and .NET 5",
+                 }; // additional for demo purpose - "Java: The Complete Reference"
+            string[] productDescription =
+                { "Deliver the photo editing power that non-professional photographers and designers need to get eye-catching and art-quality results.",
+                "The definitive guide to growing from developer to manager.",
+                "Unravels the mystery to successful software estimation - distilling academic information and real-world experience into a practical guide for working software professionals.",
+                "The original CODE COMPLETE has been fully updated and revised with leading-edge practices—and hundreds of new code samples—illustrating the art and science of software construction.",
+                "A Roadmap for Software Leaders covering the practical considerations needed to ensure you reap the full benefits of effective Agile.",
+                "Key step-by-step techniques for working in Photoshop, including how to correct, enhance, and distort digital images, create image composites, and prepare images for print and the web.",
+                "Your Complete Python Curriculum—With Exercises, Interactive Quizzes, and Sample Projects.",
+                "Second Edition, Provides a step-by-step framework on how to tackle a system design question.",
+                "The Simplified Beginner's Guide to Managing, Analyzing, and Manipulating Data With SQL.",
+                "Build intelligent apps, websites, and services with Blazor, ASP.NET Core, and Entity Framework Core using Visual Studio Code, 5th Edition."};
+            // for demo - "The Complete Reference, Eleventh Edition explains how to develop, compile, debug, and run Java programs." 
+            double[] unitPrice = { 25.65, 35.99, 19.8, 45.2, 34.95,
+                53.99, 35.99, 25, 22.5, 32.4 }; //44
+
+            string[] downloadLink =         
             {
-                "https://images.unsplash.com/photo-1482012792084-a0c3725f289f?w=350",
-                "https://images.unsplash.com/photo-1464454709131-ffd692591ee5?w=350",
-                "https://images.unsplash.com/photo-1471194402529-8e0f5a675de6?w=350",
-                "https://images.unsplash.com/photo-1438907046657-4ae137eb8c5e?w=350",
-                "https://images.unsplash.com/photo-1453487021979-5b739b2849f4?w=350"
-            };
-            // to replace with real links later
+                "PhotoshopElements2021.pdf",
+                "SuccessfulSoftwareManager.pdf",
+                "SoftwareEstimation.pdf",
+                "CodeComplete2.pdf",
+                "MoreEffectiveAgile.pdf",
+                "AdobePhotoshopClassroom.pdf",
+                "PythonBasics.pdf",
+                "SystemDesignInterview.pdf",
+                "SQLQuickStart.pdf",
+                "CSharp9andDotNet5.pdf",
+                
+            }; //for demo "JavaCompleteReference.pdf"
+
             string[] imagePath =
             {
-                "https://images.unsplash.com/photo-1482012792084-a0c3725f289f?w=350",
-                "https://images.unsplash.com/photo-1464454709131-ffd692591ee5?w=350",
-                "https://images.unsplash.com/photo-1471194402529-8e0f5a675de6?w=350",
-                "https://images.unsplash.com/photo-1438907046657-4ae137eb8c5e?w=350",
-                "https://images.unsplash.com/photo-1453487021979-5b739b2849f4?w=350"
-            };
+                "PhotoshopElements2021.jpg",
+                "SuccessfulSoftwareManager.jpg",
+                "SoftwareEstimation.jpg",
+                "CodeComplete2.jpg",
+                "MoreEffectiveAgile.jpg",
+                "AdobePhotoshopClassroom.jpg",
+                "PythonBasics.jpg",
+                "SystemDesignInterview.jpg",
+                "SQLQuickStart.jpg",
+                "CSharp9andDotNet5.jpg"
+            }; // for demo "JavaCompleteReference.jpg"
             for (int i = 0; i < productNames.Length; i++)
             {
                 db.Products.Add(new Product
@@ -58,9 +79,10 @@ namespace ESSD_CA.Db
                     ProductName = productNames[i],
                     ProductDescription = productDescription[i],
                     UnitPrice = unitPrice[i],
-                    DownloadLink = downloadLink[i],
-                    ImagePath = imagePath[i],
-                });
+                    DownloadLink = "/Download/pdf/" + downloadLink[i],
+                    ImagePath = "/products/img/" + imagePath[i],
+                    ProductStatus = "Available"
+                }) ;
 
                 db.SaveChanges();
             }
@@ -73,8 +95,7 @@ namespace ESSD_CA.Db
                 new User("john"),
                 new User("mary"),
                 new User("jane"),
-                new User("peter"),
-                new User("admin")
+                new User("peter")
             });
 
             db.Users.Add(new User("admin")
@@ -94,22 +115,22 @@ namespace ESSD_CA.Db
             string[] purchaseDate = { "1/4/2021", "1/12/2021", "2/15/2021" }; // MM/dd/yyyy
             double[] grandTotal = { 128.0, 90.5, 110.7 };
             string[] poId = new string[3];
-            for (int i=0; i< poId.Length; i++)
-            { 
+            for (int i = 0; i < poId.Length; i++)
+            {
                 poId[i] = Guid.NewGuid().ToString();
             }
             // add two orders for user1
             db.Add(new PurchaseOrder
             {
                 OrderId = poId[0],
-                PurchaseDate = DateTime.Now.ToUniversalTime(),
+                PurchaseDate = DateTime.Parse(purchaseDate[0]).ToUniversalTime(),
                 GrandTotal = grandTotal[0],
                 User = users[0] // user1
             });
             db.Add(new PurchaseOrder
             {
                 OrderId = poId[1],
-                PurchaseDate = DateTime.Now.ToUniversalTime(),
+                PurchaseDate = DateTime.Parse(purchaseDate[1]).ToUniversalTime(),
                 GrandTotal = grandTotal[1],
                 User = users[0] // user1
             });
@@ -117,7 +138,7 @@ namespace ESSD_CA.Db
             db.Add(new PurchaseOrder
             {
                 OrderId = poId[2],
-                PurchaseDate = DateTime.Now.ToUniversalTime(),
+                PurchaseDate = DateTime.Parse(purchaseDate[2]).ToUniversalTime(),
                 GrandTotal = grandTotal[2],
                 User = users[1] // user2
             });
@@ -200,7 +221,7 @@ namespace ESSD_CA.Db
             db.SaveChanges();
         }
 
-         // To be deleted, for populating PODetail only
+        // To be deleted, for populating PODetail only
         private void AddPOD()
         {
             db.PODetails.AddRange(new PurchaseOrderDetails[]
@@ -244,6 +265,29 @@ namespace ESSD_CA.Db
             });
             db.SaveChanges();
 
+        }
+        private void AddCustomerEnquiries()
+        {
+            string[] userNames = { "John", "Mary", "Jane"};
+            string[] userEmails = { "john@email.com", "mary@email.com", "jane@email.com"};
+            string[] userMessages =
+                {"Hi, what types of license are available for the ebook 'PhotoshopElements2021'?",
+                 "I'm looking to bulk license 'CodeComplete2', do you have a separate quotation for this?",
+                 "Are your e-book licenses two-year terms/limit in perpetuity?",
+                };
+
+            for (int i = 0; i < userMessages.Length; i++)
+            {
+                db.CustomerMessages.Add(new CustomerMessage
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Name = userNames[i],
+                    Email = userEmails[i],
+                    Message = userMessages[i],
+                    EnquiryStatus = false
+                }); ;
+            }
+            db.SaveChanges();
         }
 
     }

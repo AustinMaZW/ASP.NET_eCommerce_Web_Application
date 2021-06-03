@@ -2,28 +2,34 @@
     For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 *@
 @{
+    ViewData["Title"] = "Cart";
     var items = (List<ShoppingCart>)ViewData["userItems"];    //
     var addItems = (List<Product>)ViewData["addItems"];
+    var nums = 0;
 }
 
 @section Scripts{
     <script src="~/js/ShoppingCart/Cart.js"></script>
 }
 
-<div>
-    <a asp-area="" asp-controller="ShopGallery" asp-action="Index"><b>Continue Shopping</b></a>
-    <span>&nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;</span>
-    <a asp-area="" asp-controller="Purchase" asp-action="Checkout"><b id="spaceU">Checkout</b></a>
-    <span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-    <b style="font-weight: bold;">Total: $</b><b id="totalP" style="font-weight: bold;">@ViewData["TotalPrice"]</b>
+<div class="row" style="width:910px;">
+    <div class="col" style="margin-right:1%;max-width:20%;">
+        <a asp-area="" asp-controller="ShopGallery" asp-action="Index"><b>Continue Shopping</b></a>
+    </div>
+    <span style="margin-right:1%">|</span>
+    <div class="col" style="margin-right:1%;max-width:20%;">
+        <a id="check-out" asp-area="" asp-controller="Purchase" asp-action="Checkout"><b style="margin-right:0%;" id="spaceU">Checkout</b></a>
+    </div>
+    <div class="col" style="margin-right:0%;text-align:right;">
+        <b style="font-weight: bold;">Total: $</b><b id="totalP" style="font-weight: bold;">@ViewData["TotalPrice"]</b>
+    </div>
 </div>
-
 
 <table id="main_cart_page">
     <thead>
         <tr id="first_row">
             <td class="columns_name_img" id="productIMG">Product Photo</td>
-            <td class="columns_name">Product Info</td>
+            <td class="columns_name">Product Name</td>
             <td class="columns_name">Unit Price (S$)</td>
             <td class="columns_name">Quantity</td>
             <td class="columns_name">Total Price (S$)</td>
@@ -36,38 +42,69 @@
             {
                 for (var i = 0; i < addItems.Count; i++)
                 {
-                    <tr>
-                        <td class="productIMG productInfo itemfontstyle">
-                            <div>
-                                <img src="@addItems[i].ImagePath" width="260" height="173" />
-                            </div>
-                                
-                        </td>
-                        <td class="productInfo- productInfo">
-                            <span class="itemfontstyle">@addItems[i].ProductDescription</span>
-                        </td>
-                        <td class="unitPrice productInfo itemfontstyle">
+                <tr>
+                    @* product image *@
+                    <td class="productIMG productInfo itemfontstyle">
+                        <div class="bg_img">
+                            @if (addItems[i].ProductStatus != "Available")
+                            {
+                                <span class="ms">Not Available</span>
+                            }
+                            <img src="@addItems[i].ImagePath" width="128" height="160" />
+                        </div>
+                    </td>
+                    @* product name *@
+                    <td class="productInfo- productInfo">
+                        <span class="itemfontstyle">@addItems[i].ProductName</span>
+                    </td>
+                    @* product unit ptice *@
+                    @if (addItems[i].ProductStatus != "Available")
+                    {
+                        <td class=" productInfo itemfontstyle">
                             @addItems[i].UnitPrice
                         </td>
-                        <td class="productInfo quantt itemfontstyle">
-                            @{
-                                var nums = 0;
-                                nums = items.Find(x => x.ProductId == addItems[i].Id).Count;
-                            }
+                    }
+                    else
+                    {
+                        <td class="unitPrice productInfo itemfontstyle">
 
-                            <input type="number" class="numberInCart itemfontstyle" min="0" value="@nums" product_id="@addItems[i].Id" oninput="value=value.replace(/[^\d]/g,'')"style="width:70px; border:none;background:#F3F6F9;text-align:center;"/>
+                            @addItems[i].UnitPrice
+                        </td>
+                    }
 
-                        </td>
-                        <td class="productInfo ttprice itemfontstyle">
-                            @{
-                                var tt = Math.Round(nums * addItems[i].UnitPrice,2);
+                    @* product quantity *@
+                    <td class="productInfo quantt itemfontstyle">
+
+                        @if (addItems[i].ProductStatus != "Available")
+                        {
+                            <input disabled type="number" class="numberInCart itemfontstyle" style="width:70px; border:none;background:#F3F6F9;text-align:center;" />
+                        }
+                        else
+                        {
+                            nums = 0;
+                            nums = items.Find(x => x.ProductId == addItems[i].Id).Count;
+                            <input type="number" class="numberInCart itemfontstyle" min="0" max="1000" value="@nums" product_id="@addItems[i].Id" oninput="value=value.replace(/[^\d]/g,'')" style="width:60px; border:none;background:#F3F6F9;text-align:center;" />
+                        }
+                    </td>
+                    @* total price of each product  *@
+                    <td class="productInfo ttprice itemfontstyle">
+                        @{
+                            if (addItems[i].ProductStatus != "Available")
+                            {
+                                <div class="total checkOutTag">Not Available!</div>
                             }
-                            <div class="total">@tt</div>
-                        </td>
-                        <td class="bbt">
-                            <button type="button" class="deleteBtn " product_id="@addItems[i].Id" UseSubmitBehavior="false"><b class="namebtn">Delete</b></button>
-                        </td>
-                    </tr>
+                            else
+                            {
+                                var tt = Math.Round(nums * addItems[i].UnitPrice, 2);
+                                <div class="total checkOutTag">@tt</div>
+                            }
+                        }
+                    </td>
+                    @* delete button *@
+                    <td class="bbt">
+                        <button type="button" class="deleteBtn btn" product_id="@addItems[i].Id"><b class="namebtn">Delete</b></button>
+                    </td>
+                </tr>
                 }
             }
         }
@@ -80,10 +117,6 @@
 <style>
     #spaceU {
         margin-right:40%;
-    }
-    #position {
-        margin-left: 120px;
-        margin-top: 285px;
     }
 
     table, tr, th, td {
@@ -118,7 +151,7 @@
         font-family: Poppins;
         font-style: normal;
         font-weight: 600;
-        font-size: 12px;
+        font-size: 16px;
         line-height: 18px;
         /* identical to box height */
         @* display: flex;
@@ -129,7 +162,7 @@
     .columns_name_img {
         align-content: center;
         height: 80px;
-        width: 260px;
+        width: 128px;
         height: 43px;
         left: 30px;
         right: 30px;
@@ -139,7 +172,7 @@
         font-family: Poppins;
         font-style: normal;
         font-weight: 600;
-        font-size: 12px;
+        font-size: 16px;
         line-height: 18px;
         /* identical to box height */
         @*        display: flex;*@
@@ -149,12 +182,8 @@
     }
 
     .productIMG {
-        @*        align-content: center;
-        height: 173px;
-        width: 260px;*@
-
-        width: 260px;
-        height: 173px;
+        width: 128px;
+        height: 160px;
         left: 30px;
         top: 113px;
     }
@@ -193,7 +222,7 @@
         height: 34px;
         right: 30px;
         top: 181px;
-        background: #C9F7F5;
+        background: #ff150a;
         border-radius: 6px;
     }
     #first_row {
@@ -203,12 +232,12 @@
 
     .btn:hover {
         color: #fff;
-        background: #0a90f5;
+        background: #ff807a;
     }
 
     .btn:focus {
         color: #fff;
-        background: #0a90f5;
+        background: #ad0200;
         outline: none;
     }
     .namebtn {
@@ -218,9 +247,24 @@
         font-size: 12px;
         line-height: 18px;
         /* identical to box height */
-        color: #1BC5BD;
+        color: #ffffff;
     }
-    .deleteBtn {
-        border: none;
+    .ms {
+        position: absolute;
+        background: #ff1a2f;
+        opacity: 0.8;
+        width: 128px;
+        height: 20px;
+        left: 0;
+        bottom: 0.1px;
+        text-align: center;
+        color: white;
     }
+
+    .bg_img {
+        position: relative;
+        width: 128px;
+        height: 160px;
+    }
+
 </style>

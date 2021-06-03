@@ -5,112 +5,76 @@
     bool hasData = (bool)ViewData["hasHistory"];
 
 }
-<style>
-    @*.text-dark {
-        color: #272b30 !important;
-    }*@
-    .menu {
-        margin-left: 20px;
-    }
-    .menu-list {
-        padding: 10px;
-        text-decoration: underline;
-    }
-    .vl {
-        border-left: 3px solid green;
-        margin: 10px 0;
-    }
-    .product-info {
-        display: inline-block;
-        width:40%
-    }
-    .purchase-info {
-        display: inline-block;
-    }
-    .page-title {
-        font-size: 24px;
-    }
-    table.PHtable{
-        border-collapse:collapse;
-        display:inline-table;
-        vertical-align:middle;
-        max-width:350px;
-    }
 
+@section Style{
+    <link rel="stylesheet" href="~/css/history.css" />
 
+}
 
-</style>
-<div>
-    <a class="page-title" asp-area="" asp-controller="" asp-action="">My Purchases</a>
+@section Scripts{
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
 
-    <div class="d-sm-inline-flex menu">
-        <span class="menu-list">
-            <a asp-area="" asp-controller="Home" asp-action="Index">Home</a>
-        </span>
-        <span class="vl"></span>
-        <span class="menu-list">
-            <a asp-area="" asp-controller="Logout" asp-action="Index">Logout</a>
-        </span>
-    </div>
-</div>
+}
+
 @if (!hasData)
 {
-    <h2>no purchase history</h2>
+    <h5>No purchase history</h5>
 }
 else
 {
     @foreach (HistoryViewModel history in Model)
-{
-    <div class="product-info">
-        <table class="PHtable">
-            <tr>
-                <td class="pt-3"><img src=@history.Product.ImagePath class="card-img-top rounded" /></td>
-            </tr>
-            <tr>
-                <td class="pt-2">@history.Product.ProductName</td>
-            </tr>
-            <tr>
-                <td class="pt-2">@history.Product.ProductDescription</td>
-            </tr>
-            <tr>
-                <td class="pt-2">
-                    <a href=@history.Product.DownloadLink>
-                        <button type="button" class="btn btn-primary btn-block">Download</button>
-                    </a>
-                </td>
-            </tr>
-        </table>
-    </div>
-    <div class="purchase-info">
-        <table>
-            <tr>
-                <td>Purchased On:</td>
-                <td class="px-4 py-2">@history.Order.PurchaseDate.ToString("dd MMM yyyy")</td>
-            </tr>
-            <tr>
-                <td>Quantity:</td>
-                <td class="px-4 py-2">@history.ActivationCdList.Count</td>
-            </tr>
-            <tr>
-                <td>Activation Code:</td>
-                <td class="px-4 py-2">
-                    @if (@history.ActivationCdList.Count > 1)
-                    {
-                        <select>
-                            @foreach (string activationCd in history.ActivationCdList)
-                            {
-                                <option>@activationCd</option>
-                            }
-                        </select>
-                    }
-                    else
-                    {
-                    @history.ActivationCdList[0]
-                    }
-                </td>
-            </tr>
-        </table>
-    </div>
+    {
+        <div class="row">
+            <div class="col-12 col-md-6 mt-5">
+                <div class="form-inline book-photo-sm book-photo-md book-photo-lg book-photo-xl">
+                    <img src=@history.Product.ImagePath class="history-img rounded" />
+                </div>
 
-}
+                <h4 class="book-title">@history.Product.ProductName</h4>
+
+                <div class="book-text book-text-lg">
+                    <p class="text-justify">@history.Product.ProductDescription</p>
+                </div>
+
+                <div class="book-download book-download-lg">
+                    <form asp-controller="Purchase" asp-action="DownloadFile" method="post">
+                        <input type="hidden" name="downloadLink" value="@history.Product.DownloadLink" />
+                        <input type="hidden" name="productName" value="@history.Product.ProductName" />
+                        <button type="submit" class="btn btn-block btn-info">Download</button>
+                    </form>
+                </div>
+            </div>
+            <div class="col-12 col-md-6 mt-auto mb-auto">
+                <div class="product-info">
+                    <div class="property">
+                        <span class="property-title">Purchased On:</span>
+                        <span>@history.Order.PurchaseDate.ToString("dd MMM yyyy")</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-title">Quantity:</span>
+                        <span>@history.ActivationCdList.Count</span>
+                    </div>
+                    <div class="property">
+                        <span class="property-title">Activation Code:</span>
+                        <span id="actCd">
+                            @if (@history.ActivationCdList.Count > 1)
+                            {
+                                <select>
+                                    @foreach (string activationCd in history.ActivationCdList)
+                                    {
+                                        <option>@activationCd</option>
+                                    }
+                                </select>
+                            }
+                            else
+                            {
+                                @history.ActivationCdList[0]
+                            }
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    }
 }

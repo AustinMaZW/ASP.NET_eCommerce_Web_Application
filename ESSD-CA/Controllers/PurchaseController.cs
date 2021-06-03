@@ -5,6 +5,9 @@ using System.Linq;
 using ESSD_CA.Models;
 using ESSD_CA.Db;
 using Microsoft.AspNetCore.Http;
+using System.Net;
+using System.IO;
+using System.Diagnostics;
 
 namespace ESSD_CA.Controllers
 {
@@ -19,14 +22,18 @@ namespace ESSD_CA.Controllers
 
         public IActionResult History()
         {
+            ViewData["Is_PurchaseHistory"] = "bold_menu";
             // Check logged in?
             string sessionId = Request.Cookies["sessionId"];
             if (String.IsNullOrEmpty(sessionId))
                 return RedirectToAction("Index", "Login");
-
+            
             // retrieve all purchased items by user id from db
             User user = db.Users.FirstOrDefault(x => x.SessionId == sessionId);
-            List<PurchaseOrder> userOrders = db.PurchaseOrders.Where(x => x.UserId == user.UserId).ToList();
+            
+            List<PurchaseOrder> userOrders = null;
+            if (user != null)
+                userOrders  = db.PurchaseOrders.Where(x => x.UserId == user.UserId).ToList();
 
             IEnumerable<HistoryViewModel> iter = null;
             if (userOrders != null && userOrders.Count > 0)
@@ -59,6 +66,9 @@ namespace ESSD_CA.Controllers
             {
                 ViewData["hasHistory"] = false;
             }
+
+            ViewData["sessionId"] = sessionId;
+
             return View(iter);
         }
 
@@ -118,6 +128,16 @@ namespace ESSD_CA.Controllers
 
             if (shoppingCart == null)
                 return RedirectToAction("Product", "Index"); // divert empty shopping cart back to product page.
+            foreach (var sc in shoppingCart)
+            {
+                if (sc.Product.ProductStatus != "Available")
+                {
+
+
+                    return RedirectToAction("Index", "ShoppingCart");
+                }
+            }
+
 
             double totalPrice = PriceCalculation(shoppingCart) - DiscountAmt(/*future argument to be passed*/);
             string orderid = Guid.NewGuid().ToString();
@@ -148,15 +168,35 @@ namespace ESSD_CA.Controllers
             User user = db.Users.FirstOrDefault(x => x.SessionId == sessionId && x.SessionId != null);
             if (user != null)
             {
-                int count = db.ShoppingCarts.Where(x => x.UserId == user.UserId).ToList().Count();
+                List<ShoppingCart> items = db.ShoppingCarts.Where(x => x.UserId == user.UserId).ToList();
+                int count = 0;
+                foreach (ShoppingCart item in items)
+                {
+                    count += item.Count;
+                }
                 HttpContext.Session.SetInt32("ShoppingCartIcon", count);
             }
             else
             {
-                int count = db.ShoppingCarts.Where(x => x.GuestId ==
-                    HttpContext.Session.GetString("guestId")).ToList().Count();
+                List<ShoppingCart> items = db.ShoppingCarts.Where(x => x.GuestId ==
+                    HttpContext.Session.GetString("guestId")).ToList();
+                int count = 0;
+                foreach (ShoppingCart item in items)
+                {
+                    count += item.Count;
+                }
                 HttpContext.Session.SetInt32("ShoppingCartIcon", count);
             }
+        }
+
+        public FileContentResult DownloadFile(string downloadLink, string productName)
+        {
+            // set up download directory
+            var filePath = Directory.GetCurrentDirectory() + downloadLink;
+
+            string fileName = productName + ".pdf";
+
+            return File(System.IO.File.ReadAllBytes(filePath), "application/octet-stream", fileName);
         }
     }
 }

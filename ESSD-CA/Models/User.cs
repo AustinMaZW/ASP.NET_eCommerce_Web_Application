@@ -1,7 +1,9 @@
-﻿using System;
+﻿using ESSD_CA.Data;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Threading.Tasks;
 
 namespace ESSD_CA.Models
@@ -17,7 +19,6 @@ namespace ESSD_CA.Models
         [MaxLength(36)]
         public string Username { get; set; }
         [Required]
-        [MaxLength(36)]
         public string Password { get; set; }
         [MaxLength(36)]
         public string SessionId { get; set; }
@@ -29,7 +30,11 @@ namespace ESSD_CA.Models
         {
             this.UserId = Guid.NewGuid().ToString();
             this.Username = Username;
-            this.Password = Username;
+            using (MD5 md5Hash = MD5.Create())
+            {
+                string hashPassword = MD5Hash.Md5hash(md5Hash, Username);
+                this.Password = hashPassword;
+            }
             this.AccountType = "User";
         }
     }

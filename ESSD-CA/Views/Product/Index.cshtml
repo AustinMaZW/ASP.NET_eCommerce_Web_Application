@@ -26,34 +26,41 @@
                 Image Path
             </th>
             <th>
+                Status
             </th>
+            <th></th>
         </tr>
     </thead>
-
     <tbody>
         @foreach (Product product in products)
         {
-            <tr>
-                <td>
-                    @product.ProductName
-                </td>
-                <td>
-                    @product.ProductDescription
-                </td>
-                <td>
-                    $@product.UnitPrice
-                </td>
-                <td>
-                    <a href="@product.DownloadLink">@product.DownloadLink</a>
-                </td>
-                <td>
-                    <a href="@product.ImagePath">@product.ImagePath</a>
-                </td>
-                <td style="white-space:nowrap">
-                    <a class="btn" asp-action="Edit" asp-route-id="@product.Id"><img src="~/img/pencil-fill.svg" /></a>
-                    <a class="btn" asp-action="Delete" asp-route-id="@product.Id"><img src="~/img/trash-fill.svg" /></a>
-                </td>
-            </tr>
+        <tr>
+            <td>
+                @product.ProductName
+            </td>
+            <td>
+                @product.ProductDescription
+            </td>
+            <td>
+                $ @product.UnitPrice
+            </td>
+            <td>
+                @product.DownloadLink
+            </td>
+            <td>
+                @product.ImagePath
+            </td>
+            <td>
+                @product.ProductStatus
+            </td>
+            <td style="white-space:nowrap">
+                <a asp-action="Edit" asp-route-id="@product.Id"><img src="~/img/pencil-fill.svg"></a>
+                @if (!product.ProductStatus.Equals("Discontinued"))
+                {
+                <a asp-action="Delete" asp-route-id="@product.Id"><img src="~/img/trash-fill.svg" class="ml-1"></a>
+                }
+            </td>
+        </tr>
         }
     </tbody>
 </table>

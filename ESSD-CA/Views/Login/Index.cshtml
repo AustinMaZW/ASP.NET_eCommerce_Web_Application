@@ -1,6 +1,6 @@
 ﻿
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Login";
 }
 
 @section Scripts
@@ -8,37 +8,35 @@
     <script src="~/js/Login/Index.js"></script>
 }
 
-<form id="loginform" action="/Login/Index" method="post">
-    <table align="center">
-        <tr>
-            <td>
-                Username:
-            </td>
-            <td>
-                <input id="username" name="username" class="form-control" value="@ViewData["username"]" />
-            </td>
-        </tr>
-        <tr>
-            <td>
-                Password:
-            </td>
-            <td>
-                <input id="password" name="password" type="password" class="form-control" />
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="right">
-                <input id="submitButton" type="submit" class="btn btn-outline-success" />
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center">
-                <div id="err_msg">@ViewData["errLogin"]</div>
-            </td>
-        </tr>
-    </table>
+
+<form id="loginform" class="container-fluid" action="/Login/Index" method="post">
+    <div class="row justify-content-center">
+        <div class="col-auto">
+
+            <p class="my-1" style="padding:3px">Username:</p>
+
+            <p class="my-1" style="padding:3px">Password:</p>
+
+        </div>
+        <div class="col-auto">
+
+            <input id="username" name="username" class="form-control" placeholder="Username" value="@ViewData["username"]" />
+
+            <input id="password" name="password" type="password" placeholder="Password" class="form-control" />
+
+        </div>
+        <div class="row px-2">
+            <input id="submitButton" type="submit" class="btn btn-block  btn-outline-success" style="height:100%" />
+        </div>
+    </div>
+    <div class="row justify-content-center ">
+        <div class="col-auto"></div>
+        <div class="col-auto"></div>
+        <div class="col-auto">
+            <div id="err_msg" class="text-danger bold_menu">@ViewData["errLogin"]</div>
+        </div>
+    </div>
+    
+
 
 </form>
-
-
-

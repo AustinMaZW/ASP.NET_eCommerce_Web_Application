@@ -20,8 +20,9 @@ namespace ESSD_CA.Controllers
         }
         public IActionResult Index(string searchString)
         {
+            ViewData["Is_Gallery"] = "bold_menu";
             ViewData["Products"] = db.Products.Where(s => 
-                (s.ProductName.Contains(searchString) || s.ProductDescription.Contains(searchString)) || searchString == null).OrderBy(s => s.ProductName).ToList();
+                ((s.ProductName.Contains(searchString) || s.ProductDescription.Contains(searchString)) || searchString == null)&&s.ProductStatus.Equals("Available")).OrderBy(s => s.ProductName).ToList();
 
             ViewData["searchString"] = searchString;
 
@@ -44,23 +45,30 @@ namespace ESSD_CA.Controllers
             User user = db.Users.FirstOrDefault(x => x.SessionId == sessionId && x.SessionId != null);
             if (user != null)
             {
-                int count = db.ShoppingCarts.Where(x => x.UserId == user.UserId).ToList().Count();
+                List<ShoppingCart> items = db.ShoppingCarts.Where(x => x.UserId == user.UserId).ToList();
+                int count = 0;
+                foreach (ShoppingCart item in items)
+                {
+                    count += item.Count;
+                }
                 HttpContext.Session.SetInt32("ShoppingCartIcon", count);
             }
             else
             {
-                int count = db.ShoppingCarts.Where(x => x.GuestId ==
-                    HttpContext.Session.GetString("guestId")).ToList().Count();
+                List<ShoppingCart> items = db.ShoppingCarts.Where(x => x.GuestId ==
+                    HttpContext.Session.GetString("guestId")).ToList();
+                int count = 0;
+                foreach (ShoppingCart item in items)
+                {
+                    count += item.Count;
+                }
                 HttpContext.Session.SetInt32("ShoppingCartIcon", count);
             }
         }
 
         public IActionResult AddToCart([FromBody] ShoppingCart addItem)
         {
-            if (addItem == null || addItem.Count <= 0) { return RedirectToAction("Index"); }
-
-            Debug.WriteLine("Product Id: " + addItem.ProductId);               //just for debug purposes, can delete
-            Debug.WriteLine("count: " + addItem.Count);
+            if (addItem == null || addItem.Count <= 0 || addItem.Count >1000) { return RedirectToAction("Index"); }
 
             string sessionId = Request.Cookies["sessionId"];
             User user = db.Users.FirstOrDefault(x => x.SessionId == sessionId && x.SessionId != null);
@@ -70,12 +78,10 @@ namespace ESSD_CA.Controllers
             if (user != null)
             {
                 UserAddToCart(addItem, guestId, user);
-
             }
             else
             {
                 GuestAddToCart(addItem, guestId);
-
             }
             return Json(new { success = true });
 

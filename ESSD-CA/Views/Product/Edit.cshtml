@@ -9,6 +9,44 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
+        @if (Model.ProductStatus.Equals("Discontinued"))
+        {
+        <form asp-action="Restore">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="Id" />
+            <div class="form-group">
+                <label asp-for="ProductName" class="control-label"></label>
+                <input asp-for="ProductName" class="form-control" readonly />
+                <span asp-validation-for="ProductName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ProductDescription" class="control-label"></label>
+                <input asp-for="ProductDescription" class="form-control" readonly />
+                <span asp-validation-for="ProductDescription" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="UnitPrice" class="control-label"></label>
+                <input asp-for="UnitPrice" class="form-control" readonly />
+                <span asp-validation-for="UnitPrice" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DownloadLink" class="control-label"></label>
+                <input asp-for="DownloadLink" class="form-control" readonly />
+                <span asp-validation-for="DownloadLink" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="ImagePath" class="control-label"></label>
+                <input asp-for="ImagePath" class="form-control" readonly />
+                <span asp-validation-for="ImagePath" class="text-danger"></span>
+            </div>
+            <input type="hidden" asp-for="ProductStatus">
+            <div class="form-group">
+                 <input type="submit" value="Restore" class="btn btn-primary" />
+            </div>
+        </form>
+        }
+        else
+        {
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <input type="hidden" asp-for="Id" />
@@ -37,10 +75,12 @@
                 <input asp-for="ImagePath" class="form-control" />
                 <span asp-validation-for="ImagePath" class="text-danger"></span>
             </div>
+            <input type="hidden" asp-for="ProductStatus">
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
             </div>
         </form>
+        }
     </div>
 </div>
 

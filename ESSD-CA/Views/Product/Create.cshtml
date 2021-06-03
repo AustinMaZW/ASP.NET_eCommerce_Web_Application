@@ -10,7 +10,7 @@
     <div class="col-md-4">
         <form asp-action="Create">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <input type="hidden" asp-for="Id" value="@Guid.NewGuid().ToString()"/>
+            <input type="hidden" asp-for="Id" value="@Guid.NewGuid().ToString()" />
             <div class="form-group">
                 <label asp-for="ProductName" class="control-label">Product Name</label>
                 <input asp-for="ProductName" class="form-control" />
@@ -36,6 +36,7 @@
                 <input asp-for="ImagePath" class="form-control" />
                 <span asp-validation-for="ImagePath" class="text-danger"></span>
             </div>
+            <input type="hidden" asp-for="ProductStatus" value="Available" />
             <div class="form-group">
                 <input type="submit" value="Create" class="btn btn-primary" />
             </div>
@@ -49,4 +50,4 @@
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}
+} 

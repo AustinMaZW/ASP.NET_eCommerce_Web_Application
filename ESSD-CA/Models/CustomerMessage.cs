@@ -12,12 +12,6 @@ namespace ESSD_CA.Models
         [MaxLength(50)]
         public string Id { get; set; }
         
-        /*[MaxLength(50)]
-        public string GuestId { get; set; }
-        
-        [MaxLength(50)]
-        public string UserId { get; set; }*/
-        
         [Required]
         [MaxLength(30)]
         public string Name { get; set; }
@@ -31,5 +25,9 @@ namespace ESSD_CA.Models
         
         [MaxLength(2000)]
         public string Message { get; set; }
+        
+        public bool EnquiryStatus { get; set; }
+        public DateTime MessageDate{ get; set; }
+        
     }
 }

@@ -1,79 +1,75 @@
 ﻿@using Microsoft.AspNetCore.Http
 @inject IHttpContextAccessor HttpContextAccessor
-@model ESSD_CA.Models.User
+
 <style>
-    .navbar-anchor{
-        top:0;
-        left:0;
-        position:fixed;
-        width:100%
-    }
+    @*Place styles here*@
+
 
 </style>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - .NET Core CA Project</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/navbar.css" />
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
+    @RenderSection("Style", required: false)
 </head>
 <body>
     <header class="navbar-fixed-top">
         <nav class="navbar navbar-expand-lg navbar-light bg-light">
             @*Brand logo*@
             <div class="mx-auto order-0">
-                <a class="navbar-brand" asp-controller="ShopGallery" asp-action="Index"><img src="~/img/logo.png" height="40"></a>
+                <a class="navbar-brand ml-2" asp-controller="ShopGallery" asp-action="Index"><img src="~/img/logo.png" height="40"></a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
                     <span class="navbar-toggler-icon"></span>
                 </button>
             </div>
 
-            @*Display welcome message & user name*@
-            @*WIP*@
-           
-            <a style="display:inline-block; white-space:nowrap">Hello, Guest!</a>
-            
-
-
             @*Menu buttons - to flush left*@
         <div class="navbar-collapse collapse w-100 order-1 dual-collapse2">
-            @*Search form*@
-            <form class="form-inline container-fluid" asp-controller="ShopGallery" asp-action="Index">
-                <input class="form-control mr-sm-2" type="search" placeholder="Search..." name="searchString">
-                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" hidden> </button>
-            </form>
-            
             <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" asp-area="" asp-controller="ShopGallery" asp-action="Index">Products</a>
-                </li>
-                @if (HttpContextAccessor.HttpContext.Request.Cookies["sessionId"] != null)
+                @if (HttpContextAccessor.HttpContext.Session.GetString("AccountType") != "Admin")
                 {
-
                     <li class="nav-item">
-                        <a class="nav-link" style="display:inline-block; white-space:nowrap" asp-area="" asp-controller="Purchase" asp-action="History">My Purchases</a>
+                        <a class="nav-link txt-dark @ViewData["Is_Gallery"]" asp-area="" asp-controller="ShopGallery" asp-action="Index">Products</a>
                     </li>
-
                     @if (HttpContextAccessor.HttpContext.Request.Cookies["sessionId"] != null)
                     {
                         <li class="nav-item">
-                            <a class="nav-link" asp-area="" asp-controller="Purchase" asp-action="History">My&nbsp;Purchases</a>
+                            <a class="nav-link txt-dark @ViewData["Is_PurchaseHistory"]" asp-area="" asp-controller="Purchase" asp-action="History">My&nbsp;Purchases</a>
                         </li>
                     }
+                }
+
+                @* Can use below code to set pages for admin access only*@
+                @if (HttpContextAccessor.HttpContext.Session.GetString("AccountType") == "Admin")
+                {
                     <li class="nav-item">
-                        <a class="nav-link" style="width:10rem" asp-area="" asp-controller="Enquiry" asp-action="Index">Contact&nbsp;Us</a>
+                        <a class="nav-link txt-dark @ViewData["Is_ProductMgmt"]" asp-area="" asp-controller="Product" asp-action="Index">Manage&nbsp;Products</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" style="display:inline-block; white-space:nowrap" asp-area="" asp-controller="Product" asp-action="Index">Manage Products</a>
-                    </li>    
-                    @* Can use below code to set pages for admin access only
-                    @if (HttpContextAccessor.HttpContext.Session.GetString("AccountType") == "Admin")
-                    {
-                    }*@
-                </ul>
+                        <a class="nav-link txt-dark @ViewData["Is_ContactMgmt"]" asp-area="" asp-controller="Enquiry" asp-action="Manage">Manage&nbsp;Enquiries</a>
+                    </li>
+                }
+                else
+                {
+                    <li class="nav-item">
+                        <a class="nav-link txt-dark @ViewData["Is_ContactUs"]" asp-area="" asp-controller="Enquiry" asp-action="Index">Contact&nbsp;Us</a>
+                    </li>
+                }
+            </ul>
+
+            @*Search form*@
+            <form class="form-inline container-fluid my-2 my-lg-0" asp-controller="ShopGallery" asp-action="Index">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search..." name="searchString">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit" hidden> </button>
+            </form>
+
+
 
         </div>
 
@@ -84,6 +80,21 @@
 
 
                     @*Use IHttpContextAccessor injection to retrieve session key value pair*@
+                    @if (HttpContextAccessor.HttpContext.Session.GetString("uname") != null)
+                    {
+                        var name = HttpContextAccessor.HttpContext.Session.GetString("uname");
+                        <li class="nav-item">
+                            <a class="nav-link" asp-area="" asp-controller="Purchase" asp-action="History">Hello, @name!</a>
+                        </li>
+                    }
+                    else
+                    {
+                        <li class="nav-item">
+                            <a class="nav-link">Hello, Guest!</a>
+                        </li>
+                    }
+
+
                     @if (HttpContextAccessor.HttpContext.Request.Cookies["sessionId"] == null)
                     {
                         <li class="nav-item">
@@ -104,7 +115,10 @@
                                 @{
                                     var count = HttpContextAccessor.HttpContext.Session.GetInt32("ShoppingCartIcon");
                                 }
-                                <img src="/img/shopping-cart.png" width="25" /> &nbsp; <span class="badge" style="border-radius: 30px; padding: 7px 11px;">@count</span>
+                                <img src="/img/shopping-cart.png" width="25" /> &nbsp; 
+                                <span class="badge" style="border-radius: 30px; padding: 7px 11px;">
+                                    @count
+                                </span>
                             </a>
                         </li>
                     }
